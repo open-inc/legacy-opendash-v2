@@ -33,7 +33,7 @@ export default class OpenDashDataService {
 
         this.ready = false;
 
-        const adapters = $injector.get('od.adapter.register').map((AdapterFactory) => new AdapterFactory({}));
+        const adapters = $injector.get('od.adapter.register').map((AdapterFactory) => new AdapterFactory({}, $user));
 
         const promises = adapters.map((adapter) => adapter.init(new OpenDashDataContext(adapter)));
 
