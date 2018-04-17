@@ -1,6 +1,6 @@
 {
     "name": "opendash",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "author": "Sebastian Zilles <sebastian@zilles.io>",
     "license": "MIT",
     "main": "src/index.js",
