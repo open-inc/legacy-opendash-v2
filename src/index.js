@@ -172,6 +172,7 @@ class openDASH {
             template: widget.widgetTemplate,
             controller: widget.widgetController,
             bindings: {
+                widget: '<',
                 config: '<',
                 state: '<',
                 loading: '=',
@@ -182,6 +183,7 @@ class openDASH {
             template: widget.settingsTemplate,
             controller: widget.settingsController,
             bindings: {
+                widget: '<',
                 config: '<',
                 closeSettingsModal: '<',
             },

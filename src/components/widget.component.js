@@ -30,9 +30,8 @@ class controller {
 
         widget.state.enabled = false;
 
-        let template =
-    `<div ng-if="ready" style="display:block;width:100%;height:100%;">
-      <od-widget-${widget.type}-settings config="config" close-settings-modal="close" style="display:block;width:100%;height:100%;">
+        let template = `<div ng-if="ready" style="display:block;width:100%;height:100%;">
+      <od-widget-${widget.type}-settings widget="widget.operations" config="config" close-settings-modal="close" style="display:block;width:100%;height:100%;">
       </od-widget-${widget.type}-settings>
       <button ng-click="close(config)">{{ 'od.dashboard.widgets.save' | translate }}</button>
       <button ng-click="close(null)">{{ 'od.dashboard.widgets.abort' | translate }}</button>
