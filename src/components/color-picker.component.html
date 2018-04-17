@@ -1,0 +1,10 @@
+<div class="selection">
+    <input class="selection-input" type="text" ng-model="$ctrl.color"></input>
+    <div class="selection-preview" ng-style="{ 'background': $ctrl.color }" ng-click="$ctrl.togglePicker()"></div>
+</div>
+<div class="picker" ng-show="$ctrl.active" ng-style="$ctrl.pickerStyle">
+    <div class="picker-items">
+        <span class="picker-item" ng-style="{ 'background': color }" ng-repeat="color in $ctrl.colors" ng-click="$ctrl.select(color)">
+        </span>
+    </div>
+</div>

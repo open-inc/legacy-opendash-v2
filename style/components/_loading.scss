@@ -1,0 +1,50 @@
+od-loading {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, .95);
+    z-index: 3000;
+    .od-loader__spinner {
+        top: 50%;
+        margin: 0 auto;
+        margin-top: -20px;
+        width: 34px;
+        height: 40px;
+        position: relative;
+    }
+    .od-loader__cube_one,
+    .od-loader__cube_two {
+        background-color: #308ee2;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        animation: sk-cubemove 1.8s infinite ease-in-out;
+    }
+    .od-loader__cube_two {
+        animation-delay: -0.9s;
+    }
+    @keyframes sk-cubemove {
+        25% {
+            transform: translateX(22px) rotate(-90deg) scale(0.5);
+        }
+        50% {
+            transform: translateX(22px) translateY(22px) rotate(-179deg);
+        }
+        51% {
+            transform: translateX(22px) translateY(22px) rotate(-180deg);
+        }
+        75% {
+            transform: translateX(0px) translateY(22px) rotate(-270deg) scale(0.5);
+        }
+        100% {
+            transform: rotate(-360deg);
+        }
+    }
+}

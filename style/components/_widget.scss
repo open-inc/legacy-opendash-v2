@@ -1,0 +1,110 @@
+$od-widget-header-height: 30px;
+$od-widget-background-color: white;
+$od-widget-border-color: #ddd;
+$od-widget-action-hover-color: $primary;
+$od-widget-alert-color: #2974b3;
+od-widget {
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding-top: $od-widget-header-height;
+    position: relative;
+    background: $od-widget-background-color;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $od-widget-border-color;
+    transition: box-shadow .3s ease-in-out; // box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.1);
+    &.od-widget--alert {
+        animation-name: od-widget-alert-animation;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        @keyframes od-widget-alert-animation {
+            0% {
+                box-shadow: 0px 0px 2px 1px rgba($od-widget-alert-color, .8); // animation-timing-function: ease-in;
+            }
+            50% {
+                box-shadow: 0px 0px 2px 1px rgba($od-widget-alert-color, .2); // animation-timing-function: ease-out;
+            }
+            100% {
+                box-shadow: 0px 0px 2px 1px rgba($od-widget-alert-color, .8);
+            }
+        }
+    }
+    &.od-widget--edit-mode {
+        box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, .1);
+        animation-name: od-widget-edit-animation;
+        animation-iteration-count: infinite;
+        transform-origin: 50% 10%;
+        animation-duration: .3s;
+        @keyframes od-widget-edit-animation {
+            0% {
+                transform: rotate(.15deg);
+                animation-timing-function: ease-in;
+            }
+            50% {
+                transform: rotate(-0.25deg);
+                animation-timing-function: ease-out;
+            }
+        }
+        od-widget-header {
+            cursor: move;
+        }
+    }
+    &-header {
+        display: block;
+        height: $od-widget-header-height;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 3001; // above od-loading
+        overflow: hidden;
+        &-name {
+            display: block;
+            height: $od-widget-header-height;
+            padding: 0 7px;
+            font-size: 14px;
+            line-height: $od-widget-header-height;
+            overflow: hidden;
+            float: left;
+        }
+        &-action {
+            display: block !important;
+            width: $od-widget-header-height;
+            height: $od-widget-header-height;
+            float: right;
+            color: #666666;
+            text-align: center;
+            cursor: pointer;
+            &:before {
+                width: $od-widget-header-height;
+                height: $od-widget-header-height;
+                line-height: $od-widget-header-height;
+            }
+            &:hover {
+                color: $od-widget-action-hover-color;
+            }
+        }
+    }
+    &-holder {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    &-noconfig {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding-top: 10px;
+        text-align: center;
+    }
+}
+
+od-widget {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

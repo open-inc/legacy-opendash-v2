@@ -1,0 +1,12 @@
+<div>
+	<ul>
+		<li ng-if="notification.show"
+				ng-class="notification.class"
+				ng-style="notification.style"
+				ng-click="notification.close()"
+                ng-repeat="notification in $ctrl.$notification.notifications">
+                    <span ng-bind="notification.message"></span>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+        </li>
+	</ul>
+</div>

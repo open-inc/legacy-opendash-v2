@@ -1,0 +1,124 @@
+// Basiert auf (mit leichten Änderungen):
+// Styling Cross-Browser Compatible Range Inputs with Sass
+// Github: https://github.com/darlanrod/input-range-sass
+// Author: Darlan Rod https://github.com/darlanrod
+// Version 1.1.0
+// MIT License
+
+$range-input-track-color: #424242 !default;
+$range-input-thumb-color: #555bc8 !default;
+
+$range-input-thumb-radius: 8px !default;
+$range-input-thumb-height: 30px !default;
+$range-input-thumb-width: 30px !default;
+$range-input-thumb-shadow-size: 1px !default;
+$range-input-thumb-shadow-blur: 1px !default;
+$range-input-thumb-shadow-color: #111 !default;
+$range-input-thumb-border-width: 1px !default;
+$range-input-thumb-border-color: #fff !default;
+
+$range-input-track-width: 100% !default;
+$range-input-track-height: 10px !default;
+$range-input-track-shadow-size: 2px !default;
+$range-input-track-shadow-blur: 2px !default;
+$range-input-track-shadow-color: #222 !default;
+$range-input-track-border-width: 1px !default;
+$range-input-track-border-color: #000 !default;
+
+$range-input-track-radius: 5px !default;
+$range-input-contrast: 5% !default;
+
+@mixin range-input-shadow($range-input-shadow-size, $range-input-shadow-blur, $range-input-shadow-color) {
+  box-shadow: $range-input-shadow-size $range-input-shadow-size $range-input-shadow-blur $range-input-shadow-color, 0 0 $range-input-shadow-size lighten($range-input-shadow-color, 5%);
+}
+
+@mixin range-input-track() {
+  width: $range-input-track-width;
+  height: $range-input-track-height;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+@mixin range-input-thumb() {
+  @include range-input-shadow($range-input-thumb-shadow-size, $range-input-thumb-shadow-blur, $range-input-thumb-shadow-color);
+  border: $range-input-thumb-border-width solid $range-input-thumb-border-color;
+  height: $range-input-thumb-height;
+  width: $range-input-thumb-width;
+  border-radius: $range-input-thumb-radius;
+  background: $range-input-thumb-color;
+  cursor: pointer;
+}
+
+[type=range] {
+  -webkit-appearance: none;
+  margin: $range-input-thumb-height / 2 0;
+  width: $range-input-track-width;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include range-input-track();
+    @include range-input-shadow($range-input-track-shadow-size, $range-input-track-shadow-blur, $range-input-track-shadow-color);
+    background: $range-input-track-color;
+    border: $range-input-track-border-width solid $range-input-track-border-color;
+    border-radius: $range-input-track-radius;
+  }
+
+  &::-webkit-slider-thumb {
+    @include range-input-thumb();
+    -webkit-appearance: none;
+    margin-top: ((-$range-input-track-border-width * 2 + $range-input-track-height) / 2) - ($range-input-thumb-height / 2);
+  }
+
+  &:focus::-webkit-slider-runnable-track {
+    background: lighten($range-input-track-color, $range-input-contrast);
+  }
+
+  &::-moz-range-track {
+    @include range-input-track();
+    @include range-input-shadow($range-input-track-shadow-size, $range-input-track-shadow-blur, $range-input-track-shadow-color);
+    background: $range-input-track-color;
+    border: $range-input-track-border-width solid $range-input-track-border-color;
+    border-radius: $range-input-track-radius;
+  }
+
+  &::-moz-range-thumb {
+    @include range-input-thumb();
+  }
+
+  &::-ms-track {
+    @include range-input-track();
+    background: transparent;
+    border-color: transparent;
+    border-width: $range-input-thumb-width 0;
+    color: transparent;
+  }
+
+  &::-ms-fill-lower {
+    @include range-input-shadow($range-input-track-shadow-size, $range-input-track-shadow-blur, $range-input-track-shadow-color);
+    background: darken($range-input-track-color, $range-input-contrast);
+    border: $range-input-track-border-width solid $range-input-track-border-color;
+    border-radius: $range-input-track-radius * 2;
+  }
+
+  &::-ms-fill-upper {
+    @include range-input-shadow($range-input-track-shadow-size, $range-input-track-shadow-blur, $range-input-track-shadow-color);
+    background: $range-input-track-color;
+    border: $range-input-track-border-width solid $range-input-track-border-color;
+    border-radius: $range-input-track-radius * 2;
+  }
+
+  &::-ms-thumb {
+    @include range-input-thumb();
+  }
+
+  &:focus::-ms-fill-lower {
+    background: $range-input-track-color;
+  }
+
+  &:focus::-ms-fill-upper {
+    background: lighten($range-input-track-color, $range-input-contrast);
+  }
+}

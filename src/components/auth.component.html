@@ -1,0 +1,38 @@
+<div class="od-auth" ng-if="!$ctrl.$user.loading" ng-show="!$ctrl.$user.auth">
+  <div class="container container--auth">
+    <h1 ng-show="$ctrl.state === 'login'">{{ 'od.auth.login' | translate }}</h1>
+    <h1 ng-show="$ctrl.state === 'register'">{{ 'od.auth.signup' | translate }}</h1>
+    <form>
+      <fieldset>
+        <fieldset>
+          <input
+            type="text"
+            placeholder="Email"
+            ng-model="$ctrl.form.email" />
+        </fieldset>
+        <fieldset>
+          <input
+            type="password"
+            placeholder="Passwort"
+            ng-model="$ctrl.form.password" />
+        </fieldset>
+        <button type="submit"
+          ng-click="$ctrl.login()"
+          ng-show="$ctrl.state === 'login'">
+          {{ 'od.auth.button.login' | translate }}
+        </button>
+        <button type="submit"
+          ng-click="$ctrl.register()"
+          ng-show="$ctrl.state === 'register'">
+          {{ 'od.auth.button.signup' | translate }}
+        </button>
+      </fieldset>
+    </form>
+    <a ng-click="$ctrl.state = 'login'" ng-show="$ctrl.state !== 'login'">
+      {{ 'od.auth.resetpassword' | translate }}
+    </a>
+    <a ng-click="$ctrl.state = 'register'" ng-show="false">
+      {{ 'od.auth.noaccount' | translate }}
+    </a>
+  </div>
+</div>

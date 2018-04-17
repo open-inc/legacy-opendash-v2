@@ -1,0 +1,17 @@
+<od-widget-header>
+	<od-widget-header-action ng-if="!$ctrl.menu" ng-click="$ctrl.menu = true" class="fa fa-ellipsis-v" aria-hidden="true"></od-widget-header-action>
+	<od-widget-header-action ng-if="$ctrl.menu" ng-click="$ctrl.menu = false" class="fa fa-times" aria-hidden="true"></od-widget-header-action>
+	<od-widget-header-action ng-if="$ctrl.menu" ng-click="$ctrl.remove()" class="fa fa-trash" aria-hidden="true"></od-widget-header-action>
+	<od-widget-header-action ng-if="$ctrl.menu" ng-click="$ctrl.settings()" class="fa fa-cog" aria-hidden="true"></od-widget-header-action>
+	<od-widget-header-action ng-if="$ctrl.menu" ng-click="$ctrl.rename()" class="fa fa-font" aria-hidden="true"></od-widget-header-action>
+	<od-widget-header-name ng-bind="$ctrl.widget.name"></od-widget-header-name>
+</od-widget-header>
+<od-widget-holder ng-if="$ctrl.widget.state.enabled"></od-widget-holder>
+<od-widget-noconfig ng-if="!$ctrl.widget.state.config">
+	<p>
+		{{ 'od.dashboard.widgets.noconfig' | translate }}
+	</p>
+	<button ng-click="$ctrl.settings()">
+		{{ 'od.dashboard.widgets.configurate' | translate }}
+	</button>
+</od-widget-noconfig>

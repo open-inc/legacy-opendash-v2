@@ -1,0 +1,14 @@
+<div class="od-preset" ng-repeat="preset in $ctrl.presets">
+  <div class="od-preset__group_1">
+    <img class="od-preset__image" ng-src="{{ preset.image }}">
+    <button class="od-preset__button" ng-click="$ctrl.add(preset.config)">{{ 'od.presets.add' | translate }}</button>
+  </div>
+  <div class="od-preset__group_2">
+    <div class="od-preset__name">
+      {{ preset.name }}
+    </div>
+    <div class="od-preset__description">
+      {{ preset.description }}
+    </div>
+  </div>
+</div>

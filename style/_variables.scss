@@ -1,0 +1,106 @@
+// Layout/ Grid:
+
+  $gutter: 20px !default;
+
+  $breakpoints: (
+    'xs': 320px,
+    'sm': 480px,
+    'md': 640px,
+    'lg': 1024px,
+    'xl': 1280px
+  ) !default;
+
+// Typography:
+
+  $html-font-size: 62.5% !default;
+  $body-font-size: 1.6em !default;
+
+  $font-size: 16rem !default;
+
+  $font-weight-light: 300 !default;
+  $font-weight-normal: 400 !default;
+  $font-weight-bold: 700 !default;
+  $font-weight-extrabold: 900 !default;
+
+  $font-family: 'Roboto', sans-serif !default;
+
+
+// Colors:
+
+  $primary: #3374cc !default;
+  $primary-font: #ffffff !default;
+  $primary-hover: $primary - #111 !default;
+  $primary-hover-font: #ffffff !default;
+  $primary-link: #000 !default;
+  $primary-link-hover: #000 !default;
+
+  $colors: (
+    'primary': (
+      'background': #3374cc,
+      'background-hover': #3374cc,
+      'font': #ffffff,
+      'font-hover': #ffffff,
+      'link': #ffffff,
+      'link-hover': #ffffff,
+    ),
+    'success': (
+      'background': #dff0d8,
+      'background-hover': #d6e9c6,
+      'font': #3c763d,
+      'font-hover': #3c763d,
+      'link': #2b542c,
+      'link-hover': #2b542c - #111,
+    ),
+    'info': (
+      'background': #d9edf7,
+      'background-hover': #bce8f1,
+      'font': #31708f,
+      'font-hover': #31708f,
+      'link': #245269,
+      'link-hover': #245269 - #111,
+    ),
+    'warning': (
+      'background': #fcf8e3,
+      'background-hover': #faebcc,
+      'font': #8a6d3b,
+      'font-hover': #8a6d3b,
+      'link': #66512c,
+      'link-hover': #66512c - #111,
+    ),
+    'danger': (
+      'background': #f2dede,
+      'background-hover': #ebccd1,
+      'font': #a94442,
+      'font-hover': #a94442,
+      'link': #843534,
+      'link-hover': #843534 - #111,
+    ),
+  );
+
+  $secondary: #23BF23 !default;
+  $secondary-font: #ffffff !default;
+  $secondary-hover: $secondary - #111 !default;
+  $secondary-hover-font: #ffffff !default;
+  $secondary-link: #000 !default;
+  $secondary-link-hover: #000 !default;
+
+  $dark: #222222 !default;
+  $dark-font: #cccccc !default;
+  $dark-hover: #444444 !default;
+  $dark-hover-font: #ffffff !default;
+  $dark-link: $primary !default;
+  $dark-link-hover: $primary-hover !default;
+
+  $light: #e9e9e9 !default;
+  $light-font: #444444 !default;
+  $light-hover: #f0f0f0 !default;
+  $light-hover-font: #444444 !default;
+  $light-link: $primary !default;
+  $light-link-hover: $primary-hover !default;
+
+  $white: #ffffff !default;
+  $white-font: $light-font !default;
+  $white-hover: $light-hover !default;
+  $white-hover-font: $light-hover-font !default;
+  $white-link: $light-link !default;
+  $white-link-hover: $light-link-hover !default;

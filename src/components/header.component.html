@@ -1,0 +1,45 @@
+<od-topbar>
+    <nav class="container container--header">
+        <a ng-show="$ctrl.$user.auth" ng-click="$ctrl.toggleSidebar()">
+            <div class="hamburger" ng-class="{ 'open': $ctrl.sidebar }">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </a>
+        <!-- <a href="#">open.DASH</a> -->
+        <img ng-src="{{ $ctrl.$header.logo.url }}">
+        <div class="float-right">
+            <a ng-show="$ctrl.$user.auth" style="line-height: 40px;font-size: 30px;" ng-click="$ctrl.$dashboard.toggleEditMode()"><i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.getEditMode(), 'fa-floppy-o': $ctrl.$dashboard.getEditMode()}" aria-hidden="true"></i></a>
+            <a ng-show="$ctrl.$user.auth" style="line-height: 40px;font-size: 30px;" ng-click="link.action()" ng-repeat="link in $ctrl.$header.topbar"><i class="fa {{ link.icon }}" aria-hidden="true"></i></a>
+        </div>
+    </nav>
+</od-topbar>
+
+<od-sidebar ng-class="{ 'active': $ctrl.sidebar }" ng-click="$ctrl.toggleSidebar()">
+    <main>
+        <section>
+            <header>{{ 'od.header.dashboards.header' | translate }}</header>
+            <a ui-sref="od.dashboard.home" ng-repeat="name in $ctrl.$dashboard.dashboards" ng-click="$ctrl.$dashboard.changeDashboard(name)">{{ name }}</a>
+        </section>
+        <section>
+            <header>{{ 'od.header.dashboards.manage' | translate }}</header>
+            <a ng-click="$ctrl.createDashboard()">{{ 'od.header.dashboards.create' | translate }}</a>
+            <a ng-click="$ctrl.deleteDashboard()">{{ 'od.header.dashboards.delete' | translate }}</a>
+        </section>
+        <section ng-repeat="(header, links) in $ctrl.$header.sidebar">
+            <header>{{ header | translate }}</header>
+            <a ng-click="link.action()" ng-repeat="link in links">{{ link.text | translate }}</a>
+        </section>
+    </main>
+    <footer>
+        <a ng-click="link.action()" ng-repeat="link in $ctrl.$header.sidebarFooter"><i ng-if="link.icon" class="fa {{ link.icon }}" aria-hidden="true"></i>{{ link.text }}</a>
+        <a ng-click="$ctrl.$user.logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>{{ 'od.auth.logout' | translate }}</a>
+    </footer>
+</od-sidebar>
+
+<od-notification></od-notification>
+
+<div class="od-header__overlay" ng-class="{ 'active': $ctrl.$header.overlay }" ng-click="$ctrl.$header.setOverlay(false)"></div>
+<div class="od-header__overlay" ng-class="{ 'active': overlay.active }" ng-style="{ 'z-index': overlay.index }" ng-click="overlay.close()" ng-repeat="overlay in $ctrl.$header.overlays"></div>

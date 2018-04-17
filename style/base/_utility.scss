@@ -1,0 +1,70 @@
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+.display--block { display: block; }
+
+.spacer {
+  display: inline-block;
+  width: 2rem;
+}
+
+.noselect {
+    user-select: none;
+}
+
+.text--primary { color: $primary; }
+.text--secondary { color: $secondary; }
+.text--dark { color: $dark; }
+.text--light { color: $light; }
+.text--white { color: $white; }
+
+.text--center { text-align: center; }
+.text--left { text-align: left; }
+.text--right { text-align: right; }
+
+.text--uppercase { text-transform: uppercase; }
+.text--shadow { text-shadow: 0 1px 1px $dark }
+
+.text--light { font-weight: $font-weight-light; }
+.text--normal { font-weight: $font-weight-normal; }
+.text--bold { font-weight: $font-weight-bold; }
+.text--extrabold { font-weight: $font-weight-extrabold; }
+
+.text--2-1 { font-size: 2em; }
+.text--3-2 { font-size: 1.5em; }
+.text--5-4 { font-size: 1.25em; }
+.text--6-5 { font-size: 1.2em; }
+.text--1-2 { font-size: .5em; }
+.text--2-3 { font-size: .66em; }
+.text--3-4 { font-size: .75em; }
+.text--4-5 { font-size: .8em; }
+.text--9-10 { font-size: .9em; }
+
+.float-left { float: left; }
+.float-right { float: right; }
+
+@mixin raised($size: 1px) {
+  // box-shadow: 0px 0px $size $size rgba(0, 0, 0, 0.1);
+  border: $size solid #ddd;
+}
+
+.raised {
+  @include raised();
+}
+
+.clearfix {
+  *zoom: 1;
+
+  &::before,
+  &::after {
+    content: " ";
+    display: table;
+  }
+
+  &::after {
+    clear: both;
+  }
+}

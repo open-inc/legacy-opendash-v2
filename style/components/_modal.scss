@@ -1,0 +1,56 @@
+od-modal {
+    display: block;
+    max-height: calc(100vh - 100px);
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid #ddd;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: $light;
+    margin: 80px auto;
+    overflow: auto;
+    z-index: 5005;
+    &-header {
+        display: block;
+        height: 30px;
+        width: 100%;
+    }
+    &-close {
+        display: block;
+        height: 30px;
+        width: 30px;
+        float: right;
+        cursor: pointer;
+        text-align: center;
+        &:before {
+            line-height: 30px;
+        }
+    }
+    &-content {
+        display: block;
+        height: auto;
+        width: 100%;
+        padding: 20px;
+        position: relative;
+    }
+}
+
+#custom-modal.ng-enter {
+    transition: opacity .5s ease-out;
+    opacity: 0;
+}
+
+#custom-modal.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+#custom-modal.ng-leave {
+    transition: opacity .5s ease-out;
+    opacity: 1;
+}
+
+#custom-modal.ng-leave.ng-leave-active {
+    opacity: 0;
+}
