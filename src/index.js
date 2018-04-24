@@ -86,12 +86,12 @@ class openDASH {
         this.dataAdapters.push(adapter);
     }
 
-    use(plugin) {
+    use(plugin, options = {}) {
         if (!_.isFunction(plugin)) {
             throw new Error('The \'plugin\' parameter must be a function.');
         }
 
-        this.plugins.push(plugin);
+        this.plugins.push(plugin(options));
     }
 
     registerWidgets(widgets) {
