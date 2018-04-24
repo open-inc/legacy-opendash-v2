@@ -232,6 +232,10 @@ class openDASH {
         this.module.value('od.adapter.register', this.dataAdapters);
         this.module.value('od.widget.presets', this.widgetPresets);
 
+        this.plugins.forEach((plugin) => {
+            plugin(this, this.module, this.name);
+        });
+
         services.forEach(s => {
             if (s[2]) {
                 this.module.value(`opendash/services/${s[0]}`, s[1]);
@@ -246,10 +250,6 @@ class openDASH {
             } else {
                 this.module.component(_.camelCase(c[0]), c[1]);
             }
-        });
-
-        this.plugins.forEach((plugin) => {
-            plugin(this, this.module, this.name);
         });
 
         this.module.config(['$translateProvider', ($translateProvider) => {
