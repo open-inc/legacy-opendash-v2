@@ -1,13 +1,7 @@
 od-dashboard {
   display: block;
   padding-bottom: $gutter;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
-                                supported by Chrome and Opera */
+  user-select: none;
 }
 
 od-dashboard-home-component {
@@ -22,10 +16,6 @@ od-dashboard-home-component {
       font-size: 2em;
       font-weight: bold;
       margin-bottom: $gutter;
-      >span {
-        // display: inline-block;
-        // transform: rotate(90deg);
-      }
     }
   }
 }

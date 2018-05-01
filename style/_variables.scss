@@ -79,7 +79,7 @@
 
   $secondary: #23BF23 !default;
   $secondary-font: #ffffff !default;
-  $secondary-hover: $secondary - #111 !default;
+  $secondary-hover: darken($secondary, 10%) !default;
   $secondary-hover-font: #ffffff !default;
   $secondary-link: #000 !default;
   $secondary-link-hover: #000 !default;
@@ -104,3 +104,11 @@
   $white-hover-font: $light-hover-font !default;
   $white-link: $light-link !default;
   $white-link-hover: $light-link-hover !default;
+
+
+  $od-color-lighter: #fff !default;
+  $od-color-light: #fff !default;
+  $od-color-border: #cccccc !default;
+
+  $od-color-background-light: white !default;
+  $od-color-background-dark: $light !default;

@@ -19,7 +19,7 @@ od-select-date {
                 width: auto;
                 text-align: center;
                 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-                border: 2px solid #4485dd;
+                border: 2px solid $active-color;
                 -webkit-appearance: none;
                 outline: 0;
                 -webkit-transition: 0.3s ease all;
@@ -52,7 +52,7 @@ od-select-date {
         &__selection {
             @extend .clearfix;
             text-align: center;
-            background: white;
+            background: $od-color-background-light;
             border: 1px solid rgba(0, 0, 0, .1);
             &__item {
                 float: left;

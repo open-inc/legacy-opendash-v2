@@ -16,7 +16,7 @@ od-select-item {
     $eud-nav-after: $eud-nav-grey - #444;
     $eud-footer-height: 60px;
     .od-select-item {
-        background: white;
+        background: $od-color-background-light;
         &__item {
             height: $eud-selection-height;
             line-height: $eud-selection-height; // margin-bottom: $gutter/2;

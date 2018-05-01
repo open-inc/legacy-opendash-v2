@@ -79,11 +79,11 @@ input[type='submit'] {
     .button--#{$name} {
         background: map-get($color, 'font');
         color: white;
-        border-color: map-get($color, 'font') - #111;
+        border-color: darken(map-get($color, 'font'), 10%);
         &:focus,
         &:hover {
-            background-color: map-get($color, 'font') - #111;
-            border-color: map-get($color, 'font') - #222;
+            background-color: darken(map-get($color, 'font'), 10%);
+            border-color: darken(map-get($color, 'font'), 20%);
         }
     }
 }

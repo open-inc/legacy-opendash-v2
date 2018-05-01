@@ -47,8 +47,7 @@
 .float-right { float: right; }
 
 @mixin raised($size: 1px) {
-  // box-shadow: 0px 0px $size $size rgba(0, 0, 0, 0.1);
-  border: $size solid #ddd;
+  border: $size solid $od-color-border;
 }
 
 .raised {

@@ -1,0 +1,42 @@
+$od-topbar-height: 60px !default;
+$od-topbar-background: $od-color-background-light !default;
+
+od-topbar {
+    z-index: 5050;
+    background: $od-topbar-background;
+    height: $od-topbar-height;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 2px solid $primary;
+    nav {
+        height: $od-topbar-height;
+        img {
+            display: none;
+            @include media('>sm') {
+                display: block;
+                float: left;
+                height: 100%;
+                width: auto;
+                padding: 10px;
+            }
+        }
+        a {
+            height: $od-topbar-height;
+            line-height: $od-topbar-height - $gutter;
+            color: #555;
+            float: left;
+            padding: $gutter/2 $gutter;
+            display: block;
+            text-decoration: none;
+            &.right {
+                float: right;
+            }
+            &:hover {
+                background: rgba(0, 0, 0, .05);
+            }
+        }
+    }
+}

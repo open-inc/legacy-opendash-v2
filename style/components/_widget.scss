@@ -1,8 +1,9 @@
-$od-widget-header-height: 30px;
-$od-widget-background-color: white;
-$od-widget-border-color: #ddd;
-$od-widget-action-hover-color: $primary;
-$od-widget-alert-color: #2974b3;
+$od-widget-header-height: 30px !default;
+$od-widget-background-color: $od-color-background-light !default;
+$od-widget-border-color: $od-color-border !default;
+$od-widget-action-hover-color: $primary !default;
+$od-widget-alert-color: $primary !default;
+
 od-widget {
     display: block;
     height: 100%;
