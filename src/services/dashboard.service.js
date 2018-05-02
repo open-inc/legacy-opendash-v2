@@ -381,6 +381,12 @@ class OpenDashWidget {
         this.type = widget.type;
         this.grid = widget.grid;
 
+        this.operations = {
+            rename: (name) => {
+                this.name = name;
+            },
+        };
+
         const state = {
             enabled: true,
             loading: true,

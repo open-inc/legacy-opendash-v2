@@ -10,6 +10,7 @@ function WidgetHolder($compile, $rootScope) {
             const template = `<div style="display:block;width:100%;height:100%;">
                           <od-widget-${widget.type}
                             ng-if="widget.config && widget.state"
+                            widget="widget.operations"
                             config="widget.config"
                             state="widget.state"
                             loading="widget.state.loading"

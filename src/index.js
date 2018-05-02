@@ -86,12 +86,12 @@ class openDASH {
         this.dataAdapters.push(adapter);
     }
 
-    use(plugin) {
+    use(plugin, options = {}) {
         if (!_.isFunction(plugin)) {
             throw new Error('The \'plugin\' parameter must be a function.');
         }
 
-        this.plugins.push(plugin);
+        this.plugins.push(plugin(options));
     }
 
     registerWidgets(widgets) {
@@ -172,6 +172,7 @@ class openDASH {
             template: widget.widgetTemplate,
             controller: widget.widgetController,
             bindings: {
+                widget: '<',
                 config: '<',
                 state: '<',
                 loading: '=',
@@ -182,6 +183,7 @@ class openDASH {
             template: widget.settingsTemplate,
             controller: widget.settingsController,
             bindings: {
+                widget: '<',
                 config: '<',
                 closeSettingsModal: '<',
             },
@@ -230,6 +232,10 @@ class openDASH {
         this.module.value('od.adapter.register', this.dataAdapters);
         this.module.value('od.widget.presets', this.widgetPresets);
 
+        this.plugins.forEach((plugin) => {
+            plugin(this, this.module, this.name);
+        });
+
         services.forEach(s => {
             if (s[2]) {
                 this.module.value(`opendash/services/${s[0]}`, s[1]);
@@ -244,10 +250,6 @@ class openDASH {
             } else {
                 this.module.component(_.camelCase(c[0]), c[1]);
             }
-        });
-
-        this.plugins.forEach((plugin) => {
-            plugin(this, this.module, this.name);
         });
 
         this.module.config(['$translateProvider', ($translateProvider) => {

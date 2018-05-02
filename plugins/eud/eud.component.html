@@ -1,0 +1,300 @@
+<div class="eud">
+    <div class="eud__header">
+        <div class="eud__header__left noselect">
+            <button class="eud_btn_prev" ng-if="$ctrl.currentStep > 0" ng-click="$ctrl.navigate('prev')">Zurück</button>
+            <button class="eud_btn_prev" ng-if="$ctrl.currentStep < 1" ng-click="$ctrl.navigate('prev')" disabled="disabled">Zurück</button>
+        </div>
+        <div class="eud__header__center noselect">
+            <h3 ng-if="$ctrl.currentStep == 0" class="noselect"> Wahl der Datenquellen </h3>
+            <h3 ng-if="$ctrl.currentStep == 1" class="noselect"> Wahl des Betrachtungszeitraums </h3>
+            <h3 ng-if="$ctrl.currentStep == 2" class="noselect"> Wahl der Daten-Darstellung </h3>
+            <h3 ng-if="$ctrl.currentStep == 3" class="noselect"> Einstellung zur Daten-Darstellung </h3>
+            <h3 ng-if="$ctrl.currentStep == 4" class="noselect"> Vorschau der Auswahl </h3>
+        </div>
+        <div class="eud__header__right noselect">
+            <button class="eud_btn_next" ng-if="$ctrl.currentStep < 4" ng-click="$ctrl.navigate('next')">Weiter</button>
+            <button ng-if="$ctrl.save && $ctrl.currentStep === 4" ng-click="$ctrl.action()">Speichern</button>
+        </div>
+    </div>
+    <nav class="eud__nav clearfix noselect">
+        <div class="eud__nav__item" ng-click="$ctrl.navigate(0)" ng-class="$ctrl.getNavClass(0)" data-desc="Items">
+            <span>
+                <i class="fa fa-sitemap" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="eud__nav__item" ng-click="$ctrl.navigate(1)" ng-class="$ctrl.getNavClass(1)" data-desc="Zeitraum">
+            <span>
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="eud__nav__item" ng-click="$ctrl.navigate(2)" ng-class="$ctrl.getNavClass(2)" data-desc="Graphen">
+            <span>
+                <i class="fa fa-area-chart" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="eud__nav__item" ng-click="$ctrl.navigate(3)" ng-class="$ctrl.getNavClass(3)" data-desc="Einstellungen">
+            <span>
+                <i class="fa fa-cogs" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="eud__nav__item" ng-click="$ctrl.navigate(4)" ng-class="$ctrl.getNavClass(4)" data-desc="Vorschau">
+            <span>
+                <i class="fa fa-picture-o" aria-hidden="true"></i>
+            </span>
+        </div>
+    </nav>
+    <main class="eud__main">
+        <!-- <p style="clear:both; background-color: gray;width:100%;height:2px;"></p> -->
+        <div class="eud__graph-type__hr"></div>
+        <section style="clear:both;" class="eud__main__section eud__sensor-selection noselect" ng-if="$ctrl.currentStep === 0">
+            <div style="width:100;text-align:right;">
+                <fieldset style="margin:0">
+                    <div class="fieldgroup" style="width:70%;height:1px;"> </div>
+                    <div class="fieldgroup" style="width:13%;">
+                        <input style="margin:0" type="radio" name="sort_by" ng-value="1" ng-click='$ctrl.init(1)' ng-model="$ctrl.sort">
+                        <label style="display:inline" for="sort_name">nach Name</label>
+                    </div>
+                    <div class="fieldgroup" style="width:13%;">
+                        <input style="margin:0" type="radio" name="sort_by" ng-value="2" ng-click='$ctrl.init(2)' ng-model="$ctrl.sort">
+                        <label style="display:inline" for="sort_type">nach Typ</label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="eud__sensor-selection__items clearfix">
+                <div class="eud__sensor-selection__item" ng-repeat="item in $ctrl.items track by $index" ng-click="$ctrl.selectItem(item)">
+                    <div class="eud__sensor-selection__item__icon" style="padding: 0px !important;padding-left: 25px !important">
+                        <!--<img ng-src="{{ item.icon }}">-->
+                        <i ng-if="item.unit == '%'" style="font-size: 25px;line-height: 60px;" class="fa fa-percent" aria-hidden="true"></i>
+                        <i ng-if="item.unit == 'W'" style="font-size: 25px;line-height: 60px;" class="fa fa-plug" aria-hidden="true"></i>
+                        <i ng-if="item.unit == 'kWh'" style="font-size: 25px;line-height: 60px;" class="fa fa-plug" aria-hidden="true"></i>
+                        <i ng-if="item.unit == '°C'" style="font-size: 25px;line-height: 60px;" class="fa fa-sun-o" aria-hidden="true"></i>
+                        <i ng-if="item.unit == 'db'" style="font-size: 25px;line-height: 60px;" class="fa fa-volume-down" aria-hidden="true"></i>
+                        <i ng-if="item.unit == 'ppm'" style="font-size: 25px;line-height: 60px;" class="fa fa-tree" aria-hidden="true"></i>
+                        <i ng-if="item.unit == null" style="font-size: 25px;line-height: 60px;" class="fa fa-question-circle-o" aria-hidden="true"></i>
+                    </div>
+                    <div class="eud__sensor-selection__item__check" ng-show="$ctrl.isSelectedItem(item)">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </div>
+                    <div class="eud__sensor-selection__item__name">
+                        <p style="line-height: 30px;margin:0;padding:0px;"> {{ item.name }} </p>
+                        <p style="line-height: 15px;margin:0;padding:0px;">
+                            <i style="margin-left: 0px">{{ item.valueName }}</i>
+                            <i ng-if="item.unit">mit Einheit {{ item.unit }}</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section style="clear:both;" class="eud__main__section eud__time-range noselect" ng-if="$ctrl.currentStep === 1">
+            <od-select-date watch="$ctrl.watchFunction" selmode="$ctrl.selmode" selunit="$ctrl.selunit" selvalue="$ctrl.selvalue" selstart="$ctrl.selstart"
+                selend="$ctrl.selend"></od-select-date>
+        </section>
+        <section style="clear:both;" class="eud__main__section eud__graph-type" ng-if="$ctrl.currentStep === 2">
+            <div class="eud__selection clearfix noselect">
+                <div class="eud__selection__item eud__selection__item--2" ng-if="$ctrl.settings.history" ng-click="$ctrl.settings.chart.type = 'time'"
+                    ng-class="{'eud--active': $ctrl.settings.chart.type === 'time'}">
+                    <i class="fa fa-area-chart" aria-hidden="true"></i> Zeit-Diagramm </div>
+                <div class="eud__selection__item eud__selection__item--2" ng-if="!$ctrl.settings.history" ng-click="false" style="color:lightgray"
+                    ng-class="{'eud--active': $ctrl.settings.chart.type === 'time'}" od-tooltip="Keine Zeitserien-Daten ausgewählt">
+                    <i class="fa fa-area-chart" aria-hidden="true"></i> Zeit-Diagramm </div>
+                <div class="eud__selection__item eud__selection__item--2" ng-if="$ctrl.getLength($ctrl.selected)>1" ng-click="$ctrl.settings.chart.type = 'pie'"
+                    ng-class="{'eud--active': $ctrl.settings.chart.type === 'pie'}">
+                    <i class="fa fa-pie-chart" aria-hidden="true"></i> Kreis-Diagramm </div>
+                <div class="eud__selection__item eud__selection__item--2" ng-if="$ctrl.getLength($ctrl.selected)<=1" ng-click="false" style="color:lightgray"
+                    ng-class="{'eud--active': $ctrl.settings.chart.type === 'pie'}" od-tooltip="Mindestens zwei Items benötigt">
+                    <i class="fa fa-pie-chart" aria-hidden="true"></i> Kreis-Diagramm </div>
+                
+            </div>
+            <p class="eud__desc noselect">Bitte auswählen, in welcher Form die Daten dargestellt werden sollen.</p>
+        </section>
+        <section style="clear:both;" class="eud__main__section eud__graph-type noselect" ng-if="$ctrl.currentStep === 3">
+            <div class="eud__selection clearfix" ng-if="$ctrl.settings.chart.type === 'pie'">
+                <div class="eud__selection__item eud__selection__item--2" ng-click="$ctrl.settings.chart.pie_style = 'circle'" ng-class="{'eud--active': $ctrl.settings.chart.pie_style === 'circle'}">
+                    <i class="fa fa-pie-chart" aria-hidden="true"></i> Kreis </div>
+                <div class="eud__selection__item eud__selection__item--2" ng-click="$ctrl.settings.chart.pie_style = 'donut'" ng-class="{'eud--active': $ctrl.settings.chart.pie_style === 'donut'}">
+                    <i class="fa fa-circle-o" aria-hidden="true"></i> Donut </div>
+            </div>
+            <div class="eud__selection clearfix" ng-if="$ctrl.settings.chart.type === 'pie'" style="margin-left: 10%;margin-right: 10%;">
+                <p class="eud__desc">Zur Darstellung der ausgewählten Daten in diesem Diagrammtyp müssen die Daten zusammengefasst werden:</p>
+                <div class="eud__selection__itemAdd eud__selection__itemAdd--2" ng-click="$ctrl.settings.chart.pie_aggregation = 'SUM'" ng-class="{'eud--active': $ctrl.settings.chart.pie_aggregation === 'SUM'}">
+                    Summe der Werte </div>
+                <div class="eud__selection__itemAdd eud__selection__itemAdd--2" ng-click="$ctrl.settings.chart.pie_aggregation = 'MEAN'"
+                    ng-class="{'eud--active': $ctrl.settings.chart.pie_aggregation === 'MEAN'}"> Durchschnitt der Werte </div>
+                <div class="eud__selection__itemAdd eud__selection__itemAdd--2" ng-click="$ctrl.settings.chart.pie_aggregation = 'MIN'" ng-class="{'eud--active': $ctrl.settings.chart.pie_aggregation === 'MIN'}">
+                    Minumum der Werte </div>
+                <div class="eud__selection__itemAdd eud__selection__itemAdd--2" ng-click="$ctrl.settings.chart.pie_aggregation = 'MAX'" ng-class="{'eud--active': $ctrl.settings.chart.pie_aggregation === 'MAX'}">
+                    Maximum der Werte </div>
+            </div>
+            <p class="eud__desc" ng-if="$ctrl.settings.chart.type === 'pie'">Bitte auswählen, wie die Daten in dem ausgewählten Diagramm dargestellt werden sollen.</p>
+            <div class="eud__selection clearfix" ng-if="$ctrl.settings.chart.type === 'time'">
+                <div class="eud__selection__item eud__selection__item--2" ng-click="$ctrl.settings.chart.time_style = 'line'" ng-class="{'eud--active': $ctrl.settings.chart.time_style === 'line'}">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i> Linien-Diagramm </div>
+                <div class="eud__selection__item eud__selection__item--2" ng-click="$ctrl.settings.chart.time_style = 'column'" ng-class="{'eud--active': $ctrl.settings.chart.time_style === 'column'}">
+                    <i class="fa fa-bar-chart" aria-hidden="true"></i> Balken-Diagramm </div>
+                <div class="eud__selection__item eud__selection__item--2" ng-click="$ctrl.settings.chart.time_style = 'area'" ng-class="{'eud--active': $ctrl.settings.chart.time_style === 'area'}">
+                    <i class="fa fa-area-chart" aria-hidden="true"></i> Area-Diagramm </div>
+                <div class="eud__selection__item eud__selection__item--2" ng-click="$ctrl.settings.chart.time_style = 'scatter'" ng-class="{'eud--active': $ctrl.settings.chart.time_style === 'scatter'}">
+                    <i class="fa fa-circle" aria-hidden="true"></i> Punkte-Diagramm </div>
+                <!-- <od-tabs>
+                    <od-tab label="Alle Gleich">
+                        <div class="eud__selection__item eud__selection__item--2" ng-click="$ctrl.settings.chart.time_style = 'line'" ng-class="{'eud--active': $ctrl.settings.chart.time_style === 'line'}">
+                        <i class="fa fa-line-chart" aria-hidden="true"></i> Linien-Diagramm </div>
+                        <div class="eud__selection__item eud__selection__item--2" ng-click="$ctrl.settings.chart.time_style = 'column'" ng-class="{'eud--active': $ctrl.settings.chart.time_style === 'column'}">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i> Balken-Diagramm </div>
+                        <div class="eud__selection__item eud__selection__item--2" ng-click="$ctrl.settings.chart.time_style = 'area'" ng-class="{'eud--active': $ctrl.settings.chart.time_style === 'area'}">
+                        <i class="fa fa-area-chart" aria-hidden="true"></i> Area-Diagramm </div>
+                        <div class="eud__selection__item eud__selection__item--2" ng-click="$ctrl.settings.chart.time_style = 'scatter'" ng-class="{'eud--active': $ctrl.settings.chart.time_style === 'scatter'}">
+                        <i class="fa fa-circle" aria-hidden="true"></i> Punkte-Diagramm </div>
+                    </od-tab>
+                    <od-tab label="Alle Einzeln"> </od-tab>
+                    </od-tabs> -->
+            </div>
+            <p class="eud__desc" ng-if="$ctrl.settings.chart.type === 'time'">Bitte auswählen, auf welche Art die Daten auf dem Zeitdiagramm dargestellt werden sollen.</p>
+            
+        </section>
+        <section style="clear:both;" class="eud__main__section" ng-if="$ctrl.currentStep === 4">
+            <div class="od_dashboard_widget">
+                <od-loading ng-if="$ctrl.loading" style="position:relative;height:549px;padding-top:15px;"></od-loading>
+                <div class="od_dashboard_widget_header"> </div>
+                <div class="od_dashboard_widget_content">
+                    <highchart ng-if="!$ctrl.loading && $ctrl.graph" config="$ctrl.graph" class="block-100-100" disable-data-watch="true"></highchart>
+                </div>
+            </div>
+            <div ng-if="!$ctrl.loading && $ctrl.graph" class="eud__selection clearfix noselect" style="margin-top:10px">
+                <div class="eud__selection__item eud__selection__item--4" ng-click="$ctrl.applySettings('chart.legend', !$ctrl.settings.chart.legend)"
+                    ng-class="{'eud--active': $ctrl.settings.chart.legend }" od-tooltip="Zeigt die Legende zu den Datenserien">
+                    <i class="fa fa-file-text-o" aria-hidden="true"></i> Legende </div>
+                <div class="eud__selection__item eud__selection__item--4" ng-click="$ctrl.applySettings('chart.tooltips', !$ctrl.settings.chart.tooltips)"
+                    ng-class="{'eud--active': $ctrl.settings.chart.tooltips }" od-tooltip="Zeigt Informationen zu markierten Datenpunkten">
+                    <i class="fa fa-commenting-o" aria-hidden="true"></i> Tooltips </div>
+                <div class="eud__selection__item eud__selection__item--4" ng-if="$ctrl.settings.chart.type != 'spider' && $ctrl.settings.chart.type != 'heatmap' && $ctrl.settings.chart.type != 'pie'"
+                    ng-click="$ctrl.applySettings('chart.zoom', !$ctrl.settings.chart.zoom)" ng-class="{'eud--active': $ctrl.settings.chart.zoom }"
+                    od-tooltip="Erlaubt das Zoomen im Graphen">
+                    <i class="fa fa-search-plus" aria-hidden="true"></i> Zoom </div>
+                <div class="eud__selection__item eud__selection__item--4" ng-if="$ctrl.settings.chart.type === 'spider' || $ctrl.settings.chart.type === 'heatmap' || $ctrl.settings.chart.type === 'pie'"
+                    ng-click="false" style="color:lightgray" ng-class="{'eud--active': $ctrl.settings.chart.zoom }" od-tooltip="Zoomen nicht möglich">
+                    <i class="fa fa-search-plus" aria-hidden="true"></i> Zoom </div>
+                <div class="eud__selection__item eud__selection__item--4" ng-click="$ctrl.exportData()" od-tooltip="Export der Rohdaten als CSV">
+                    <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export </div>
+            </div>
+            <div ng-if="!$ctrl.loading && $ctrl.graph && !$ctrl.showMoreOptions && $ctrl.settings.chart.type === 'time'" ng-click="$ctrl.showMoreOptions = true"
+                style="text-align:center;" class="noselect">Mehr Optionen</div>
+            <div ng-if="!$ctrl.loading && $ctrl.graph && $ctrl.showMoreOptions" ng-click="$ctrl.showMoreOptions = false" style="text-align:center;"
+                class="noselect">Optionen ausblenden</div>
+            <div class="eud__more" ng-show="$ctrl.showMoreOptions">
+                <div class="eud__more__group eud__more__labels" ng-class="{ 'eud__more__group--hidden': eud__more__labels }">
+                    <div class="eud__more__group__header" ng-click="eud__more__labels = !eud__more__labels">
+                            <i class="fa fa-tag ico"></i> Achsenbeschriftung
+                            <i class="fa ico" ng-class="{ 'fa-chevron-up': eud__more__labels, 'fa-chevron-down': !eud__more__labels }"></i>
+                    </div>
+                    <div class="eud__more__group__content">
+                        <div class="input--icon float-left" style="width: 50%;">
+                            <img src="ico_x.jpg">
+                            <input type="text" class="" placeholder="X-Achsen Beschriftung eingeben..." ng-model="$ctrl.settings.chart.xAxisTitle">
+                        </div>
+                        <div class="input--icon float-left" style="width: 50%;">
+                            <img src="ico_y.jpg">
+                            <input type="text" class="" ng-if="$ctrl.settings.chart.axisCount%2 != 0" placeholder="Y-Achsen Beschriftung eingeben..."
+                                ng-model="$ctrl.settings.chart.yAxisTitle">
+                            <input type="text" class="" ng-if="$ctrl.settings.chart.axisCount%2 == 0 && $ctrl.settings.chart.axisType > 0" placeholder="Y-Achsen (1.Achse) Beschriftung eingeben..."
+                                ng-model="$ctrl.settings.chart.yAxisTitleA[0]">
+                            <input type="text" class="" ng-if="$ctrl.settings.chart.axisCount%2 == 0 && $ctrl.settings.chart.axisType > 1" placeholder="Y-Achsen (2.Achse) Beschriftung eingeben..."
+                                ng-model="$ctrl.settings.chart.yAxisTitleA[1]">
+                            <input type="text" class="" ng-if="$ctrl.settings.chart.axisCount%2 == 0 && $ctrl.settings.chart.axisType > 2" placeholder="Y-Achsen (3.Achse) Beschriftung eingeben..."
+                                ng-model="$ctrl.settings.chart.yAxisTitleA[2]">
+                            <input type="text" class="" ng-if="$ctrl.settings.chart.axisCount%2 == 0 && $ctrl.settings.chart.axisType > 3" placeholder="Y-Achsen (4.Achse) Beschriftung eingeben..."
+                                ng-model="$ctrl.settings.chart.yAxisTitleA[3]">
+                        </div>
+                    </div>
+                </div>
+                <div class="eud__more__group eud__more__series" ng-class="{ 'eud__more__group--hidden': eud__more__series }">
+                    <div class="eud__more__group__header" ng-click="eud__more__series = !eud__more__series">
+                            <i class="fa fa-database ico"></i> Datenserien
+                            <i class="fa ico" ng-class="{ 'fa-chevron-up': eud__more__series, 'fa-chevron-down': !eud__more__series }"></i>
+                    </div>
+                    <div class="eud__more__group__content">
+                        <div class="eud__item-settings__item" ng-repeat="item in $ctrl.history track by $index" style="clear: both;">
+                            <div class="w1 clearfix">
+                                <div class="eud__item-settings__item__icon" style="width: 5%">
+                                    <i ng-if="item.unit == '%'" style="font-size: 25px;line-height: 60px;" class="fa fa-percent" aria-hidden="true"></i>
+                                    <i ng-if="item.unit == 'W'" style="font-size: 25px;line-height: 60px;" class="fa fa-plug" aria-hidden="true"></i>
+                                    <i ng-if="item.unit == 'kWh'" style="font-size: 25px;line-height: 60px;" class="fa fa-plug" aria-hidden="true"></i>
+                                    <i ng-if="item.unit == '°C'" style="font-size: 25px;line-height: 60px;" class="fa fa-sun-o" aria-hidden="true"></i>
+                                    <i ng-if="item.unit == 'db'" style="font-size: 25px;line-height: 60px;" class="fa fa-volume-down" aria-hidden="true"></i>
+                                    <i ng-if="item.unit == 'ppm'" style="font-size: 25px;line-height: 60px;" class="fa fa-tree" aria-hidden="true"></i>
+                                    <i ng-if="item.unit == null" style="font-size: 25px;line-height: 60px;" class="fa fa-question-circle-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="boxed-input float-left" style="width: 75%">
+                                    <input type="text" ng-model="item.settings.name" class="" placeholder="Computer (Computer_LastHourEnergy)">
+                                </div>
+                                <div class="boxed-input float-left" style="width: 20%">
+                                    <od-color-picker class="eud__item-settings__item__color" color="item.settings.color"></od-color-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <button ng-click="$ctrl.initGraph()" class="button button--outline float-right">Änderungen übernehmen</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="eud__more__group eud__more__lines" style="height: 380px;" ng-class="{ 'eud__more__group--hidden': eud__more__lines }">
+                    <div class="eud__more__group__header" ng-click="eud__more__lines = !eud__more__lines">
+                            <i class="fa fa-chart-bar ico"></i> Hilfslinien
+                            <i class="fa ico" ng-class="{ 'fa-chevron-up': eud__more__lines, 'fa-chevron-down': !eud__more__lines }"></i>
+                    </div>
+                    <div class="eud__more__group__content">
+                        <div class="float-left" style="width: 47%;">
+                            <div class="buttons-box">
+                                <div class="float-left" style="width: 50%;">
+                                    <a href="#" class="button button--outline margin-bottom" ng-click="$ctrl.addLine(0)">Durchschnitslinie einfügen</a>
+                                </div>
+                                <div class="float-right" style="width: 50%;">
+                                    <a href="#" class="button button--outline margin-bottom" ng-click="$ctrl.addLine(2)">Maxlinie einfügen</a>
+                                </div>
+                                <div class="float-left" style="width: 50%;">
+                                    <a href="#" class="button button--outline" ng-click="$ctrl.addLine(1)">Mediallinie einfügen</a>
+                                </div>
+                                <div class="float-right" style="width: 50%;">
+                                    <a href="#" class="button button--outline" ng-click="$ctrl.addLine(3)">Minilinie einfügen</a>
+                                </div>
+                            </div>
+                            <div class="custominput-box">
+                                <div class="float-left margin-bottom-big" style="width: 50%;">
+                                    <input type="text" class=" input-labeled" placeholder="12.34" ng-model="$ctrl.plotNumber"> </div>
+                                <div class="float-left margin-bottom-big" style="width: 50%;">
+                                    <input type="text" class=" input-labeled" ng-model="$ctrl.plotLabel" placeholder="Lastspitzgrenze"> </div>
+                                <div>
+                                    <a href="#" class="button button--outline" ng-click="$ctrl.addLine(4)">Eigene Linie einfügen</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="float-right" style="height: 350px; width: 50%; border-left: 1px solid #aeaeae;">
+                            <div class="cright">
+                                <i class="fa fa-angle-right fa-2x"></i>
+                            </div>
+                            <div class="list">
+                                <div ng-repeat="line in $ctrl.settings.chart.plotLines">
+                                    <p>
+                                        <i ng-click="$ctrl.delLine(line.id)" style="margin: auto;line-height: 60px;font-size: 2em;" class="fa fa-times" aria-hidden="true"></i> {{line.name}} </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="eud__more__group eud__more__functions" ng-class="{ 'eud__more__group--hidden': eud__more__functions }">
+                    <div class="eud__more__group__header" ng-click="eud__more__functions = !eud__more__functions">
+                        <i class="fa fa-compress ico"></i> Funktionen
+                        <i class="fa ico" ng-class="{ 'fa-chevron-up': eud__more__functions, 'fa-chevron-down': !eud__more__functions }"></i>
+                    </div>
+                    <div class="eud__more__group__content">
+                        <div class="float-left" style="width: 50%;">
+                            <a ng-click="$ctrl.addAxis()" href="#" class="button button--outline">Achsen einfügen/entfernen</a>
+                        </div>
+                        <div class="float-left" style="width: 50%;">
+                            <a ng-click="$ctrl.addKPI()" class="button button--outline">Kennzahlen einfügen/einfügen</a>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </main>
+    </div>
