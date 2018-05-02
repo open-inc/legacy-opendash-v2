@@ -7,7 +7,7 @@
     "jsnext:main": "src/index.js",
     "module": "src/index.js",
     "scripts": {
-        "test": "eslint ./src ./plugins"
+        "test": "eslint ./src"
     },
     "dependencies": {
         "angular": "^1.6.9",
