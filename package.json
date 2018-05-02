@@ -1,13 +1,13 @@
 {
     "name": "opendash",
-    "version": "2.0.1",
+    "version": "2.1.0",
     "author": "Sebastian Zilles <sebastian@zilles.io>",
     "license": "MIT",
     "main": "src/index.js",
     "jsnext:main": "src/index.js",
     "module": "src/index.js",
     "scripts": {
-        "test": "eslint ./src ./plugins"
+        "test": "eslint ./src"
     },
     "dependencies": {
         "angular": "^1.6.9",
