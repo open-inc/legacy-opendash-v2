@@ -8,13 +8,35 @@
 </od-widget-header>
 <od-widget-holder ng-if="$ctrl.widget.state.enabled"></od-widget-holder>
 <od-widget-noconfig ng-if="!$ctrl.widget.state.config">
-	<p ng-show="$ctrl.widget.state.data">
-		{{ 'od.dashboard.widgets.noconfig' | translate }}
-	</p>
-	<p ng-show="!$ctrl.widget.state.data">
-		{{ 'od.dashboard.widgets.nodata' | translate }}
-	</p>
-	<button ng-click="$ctrl.settings()">
-		{{ 'od.dashboard.widgets.configurate' | translate }}
-	</button>
+
+
+
+	<div class="noconfigcontainer" ng-show="$ctrl.widget.state.data">
+		<div class="middler">
+			<div class="noconfigitem" style="padding-bottom: 12px;">
+					<i class="fa fa-2x fa-cogs" style="font-size: 42px; position: relative;top:5px;" aria-hidden="true"></i>
+			</div>
+			<div class="noconfigitem" style="padding-bottom: 8px;">
+					{{ 'od.dashboard.widgets.noconfig' | translate }}
+			</div>
+			<button class="noconfigitem" ng-click="$ctrl.settings()">
+					{{ 'od.dashboard.widgets.configurate' | translate }}
+			</button>
+		</div>
+	</div>
+
+	<div class="noconfigcontainer" ng-show="!$ctrl.widget.state.data">
+			<div class="middler">
+				<div class="noconfigitem" style="padding-bottom: 12px;">
+						<i class="fa fa-2x fa-database" style="font-size: 42px; position: relative;top:5px;" aria-hidden="true"></i>
+				</div>
+				<div class="noconfigitem" style="padding-bottom: 8px;">
+						{{ 'od.dashboard.widgets.nodata' | translate }}
+				</div>
+				<button class="noconfigitem" ng-click="$ctrl.settings()">
+						{{ 'od.dashboard.widgets.configurate' | translate }}
+				</button>
+			</div>
+		</div>
+
 </od-widget-noconfig>
