@@ -391,6 +391,7 @@ class OpenDashWidget {
             enabled: true,
             loading: true,
             config: true,
+            data: true,
             alert: false,
         };
 
@@ -417,6 +418,12 @@ class OpenDashWidget {
                         target['loading'] = value;
                     }
 
+                    if (key === 'data') {
+                        target['config'] = value;
+                        target['enabled'] = value;
+                        target['loading'] = value;
+                    }
+
                     return true;
                 },
             });
@@ -436,6 +443,13 @@ class OpenDashWidget {
                     state.config = value;
                     state.enabled = value;
                     state.loading = value;
+                },
+                get data() {
+                    return state.data;
+                },
+                set data(value) {
+                    state.data = value;
+                    state.config = value;
                 },
                 get alert() {
                     return state.alert;
