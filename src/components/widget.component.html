@@ -8,8 +8,11 @@
 </od-widget-header>
 <od-widget-holder ng-if="$ctrl.widget.state.enabled"></od-widget-holder>
 <od-widget-noconfig ng-if="!$ctrl.widget.state.config">
-	<p>
+	<p ng-show="$ctrl.widget.state.data">
 		{{ 'od.dashboard.widgets.noconfig' | translate }}
+	</p>
+	<p ng-show="!$ctrl.widget.state.data">
+		{{ 'od.dashboard.widgets.nodata' | translate }}
 	</p>
 	<button ng-click="$ctrl.settings()">
 		{{ 'od.dashboard.widgets.configurate' | translate }}

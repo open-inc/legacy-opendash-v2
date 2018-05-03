@@ -5,7 +5,6 @@ import Logger from '../helper/logger';
 
 const logger = Logger('opendash/services/dashboard');
 
-let log = false;
 let reload = true;
 
 let $user;
@@ -28,7 +27,6 @@ export default class Dashboard {
         $timeout = $injector.get('$timeout');
         $scope = $injector.get('$rootScope');
 
-        log = $env('OD-DASHBOARD-LOG', null, false);
         reload = $env('OD-DASHBOARD-RELOAD', null, true);
 
         // debounce der save methode, weil die save Methode teilweise sehr oft
@@ -391,66 +389,51 @@ class OpenDashWidget {
             enabled: true,
             loading: true,
             config: true,
+            data: true,
             alert: false,
         };
 
-        if (typeof (Proxy) != 'undefined') {
-            this.state = new Proxy(state, {
-                get(target, key) {
-                    if (['loading', 'config', 'alert', 'enabled'].indexOf(key) < 0) {
-                        throw new Error(`[opendash/services/dashboard] Unknown Widget State: widget.state.${key}`);
-                    }
+        this.state = {
+            get loading() {
+                return state.loading;
+            },
+            set loading(value) {
+                state.loading = value;
+            },
+            get config() {
+                return state.config;
+            },
+            set config(value) {
+                state.config = value;
+                state.enabled = value;
+                state.loading = value;
 
-                    return target[key];
-                },
-                set(target, key, value) {
-                    if (['loading', 'config', 'alert', 'enabled'].indexOf(key) < 0) {
-                        throw new Error(`[opendash/services/dashboard] Unknown Widget State: widget.state.${key}`);
-                    }
-
-                    if (log) logger.log('widget.state was written.', key, '=', value);
-
-                    target[key] = value;
-
-                    if (key === 'config') {
-                        target['enabled'] = value;
-                        target['loading'] = value;
-                    }
-
-                    return true;
-                },
-            });
-        } else {
-            // IE Fix
-            this.state = {
-                get loading() {
-                    return state.loading;
-                },
-                set loading(value) {
-                    state.loading = value;
-                },
-                get config() {
-                    return state.config;
-                },
-                set config(value) {
-                    state.config = value;
-                    state.enabled = value;
-                    state.loading = value;
-                },
-                get alert() {
-                    return state.alert;
-                },
-                set alert(value) {
-                    state.alert = value;
-                },
-                get enabled() {
-                    return state.enabled;
-                },
-                set enabled(value) {
-                    state.enabled = value;
-                },
-            };
-        }
+                if (value === true) {
+                    state.data = value;
+                }
+            },
+            get data() {
+                return state.data;
+            },
+            set data(value) {
+                state.data = value;
+                state.config = value;
+                state.enabled = value;
+                state.loading = value;
+            },
+            get alert() {
+                return state.alert;
+            },
+            set alert(value) {
+                state.alert = value;
+            },
+            get enabled() {
+                return state.enabled;
+            },
+            set enabled(value) {
+                state.enabled = value;
+            },
+        };
 
         this.config = widget.config;
 
