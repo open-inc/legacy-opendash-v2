@@ -19,6 +19,7 @@ export default class Presets {
         $header = $injector.get('opendash/services/header');
 
         $header.addSidebarItem({
+            icon: 'fa-plus',
             group: 'od.header.widgets.header',
             text: 'od.header.widgets.presets',
             action: () => {
