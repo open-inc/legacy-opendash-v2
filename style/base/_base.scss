@@ -33,7 +33,7 @@ h6 {
 a {
     color: $primary;
     &:hover {
-        color: $primary + #111;
+        color: darken($primary, 10%);
     }
 }
 

@@ -1,3 +1,6 @@
+$od-loading-color: $primary !default;
+$od-loading-background: rgba(255, 255, 255, .95) !default;
+
 od-loading {
     display: block;
     position: absolute;
@@ -7,7 +10,7 @@ od-loading {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, .95);
+    background: $od-loading-background;
     z-index: 3000;
     .od-loader__spinner {
         top: 50%;
@@ -19,7 +22,7 @@ od-loading {
     }
     .od-loader__cube_one,
     .od-loader__cube_two {
-        background-color: #308ee2;
+        background-color: $od-loading-color;
         width: 10px;
         height: 10px;
         position: absolute;

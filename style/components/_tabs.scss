@@ -1,14 +1,16 @@
+$od-tabs-labels-background: transparent !default;
+
 od-tabs {
     display: block;
     width: auto;
     >nav {
-        background: white;
+        background: $od-tabs-labels-background;
         display: block;
         padding-left: 0;
         margin-bottom: 0;
         list-style: none;
-        border-top: 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
+        border-top: 1px solid $od-color-border;
+        border-bottom: 1px solid $od-color-border;
         >a {
             display: inline-block;
             padding: 10px 20px;

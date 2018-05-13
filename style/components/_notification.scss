@@ -16,14 +16,15 @@ od-notification {
     li {
         padding: 10px;
         margin-top: $gutter;
-        border: 1px solid #bce8f1;
         border-radius: 4px;
-        color: #31708f;
-        background: #d9edf7;
         font-size: .8em;
         box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
         cursor: pointer;
         transition: all .5s ease-in-out;
+
+        background: map-get(map-get($colors, 'info'), 'background');
+        color: map-get(map-get($colors, 'info'), 'font');
+        border-color: map-get(map-get($colors, 'info'), 'background-hover');
 
         @each $name, $color in $colors {
             &.notification--#{$name} {

@@ -36,8 +36,8 @@
         display: none;
         z-index: 1;
         position: absolute;
-        background-color: #ddd;
-        border-color: #fff;
+        background-color: darken($od-color-background-dark, 10%);
+        border-color: darken($od-color-background-dark, 10%);
         opacity: 0.2;
     }
     .gridster-item.gridster-item-moving,
@@ -81,8 +81,8 @@
     cursor: se-resize;
     width: 0;
     height: 0;
-    right: 1px;
-    bottom: 1px;
+    right: 0; // 1px;
+    bottom: 0; // 1px;
     border-style: solid;
     border-width: 0 0 12px 12px;
     border-color: transparent;
@@ -92,31 +92,31 @@
     cursor: ne-resize;
     width: 12px;
     height: 12px;
-    right: 1px;
-    top: 1px;
+    right: 0; // 1px;
+    top: 0; // 1px;
 }
 
 .handle-nw {
     cursor: nw-resize;
     width: 12px;
     height: 12px;
-    left: 1px;
-    top: 1px;
+    left: 0; // 1px;
+    top: 0; // 1px;
 }
 
 .handle-sw {
     cursor: sw-resize;
     width: 12px;
     height: 12px;
-    left: 1px;
-    bottom: 1px;
+    left: 0; // 1px;
+    bottom: 0; // 1px;
 }
 
 .handle-e {
     cursor: e-resize;
     width: 12px;
     bottom: 0;
-    right: 1px;
+    right: 0; // 1px;
     top: 0;
 }
 
@@ -124,7 +124,7 @@
     cursor: s-resize;
     height: 12px;
     right: 0;
-    bottom: 1px;
+    bottom: 0; // 1px;
     left: 0;
 }
 
@@ -132,23 +132,23 @@
     cursor: n-resize;
     height: 12px;
     right: 0;
-    top: 1px;
+    top: 0; // 1px;
     left: 0;
 }
 
 .handle-w {
     cursor: w-resize;
     width: 12px;
-    left: 1px;
+    left: 0; // 1px;
     top: 0;
     bottom: 0;
 }
 
 .gridster .gridster-item:hover .gridster-box {
-    border: 1.5px solid #B3B2B3;
+    border: 1px solid #B3B2B3;
 }
 
 // .gridster .gridster-item:hover .handle-se {
 .gridster .gridster-item .handle-se {
-    border-color: transparent transparent #ccc;
+    border-color: transparent transparent $primary;
 }

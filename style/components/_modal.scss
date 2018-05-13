@@ -3,7 +3,7 @@ od-modal {
     max-height: calc(100vh - 100px);
     width: 100%;
     max-width: 600px;
-    border: 1px solid #ddd;
+    border: 1px solid $od-color-border;
     position: fixed;
     top: 0;
     left: 0;
@@ -35,22 +35,4 @@ od-modal {
         padding: 20px;
         position: relative;
     }
-}
-
-#custom-modal.ng-enter {
-    transition: opacity .5s ease-out;
-    opacity: 0;
-}
-
-#custom-modal.ng-enter.ng-enter-active {
-    opacity: 1;
-}
-
-#custom-modal.ng-leave {
-    transition: opacity .5s ease-out;
-    opacity: 1;
-}
-
-#custom-modal.ng-leave.ng-leave-active {
-    opacity: 0;
 }

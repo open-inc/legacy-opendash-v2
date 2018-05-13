@@ -63,7 +63,7 @@ od-eud-editor {
                 border-radius: 50%;
                 border: $eud-nav-border solid;
                 border-color: $eud-nav-grey;
-                background: white;
+                background: $od-color-background-light;
                 font-weight: bold;
                 margin-left: $eud-nav-div - $eud-nav-inline-gap;
                 >span {
@@ -120,7 +120,7 @@ od-eud-editor {
         }
         &__sensor-selection {
             &__items {
-                background: white;
+                background: $od-color-background-light;
             }
             &__item {
                 height: $eud-selection-height;
@@ -169,7 +169,7 @@ od-eud-editor {
             }
         }
         &__item-settings {
-            background: white;
+            background: $od-color-background-light;
             &__item {
                 height: $eud-selection-height;
                 line-height: $eud-selection-height;
@@ -237,7 +237,7 @@ od-eud-editor {
         }
         &__selection {
             text-align: center;
-            background: white;
+            background: $od-color-background-light;
             border: 1px solid rgba(0, 0, 0, .2);
             border-bottom: 0px;
             border-right: 0px;
@@ -303,7 +303,7 @@ od-eud-editor {
             text-align: center;
             padding: $gutter;
             padding-top: 50px;
-            background: white;
+            background: $od-color-background-light;
             .group-header p {
                 color: #aeadae;
                 font-size: 14px;

@@ -12,10 +12,10 @@
 }
 
 .container--auth {
-    padding: 20px;
+    padding: $gutter;
     margin-top: 100px;
     background: $white;
-    border: 1px solid #ccc;
+    border: 1px solid $od-color-border;
     max-width: 500px;
     @include media('>500px') {
         border-radius: 5px;

@@ -1,18 +1,18 @@
-$color-picker-height: 20px;
-$color-picker-input-width: 90px;
-$color-picker-rows: 14;
-$color-picker-item-size: 20px;
+$od-color-picker-height: 20px !default;
+$od-color-picker-input-width: 90px !default;
+$od-color-picker-rows: 14 !default;
+$od-color-picker-item-size: 20px !default;
 
 od-color-picker {
 
     display: inline-block;
 
-    height: $color-picker-height;
-    width: $color-picker-height + $color-picker-input-width;
+    height: $od-color-picker-height;
+    width: $od-color-picker-height + $od-color-picker-input-width;
 
     .selection {
         position: relative;
-        height: $color-picker-height;
+        height: $od-color-picker-height;
         width: 100%;
         height: 3.8rem;
         margin-bottom: 1.5rem;
@@ -22,7 +22,7 @@ od-color-picker {
             // width: 110px;
             text-align: center;
             border: 0;
-            border-bottom: 2px solid #cfcfcf;
+            border-bottom: 2px solid $od-color-border;
         }
 
         &-preview {
@@ -32,10 +32,10 @@ od-color-picker {
             bottom: 0px;
             right: 5px;
 
-            height: $color-picker-height;
-            width: $color-picker-height;
+            height: $od-color-picker-height;
+            width: $od-color-picker-height;
 
-            border: .1rem solid #ccc;
+            border: .1rem solid $od-color-border;
             // margin-top: 1.1rem;
         }
     }
@@ -45,7 +45,7 @@ od-color-picker {
 
         position: absolute;
         background: black;
-        width: $color-picker-rows * $color-picker-item-size + 4px;
+        width: $od-color-picker-rows * $od-color-picker-item-size + 4px;
         padding: 2px;
 
         z-index: 5010;
@@ -55,7 +55,7 @@ od-color-picker {
         display: block;
         cursor: pointer;
         float: left;
-        width: $color-picker-item-size;
-        height: $color-picker-item-size;
+        width: $od-color-picker-item-size;
+        height: $od-color-picker-item-size;
     }
 }

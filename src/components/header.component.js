@@ -3,20 +3,23 @@ import template from './header.component.html';
 class controller {
 
     static get $inject() {
-        return ['opendash/services/header', 'opendash/services/user', 'opendash/services/dashboard', 'opendash/services/presets', 'opendash/services/modal']; 
+        return ['$injector']; 
     }
 
-    constructor($header, $user, $dashboard, $presets, $modal) {
+    constructor($injector) {
 
-        this.$header = $header;
-        this.$user = $user;
-        this.$dashboard = $dashboard;
-        this.$presets = $presets;
-        this.$modal = $modal;
+        this.$header = $injector.get('opendash/services/header');
+        this.$user = $injector.get('opendash/services/user');
+        this.$dashboard = $injector.get('opendash/services/dashboard');
+        this.$presets = $injector.get('opendash/services/presets');
+        this.$modal = $injector.get('opendash/services/modal');
+        this.$env = $injector.get('opendash/services/env');
 
         this.sidebar = false;
 
-        $header.onOverlayClose(() => {
+        this.sidebarMode = this.$env('OD-HEADER-SIDEBAR-MODE', null, true);
+
+        this.$header.onOverlayClose(() => {
             this.sidebar = false;
         });
     }

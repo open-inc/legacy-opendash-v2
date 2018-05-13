@@ -1,0 +1,200 @@
+$od-topbar-height: 60px !default;
+$od-topbar-background: $od-color-background-light !default;
+
+od-topbar {
+    display: block;
+
+    height: $od-topbar-height;
+    width: 100%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    background: $od-topbar-background;
+    border-bottom: 2px solid #439eca;
+
+    z-index: 5050;
+
+    &-container {
+        display: block;
+        height: $od-topbar-height;
+
+        @extend .container;
+    }
+
+    &-logo {
+        display: block;
+        height: $od-topbar-height;
+        float: left;
+        img {
+            display: none;
+            @include media('>sm') {
+                display: block;
+                height: $od-topbar-height;
+                width: auto;
+                padding: $gutter/2 0;
+            }
+        }
+    }
+
+    &-navigation {
+        display: block;
+        float: right;
+
+        > a {
+            display: block;
+            float: left;
+
+            padding: 0 $gutter/2;
+
+            height: $od-topbar-height;
+            line-height: $od-topbar-height;
+
+            > i.fa {
+                font-size: 40px;
+                line-height: $od-topbar-height;
+            }
+
+            &:hover {
+                color: $primary-font;
+                background: $primary;
+
+                > nav {
+                    display: block;
+                }
+            }
+        }
+
+        section {
+            display: block;
+            position: relative;
+            float: left;
+
+            padding: 0 $gutter/2;
+
+            height: $od-topbar-height;
+            line-height: $od-topbar-height;
+
+            nav {
+                display: none;
+
+                position: absolute;
+                top: $od-topbar-height;
+                right: 0;
+
+                width: auto;
+                min-width: 300px;
+
+                background: $primary;
+
+                border-bottom: 2px solid $primary-hover;
+
+                a {
+                    display: block;
+                    color: $primary-font;
+                    padding: 0 $gutter/2;
+
+                    > i.fa {
+                        width: $od-topbar-height - $gutter;
+                        text-align: center;
+                    }
+
+                    &:hover {
+                        color: $primary-hover-font;
+                        background: $primary-hover;
+                    }
+                }
+            }
+
+            &:hover {
+                color: $primary-font;
+                background: $primary;
+
+                nav {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    // > nav {
+
+    //     > a {
+    //         height: $od-topbar-height;
+    //         line-height: $od-topbar-height - 20px;
+    //         color: #555;
+    //         float: left;
+    //         padding: 10px 20px;
+    //         display: block;
+    //         text-decoration: none;
+    //         &.right {
+    //             float: right;
+    //         }
+    //         &:hover {
+    //             background: rgba(0, 0, 0, .05);
+    //         }
+    //     }
+    // }
+    &-hamburger {
+        display: block;
+        width: $od-topbar-height;
+        height: $od-topbar-height;
+        padding: $gutter/2;
+
+        float: left;
+
+        .hamburger {
+            $hamburger-height: $od-topbar-height - $gutter;
+            $hamburger-width: $od-topbar-height - $gutter;
+            $hamburger-line-height: 2px;
+            $hamburger-line-offset: 8px;
+            $hamburger-line-color: #253447 - #111;
+            width: $hamburger-width;
+            height: $hamburger-height;
+            position: relative;
+            margin: ($hamburger-height - $hamburger-line-offset * 2 - $hamburger-line-height)/2 0;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+            span {
+                display: block;
+                position: absolute;
+                height: $hamburger-line-height;
+                width: 100%;
+                background: $hamburger-line-color; // border-radius: 50%;
+                opacity: 1;
+                left: 0;
+                transform: rotate(0deg);
+                transition: .25s ease-in-out;
+                &:nth-child(1) {
+                    top: 0px;
+                }
+                &:nth-child(2),
+                &:nth-child(3) {
+                    top: $hamburger-line-offset;
+                }
+                &:nth-child(4) {
+                    top: $hamburger-line-offset * 2;
+                }
+            }
+            &.open {
+                span {
+                    &:nth-child(1),
+                    &:nth-child(4) {
+                        top: 18px;
+                        width: 0%;
+                        left: 50%;
+                    }
+                    &:nth-child(2) {
+                        transform: rotate(45deg);
+                    }
+                    &:nth-child(3) {
+                        transform: rotate(-45deg);
+                    }
+                }
+            }
+        }
+    }
+}

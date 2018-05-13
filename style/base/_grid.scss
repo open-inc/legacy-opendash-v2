@@ -1,10 +1,9 @@
-$container-width: 100%;
-$gutter: 20px;
+$od-container-width: 100% !default;
 
 .container {
     margin: 0 auto;
     min-width: 300px;
-    max-width: $container-width;
+    max-width: $od-container-width;
     padding: 0 $gutter;
     position: relative;
     width: 100%;
@@ -14,7 +13,7 @@ $gutter: 20px;
     .container {
         margin: 0;
         min-width: 300px;
-        max-width: $container-width;
+        max-width: $od-container-width;
         padding: 0;
         position: relative;
         width: 100%;
