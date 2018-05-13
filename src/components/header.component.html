@@ -12,8 +12,9 @@
         <od-topbar-logo>
             <img ng-src="{{ $ctrl.$header.logo.url }}">
         </od-topbar-logo>
-        <od-topbar-navigation class="float-right">
-            <section>
+
+        <od-topbar-navigation class="float-right" ng-show="$ctrl.$user.auth">
+            <section ng-if="!$ctrl.sidebarMode">
                 <header>{{ 'od.header.dashboards.header' | translate }}</header>
                 <nav>
                     <div>
@@ -24,7 +25,7 @@
                     </div>
                 </nav>
             </section>
-            <section>
+            <section ng-if="!$ctrl.sidebarMode">
                 <header>{{ 'od.header.dashboards.manage' | translate }}</header>
                 <nav>
                     <div>
@@ -39,7 +40,7 @@
                     </div>
                 </nav>
             </section>
-            <section ng-repeat="(header, links) in $ctrl.$header.sidebar">
+            <section ng-if="!$ctrl.sidebarMode" ng-repeat="(header, links) in $ctrl.$header.sidebar">
                 <header>{{ header | translate }}</header>
                 <nav>
                     <div>
@@ -50,6 +51,14 @@
                     </div>
                 </nav>
             </section>
+            <a ng-click="$ctrl.$dashboard.toggleEditMode()">
+                <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.getEditMode(), 'fa-floppy-o': $ctrl.$dashboard.getEditMode()}"
+                    aria-hidden="true"></i>
+            </a>
+            <a ng-repeat="link in $ctrl.$header.topbar" ng-click="link.action()">
+                <i class="fa {{ link.icon }}" aria-hidden="true"></i>
+                <span>{{ link.text | translate }}</span>
+            </a>
             <!--
             <footer>
                 <a ng-click="link.action()" ng-repeat="link in $ctrl.$header.sidebarFooter">
