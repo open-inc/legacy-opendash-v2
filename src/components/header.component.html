@@ -23,12 +23,8 @@
                             <span>{{ name }}</span>
                         </a>
                     </div>
-                </nav>
-            </section>
-            <section ng-if="!$ctrl.sidebarMode">
-                <header>{{ 'od.header.dashboards.manage' | translate }}</header>
-                <nav>
                     <div>
+                        <header>{{ 'od.header.dashboards.manage' | translate }}</header>
                         <a ng-click="$ctrl.createDashboard()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <span>{{ 'od.header.dashboards.create' | translate }}</span>
@@ -57,7 +53,7 @@
             </a>
             <a ng-repeat="link in $ctrl.$header.topbar" ng-click="link.action()">
                 <i class="fa {{ link.icon }}" aria-hidden="true"></i>
-                <span>{{ link.text | translate }}</span>
+                <span>{{ link.text }}</span>
             </a>
             <!--
             <footer>
