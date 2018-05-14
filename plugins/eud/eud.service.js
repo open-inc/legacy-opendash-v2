@@ -20,6 +20,7 @@ export default class EUDService {
         moment = _moment;
         if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) > 580) {
             $header.addSidebarItem({
+                icon: 'fa-puzzle-piece',
                 group: 'od.header.widgets.header',
                 text: 'od.header.widgets.eud',
                 action: () => {
