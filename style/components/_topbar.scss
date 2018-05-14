@@ -20,8 +20,6 @@ od-topbar {
     &-container {
         display: block;
         height: $od-topbar-height;
-
-        @extend .container;
     }
 
     &-logo {
