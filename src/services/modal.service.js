@@ -75,7 +75,7 @@ export default class Modal {
             return $q.reject('Modal benötigt options.template');
         }
 
-        const overlay = $header.createOverlay();
+        const overlay = $header.createOverlay(true);
 
         overlay.onClose(() => {
             cleanUpClose(null);

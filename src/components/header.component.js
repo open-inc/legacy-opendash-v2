@@ -15,13 +15,16 @@ class controller {
         this.$modal = $injector.get('opendash/services/modal');
         this.$env = $injector.get('opendash/services/env');
 
-        this.sidebar = false;
-
         this.sidebarMode = this.$env('OD-HEADER-SIDEBAR-MODE', null, true);
 
-        this.$header.onOverlayClose(() => {
-            this.sidebar = false;
-        });
+        this.overlay = this.$header.createOverlay(true, false);
+
+        this.overlay.active = false;
+        this.overlay.index = 5001;
+    }
+
+    get sidebar() {
+        return this.overlay.active;
     }
 
     createDashboard() {
@@ -41,8 +44,7 @@ class controller {
     }
 
     toggleSidebar() {
-        this.sidebar = !this.sidebar;
-        this.$header.setOverlay(this.sidebar);
+        this.overlay.toggle();
     }
 }
 

@@ -12,7 +12,6 @@ export default class HeaderService {
     constructor(_$event) {
         $event = _$event;
 
-        this.overlay = false;
         this.overlayClose;
         this.sidebar = {};
         this.sidebarFooter = [];
@@ -25,6 +24,20 @@ export default class HeaderService {
 
         this.overlays = [];
         this.overlayIndex = 5000;
+
+        this.navOverlay = this.createOverlay(true, false);
+
+        this.navOverlay.onOpen(() => {
+            $event.emit('od-header-overlay-open');
+        });
+
+        this.navOverlay.onClose(() => {
+            $event.emit('od-header-overlay-close');
+        });
+    }
+
+    get overlay() {
+        return this.navOverlay && this.navOverlay.active;
     }
 
     addLogo(url, action) {
@@ -79,27 +92,43 @@ export default class HeaderService {
     }
 
     setOverlay(input) {
-        if (this.overlay !== input) {
-            if (input) {
-                this.overlay = true;
-                $event.emit('od-header-overlay-open');
-            } else {
-                this.overlay = false;
-                $event.emit('od-header-overlay-close');
-            }
+        console.warn('Depricated: [opendash/services/header] setOverlay()'); // eslint-disable-line
+
+        if (input) {
+            this.navOverlay.open();
+        } else {
+            this.navOverlay.close();
         }
     }
 
     onOverlayOpen(fn) {
+        console.warn('Depricated: [opendash/services/header] onOverlayOpen()'); // eslint-disable-line
+
         $event.on('od-header-overlay-open', fn);
     }
 
     onOverlayClose(fn) {
+        console.warn('Depricated: [opendash/services/header] onOverlayClose()'); // eslint-disable-line
+
         $event.on('od-header-overlay-close', fn);
     }
 
-    createOverlay() {
-        let overlay = new OpenDashOverlay(this.overlayIndex);
+    createOverlay(focus = false, active = true) {
+        let overlay = new OpenDashOverlay(this.overlayIndex, active);
+
+        if (focus) {
+            overlay.onOpen(() => {
+                this.overlays.forEach(o => {
+                    if (o !== overlay) {
+                        o.close();
+                    }
+                });
+            });
+        }
+
+        if (active) {
+            overlay.open();
+        }
 
         this.overlays.push(overlay);
         this.overlayIndex += 10;
@@ -110,22 +139,50 @@ export default class HeaderService {
 
 class OpenDashOverlay {
     constructor(index) {
-        this.active = true;
+        this.active = false;
         this.index = index;
-        this.watcher = [];
+
+        this.openWatcher = [];
+        this.closeWatcher = [];
+    }
+
+    open() {
+        if (this.active) {
+            this.close();
+        }
+
+        this.active = true;
+        this.openWatcher.forEach(cb => cb());
     }
 
     close() {
-        this.active = false;
-        this.watcher.forEach(cb => cb());
+        if (this.active) {
+            this.active = false;
+            this.closeWatcher.forEach(cb => cb());
+        }
+    }
+
+    toggle() {
+        if (this.active) {
+            this.close();
+        } else {
+            this.open();
+        }
+    }
+
+    onOpen(callback) {
+        if (this.active) {
+            callback();
+        }
+
+        this.openWatcher.push(callback);
     }
 
     onClose(callback) {
         if (!this.active) {
             callback();
-            return;
         }
 
-        this.watcher.push(callback);
+        this.closeWatcher.push(callback);
     }
 }

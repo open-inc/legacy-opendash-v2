@@ -76,7 +76,7 @@
     </od-topbar-container>
 </od-topbar>
 
-<od-sidebar ng-if="$ctrl.sidebarMode" ng-class="{ 'active': $ctrl.sidebar }" ng-click="$ctrl.toggleSidebar()">
+<od-sidebar ng-if="$ctrl.sidebarMode" ng-class="{ 'active': $ctrl.sidebar }" ng-click="$ctrl.overlay.close()">
     <main>
         <section>
             <header>{{ 'od.header.dashboards.header' | translate }}</header>
@@ -102,6 +102,5 @@
 
 <od-notification></od-notification>
 
-<div class="od-header__overlay" ng-class="{ 'active': $ctrl.$header.overlay }" ng-click="$ctrl.$header.setOverlay(false)"></div>
 <div class="od-header__overlay" ng-class="{ 'active': overlay.active }" ng-style="{ 'z-index': overlay.index }" ng-click="overlay.close()"
     ng-repeat="overlay in $ctrl.$header.overlays"></div>
