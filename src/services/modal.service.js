@@ -106,7 +106,9 @@ export default class Modal {
 
         let closed = false;
 
-        let body = angular.element($document[0].body);
+        // todo
+        // let body = angular.element($document[0].body);
+        let body = angular.element('opendash');
         let modalScope = $rootScope.$new();
         let closeDeferred = $q.defer();
         let closedDeferred = $q.defer();
