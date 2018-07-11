@@ -10,13 +10,13 @@ export default class OpenDashRouter {
     }
 
     async init() {
-
+        return 'test';
     }
 
     go(path) {
         if (path !== this.path) {
             this.path = path;
-    
+
             this.calcCurrent();
         }
     }
@@ -26,6 +26,10 @@ export default class OpenDashRouter {
 
         if (!route) {
             route = this.getByName(this.default);
+        }
+
+        if (!route) {
+            return;
         }
 
         let params = route.params(this.path);
@@ -62,7 +66,7 @@ export default class OpenDashRouter {
     getByName(name) {
         return this.routes.find(r => r.name === name);
     }
-    
+
     getByPath(path) {
         return this.routes.find(r => r.test(path));
     }

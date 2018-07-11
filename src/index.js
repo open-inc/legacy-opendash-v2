@@ -15,7 +15,7 @@ import config from './config';
 import Logger from './helper/logger';
 
 import envService from './services/env.service';
-import routerService from './services/env.service';
+import routerService from './services/router.service';
 
 const logger = Logger('opendash/core');
 

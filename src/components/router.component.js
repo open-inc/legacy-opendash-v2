@@ -1,24 +1,26 @@
 class controller {
 
     static get $inject() {
-        return ['$element', '$compile', '$rootScope', 'opendash/service/router'];
+        return ['$element', '$compile', '$rootScope', 'opendash/services/router'];
     }
 
     constructor($element, $compile, $rootScope, $router) {
         $router.onChange((current) => {
-            const scope = $rootScope.$new();
-            const component = current.component;
-    
-            const template = `<${component}></${component}>`;
-    
-            const element = $compile(template)(scope);
-    
+            let scope = $rootScope.$new();
+            let component = current.component;
+
+            scope.current = current;
+
+            let template = `<${component} route="current"></${component}>`;
+
+            let element = $compile(template)(scope);
+
             $element.html(element);
         });
     }
 }
 
-const template = '404';
+const template = '404 - Routing Failed';
 
 let component = {
     controller,
