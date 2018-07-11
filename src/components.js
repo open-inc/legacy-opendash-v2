@@ -1,8 +1,9 @@
+import opendashComponent from './components/opendash.component';
+import routerComponent from './components/router.component';
 import odAuthComponent from './components/auth.component';
 import notificationComponent from './components/notification.component';
 import odLoadingComponent from './components/loading.component';
 import dashboardComponent from './components/dashboard.component';
-import opendashComponent from './components/opendash.component';
 import headerComponent from './components/header.component';
 import odWidgetComponent from './components/widget.component';
 import highchartComponent from './components/highchart.component';
@@ -20,6 +21,7 @@ export default [
     // Core
     ['opendash', opendashComponent],
 
+    ['od-router', routerComponent],
     ['od-auth', odAuthComponent],
     ['od-dashboard', dashboardComponent],
     ['od-notification', notificationComponent],

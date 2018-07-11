@@ -15,6 +15,7 @@ import config from './config';
 import Logger from './helper/logger';
 
 import envService from './services/env.service';
+import routerService from './services/env.service';
 
 const logger = Logger('opendash/core');
 
@@ -47,6 +48,14 @@ class openDASH {
         }
 
         return ngModule;
+    }
+
+    get router() {
+        return routerService;
+    }
+
+    get env () {
+        return envService;
     }
 
     get name() {
@@ -198,10 +207,6 @@ class openDASH {
         });
     }
 
-    env(key, value) {
-        envService(key, value);
-    }
-
     registerTranslation(translation) {
         if (_.isArray(translation) && translation.length === 2) {
             this.translations.push(translation);
@@ -262,6 +267,8 @@ class openDASH {
 
             // logger.log(`i18n: ${language} => ${JSON.stringify($translateProvider.translations(), null, 2)}`);
         }]);
+
+        this.router.calcCurrent();
 
         logger.log('Instance started.');
 

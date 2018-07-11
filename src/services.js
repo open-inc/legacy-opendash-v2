@@ -12,10 +12,11 @@ export default [
     ['user', userService],
     ['data', dataService],
     ['event', eventService],
-    ['env', envService, true],
     ['modal', modalService],
     ['notification', notificationService],
     ['presets', presetsService],
     ['dashboard', dashboardService],
     ['header', headerService],
+    ['env', envService, true],
+    ['router', envService, true],
 ];
