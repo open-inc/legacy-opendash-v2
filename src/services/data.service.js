@@ -6,7 +6,7 @@ import Logger from '../helper/logger';
 
 const logger = Logger('opendash/services/data');
 
-const defaultIcon = '/assets/vendor/opendash/assets/smarthome/default_18.png';
+import defaultIcon from 'file-loader!../assets/default-item.svg';
 
 let $timeout, $q, $user, $env;
 
