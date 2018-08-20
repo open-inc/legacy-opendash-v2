@@ -2,54 +2,69 @@ import _ from 'lodash';
 
 import template from './select-item.component.html';
 
+let $user;
 let $data;
+let $q;
 
 class controller {
 
     static get $inject() {
-        return ['opendash/services/data'];
+        return ['$injector'];
     }
 
-    constructor(dataService) {
-        $data = dataService;
+    constructor($injector) {
+        $user = $injector.get('opendash/services/user');
+        $data = $injector.get('opendash/services/data');
+
+        $q = $injector.get('$q');
 
         this.output = [];
         this.dropdownValue = null;
     }
 
-    $onInit() {
-        if (!_.isObject(this.config)) {
-            throw new Error('Bad usage of od-select-item config attribute. Must be an object.');
-        }
+    async $onInit() {
+        try {
 
-        if (!_.isFunction(this.watch)) {
-            throw new Error('Bad usage of od-select-item output attribute. Must be an array.');
-        }
+            await $user.wait();
+            await $data.wait();
 
-        const query = $data.query();
+            if (!_.isObject(this.config)) {
+                throw new Error('Bad usage of od-select-item config attribute. Must be an Object.');
+            }
 
-        if (this.config.root) {
-            query.root();
-        }
+            if (!_.isFunction(this.watch)) {
+                throw new Error('Bad usage of od-select-item watch attribute. Must be a Function.');
+            }
 
-        if (this.config.containers) {
-            query.container();
-        }
+            const query = $data.query();
 
-        if (this.config.items) {
-            query.items();
-        }
+            if (this.config.root) {
+                query.root();
+            }
 
-        if (this.config.filter && _.isFunction(this.config.filter)) {
-            query.filter(this.config.filter);
-        }
+            if (this.config.containers) {
+                query.container();
+            }
 
-        if (this.config.type) {
-            this.available = $data.listByType(this.config.type, query.run());
-            this.vo = true;
-        } else {
-            this.available = query.run();
-            this.vo = false;
+            if (this.config.items) {
+                query.items();
+            }
+
+            if (this.config.filter && _.isFunction(this.config.filter)) {
+                query.filter(this.config.filter);
+            }
+
+            if (this.config.type) {
+                this.available = $data.listByType(this.config.type, query.run());
+                this.vo = true;
+            } else {
+                this.available = query.run();
+                this.vo = false;
+            }
+
+            await $q.resolve();
+        } catch (error) {
+            console.error(error);
         }
     }
 

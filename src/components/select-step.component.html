@@ -1,0 +1,20 @@
+<div class="od__select-steps__title" ng-if="$ctrl.ready">
+    <div class="od__select-steps__title__left">
+        <button ng-if="$ctrl.currentStep > 0" ng-click="$ctrl.navigate('prev')">{{ 'od.ui.prev' | translate }}</button>
+        <button ng-if="$ctrl.currentStep < 1" ng-click="$ctrl.navigate('prev')" disabled="disabled">{{ 'od.ui.prev' | translate }}</button>
+    </div>
+    <div class="od__select-steps__title__center">
+        <h3 class="noselect">{{ $ctrl.getCurrent().label }}</h3>
+    </div>
+    <div class="od__select-steps__title__right">
+        <button ng-if="$ctrl.currentStep < $ctrl.last" ng-click="$ctrl.navigate('next')">{{ 'od.ui.next' | translate }}</button>
+        <button ng-if="$ctrl.currentStep === $ctrl.last" ng-click="$ctrl.action()" disabled="disabled">{{ 'od.ui.next' | translate }}</button>
+    </div>
+</div>
+<div class="od__select-steps__icons" ng-if="$ctrl.ready">
+    <div class="od__select-steps__icons__item" ng-click="$ctrl.navigate($index)" ng-class="$ctrl.getNavClass($index)" data-desc="{{ step.label }}" ng-repeat="step in $ctrl.steps track by $index">
+        <span>
+            <i class="fa" ng-class="step.icon" aria-hidden="true"></i>
+        </span>
+    </div>
+</div>

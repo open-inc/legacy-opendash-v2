@@ -43,6 +43,10 @@ class controller {
             throw new Error('Bad usage of od-select-date watch attribute. Must be a Function.');
         }
 
+        if (_.isObject(this.config)) {
+            Object.assign(this, this.config);
+        }
+
         if (this.mode) {
             if (ALLOWED_MODES.indexOf(this.mode) < 0) {
                 logger.warn(`Bad usage of od-select-date mode attribute: Mode must be ${ALLOWED_MODES.join('|')}. '${ALLOWED_MODES[0]}' will be used instead of '${this.mode}'`);
@@ -229,6 +233,7 @@ let component = {
     controller,
     template,
     bindings: {
+        config: '<',
         mode: '@',
         selmode: '<',
         selunit: '<',
