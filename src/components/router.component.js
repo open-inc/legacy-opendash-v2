@@ -1,10 +1,10 @@
 class controller {
 
     static get $inject() {
-        return ['$element', '$compile', '$rootScope', 'opendash/services/router'];
+        return ['$element', '$compile', '$rootScope', 'opendash/services/router', '$q'];
     }
 
-    constructor($element, $compile, $rootScope, $router) {
+    constructor($element, $compile, $rootScope, $router, $q) {
         $router.onChange((current) => {
             let scope = $rootScope.$new();
             let component = current.component;
@@ -16,6 +16,8 @@ class controller {
             let element = $compile(template)(scope);
 
             $element.html(element);
+
+            $q.resolve()
         });
     }
 }

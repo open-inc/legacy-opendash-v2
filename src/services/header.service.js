@@ -2,15 +2,17 @@ import _ from 'lodash';
 import defaultLogo from '../assets/opendash.png';
 
 let $event;
+let $router;
 
 export default class HeaderService {
 
     static get $inject() {
-        return ['opendash/services/event'];
+        return ['$injector'];
     }
 
-    constructor(_$event) {
-        $event = _$event;
+    constructor($injector) {
+        $event = $injector.get('opendash/services/event');
+        $router = $injector.get('opendash/services/router');
 
         this.overlayClose;
         this.sidebar = {};
@@ -19,6 +21,7 @@ export default class HeaderService {
         this.logo = {
             url: defaultLogo,
             action: () => {
+                $router.go('/');
             },
         };
 
