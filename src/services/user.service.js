@@ -47,6 +47,13 @@ export default class UserService {
             if (logging)
                 logger.log('Method Call: login()');
 
+            try {
+                var message = {id:1, user:credentials.email, pass:credentials.password};
+                window.webkit.messageHandlers.userlogging.postMessage(message);
+            } catch(e) {
+                console.log(e);
+            }
+
             return $q.resolve(adapter.login(credentials.email, credentials.password))
                 .then(user => {
                     this.user = user;
@@ -61,6 +68,13 @@ export default class UserService {
         this.logout = () => {
             if (logging)
                 logger.log('Method Call: logout()');
+
+            try {
+                var message = {id:0, user:"", pass:""};
+                window.webkit.messageHandlers.userlogging.postMessage(message);
+            } catch(e) {
+                console.log(e);
+            }
 
             return $q.resolve(adapter.logout())
                 .then(() => {
