@@ -66,7 +66,7 @@ export default class Modal {
             });
     }
 
-    async open({ component, data }) {
+    async open({ component, width, data }) {
 
         let template = `<${component} ng-if="ready" modal="modalSettings"></${component}>`;
         let controller = ['$scope', 'close', ($scope, close) => {
@@ -81,6 +81,7 @@ export default class Modal {
         let options = {
             controller,
             template,
+            width,
         };
 
         await this.showModal(options);
