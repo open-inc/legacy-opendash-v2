@@ -50,5 +50,9 @@ export default ['en', {
             end: 'Enddatum:',
             since: 'Seit:',
         },
+        ui: {
+            prev: 'Back',
+            next: 'Next',
+        },
     },
 }];
