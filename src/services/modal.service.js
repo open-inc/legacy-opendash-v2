@@ -66,6 +66,28 @@ export default class Modal {
             });
     }
 
+    async open({ component, data }) {
+
+        let template = `<${component} ng-if="ready" modal="modalSettings"></${component}>`;
+        let controller = ['$scope', 'close', ($scope, close) => {
+            $scope.modalSettings = {
+                close,
+                data,
+            };
+
+            $scope.ready = true;
+        }];
+
+        let options = {
+            controller,
+            template,
+        };
+
+        await this.showModal(options);
+
+        await $q.resolve();
+    }
+
     showModal(options) {
         if (!options.controller) {
             return $q.reject('Modal benötigt options.controller');
@@ -107,8 +129,8 @@ export default class Modal {
         let closed = false;
 
         // todo
-        // let body = angular.element($document[0].body);
-        let body = angular.element('opendash');
+        let body = angular.element($document[0].body);
+        // let body = angular.element('opendash');
         let modalScope = $rootScope.$new();
         let closeDeferred = $q.defer();
         let closedDeferred = $q.defer();
