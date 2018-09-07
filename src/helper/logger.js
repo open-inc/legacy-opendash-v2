@@ -11,5 +11,10 @@ export default function logger(namespace) {
         error(...args) {
             console.error(`[${namespace}]`, ...args);
         },
+        assert(condition = false, message = 'Error') {
+            if (!condition) {
+                throw new Error(`[${namespace}] ${message}`);
+            }
+        },
     };
 }
