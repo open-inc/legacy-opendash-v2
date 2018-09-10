@@ -1,4 +1,8 @@
-<div ng-if="!$ctrl.config.dropdown" class="od-select-item">
+<div ng-if="$ctrl.config.search">
+
+</div>
+
+<div ng-show="$ctrl.hasResults" ng-if="!$ctrl.config.dropdown" class="od-select-item">
   <div ng-if="!$ctrl.vo" class="od-select-item__item" ng-repeat="item in $ctrl.available" ng-click="$ctrl.toggleSelected(item.id)">
     <div class="od-select-item__item__icon">
       <img ng-src="{{ item.icon }}">
@@ -22,10 +26,16 @@
     </div>
   </div>
 </div>
+
 <select
+  ng-show="$ctrl.hasResults"
   ng-if="$ctrl.config.dropdown"
   ng-model="$ctrl.dropdownValue"
   ng-change="$ctrl.dropdownOnChange()"
   ng-options="option.name for option in $ctrl.dropdownOptions track by option.id"
   >
 </select>
+
+<div ng-if="!$ctrl.hasResults">
+  {{ 'od.select.items.empty' | translate }}
+</div>
