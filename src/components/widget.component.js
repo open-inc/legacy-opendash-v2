@@ -85,6 +85,10 @@ class controller {
       }
     });
   }
+    actionClick(action) {
+
+        action.click(this.widget, this.$element[0]);
+    }
 }
 
 let component = {

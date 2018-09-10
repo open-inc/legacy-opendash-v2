@@ -165,5 +165,136 @@ export default class UserService {
         }
       });
     };
+
+    this.listDashboards = async data => {
+      if (logging) logger.log("Method Call: listDashboards()");
+
+      try {
+        if (adapter.listDashboards) {
+          let result = await adapter.listDashboards();
+          return result;
+        } else {
+          return (await this.getData("dashboard")).dashboards || [];
+        }
+      } catch (error) {
+        return [];
+      }
+    };
+
+    this.getDashboard = async id => {
+      if (logging) logger.log("Method Call: getDashboard()");
+
+      try {
+        if (adapter.getDashboard) {
+          let result = await adapter.getDashboard(id);
+          return result;
+        } else {
+          return await this.getData(`dashboard:${id}`);
+        }
+      } catch (error) {
+        logger.error(error);
+      }
+    };
+
+    this.setDashboard = async dashboard => {
+      if (logging) logger.log("Method Call: setDashboard()");
+
+      try {
+        if (adapter.setDashboard) {
+          let result = await adapter.setDashboard(dashboard);
+          return result;
+        } else {
+          return await this.setData(`dashboard:${dashboard.id}`, dashboard);
+        }
+      } catch (error) {
+        logger.error(error);
+      }
+    };
+
+    this.deleteDashboard = async id => {
+      if (logging) logger.log("Method Call: getDashboard()");
+
+      try {
+        if (adapter.deleteDashboard) {
+          let result = await adapter.deleteDashboard(id);
+          return result;
+        } else {
+          return await this.getData(`dashboard:${id}`);
+        }
+      } catch (error) {
+        logger.error(error);
+      }
+    };
+
+    this.createDashboard = async ({
+      name = "Home",
+      widgets = [],
+      id = uuidv4(),
+      version = 2
+    }) => {
+      if (logging) logger.log("Method Call: createDashboard()");
+
+      try {
+        if (adapter.createDashboard) {
+          let result = await adapter.createDashboard({
+            name,
+            widgets,
+            id,
+            version
+          });
+          return result;
+        } else {
+          let meta = await this.getData(`dashboard`);
+
+          if (meta.version === version) {
+            if (!meta.dashboards) {
+              meta.dashboards = [];
+            }
+
+            meta.dashboards.push(id);
+
+            await this.setData(`dashboard`, meta);
+          }
+
+          await this.setData(`dashboard:${id}`, {
+            id,
+            version,
+            name,
+            widgets
+          });
+
+          return id;
+        }
+      } catch (error) {
+        logger.error(error);
+      }
+    };
+
+    const optionalMethods = [
+      "listUsers",
+      "shareDashboardWithUser",
+      "listSharedData",
+      "createSharedData",
+      "deleteSharedData",
+      "getKeyValueData",
+      "createKeyValueData"
+    ];
+
+    for (const method of optionalMethods) {
+      if (adapter[method] && typeof adapter[method] === "function") {
+        this[method] = async (...args) => {
+          if (logging) logger.log(`Method Call: ${method}()`);
+          return await adapter[method](...args);
+        };
+      }
+    }
   }
+}
+
+function uuidv4() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+    let r = (Math.random() * 16) | 0;
+    let v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }

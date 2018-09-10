@@ -44,6 +44,12 @@ export default [
           nodata: "This widget doesn't receive data",
           save: "Save",
           abort: "Cancel"
+        },
+        errors: {
+          init: "Could not load dashboard. Please contact support.",
+          create: "Could not create dashboard.",
+          change: "Could not change dashboard.",
+          delete: "Could not delete dashboard."
         }
       },
       presets: {

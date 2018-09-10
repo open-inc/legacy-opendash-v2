@@ -18,9 +18,9 @@
                 <header>{{ 'od.header.dashboards.header' | translate }}</header>
                 <nav>
                     <div>
-                        <a ui-sref="od.dashboard.home" ng-repeat="name in $ctrl.$dashboard.dashboards" ng-click="$ctrl.$dashboard.changeDashboard(name)">
+                        <a ui-sref="od.dashboard.home" ng-repeat="db in $ctrl.$dashboard.dashboards" ng-click="$ctrl.$dashboard.changeDashboard(db.id)">
                             <i class="fa fa-database" aria-hidden="true"></i>
-                            <span>{{ name }}</span>
+                            <span>{{ db.name }}</span>
                         </a>
                     </div>
                     <div>
@@ -80,8 +80,7 @@
     <main>
         <section>
             <header>{{ 'od.header.dashboards.header' | translate }}</header>
-            <a ui-sref="od.dashboard.home" ng-repeat="name in $ctrl.$dashboard.dashboards" ng-click="$ctrl.$dashboard.changeDashboard(name)">{{
-                name }}</a>
+            <a ui-sref="od.dashboard.home" ng-repeat="db in $ctrl.$dashboard.dashboards" ng-click="$ctrl.$dashboard.changeDashboard(db.id)">{{ db.name }}</a>
         </section>
         <section>
             <header>{{ 'od.header.dashboards.manage' | translate }}</header>

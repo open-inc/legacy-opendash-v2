@@ -45,6 +45,13 @@ export default [
           nodata: "Es stehen keine Daten zur Verfügung.",
           save: "Speichern",
           abort: "Abbrechen"
+        },
+        errors: {
+          init:
+            "Dashboard konnte nicht geladen werden. Bitte den Support kontaktieren.",
+          create: "Dashboard konnte nicht erstellt werden.",
+          change: "Dashboard konnte nicht gewechselt werden.",
+          delete: "Dashboard konnte nicht gelöscht werden."
         }
       },
       presets: {
