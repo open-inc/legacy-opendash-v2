@@ -68,21 +68,45 @@ class controller {
         }
     }
 
+    get items() {
+        return (this.searchResult) ? this.searchResult : this.available;
+    }
+
+    searchOnChange() {
+        if (this.searchText) {
+            console.log(this.searchText);
+
+            console.log(this.available);
+
+            this.searchResult = this.available.filter(i => {
+                let item = (this.vo) ? i[0] : i;
+
+                console.log(item.name.toLowerCase());
+
+                let nameMatch = item.name.toLowerCase().includes(this.searchText.toLowerCase());
+
+                return nameMatch;
+            });
+        } else {
+            this.searchResult = null;
+        }
+    }
+
     dropdownOnChange() {
         this.watch(this.dropdownValue.value);
     }
 
     get dropdownOptions() {
         if (this.vo) {
-            return this.available.map(item => {
+            return this.items.map(item => {
                 return {
                     id: JSON.stringify([item[0].id, item[1]]),
                     value: [item[0].id, item[1]],
-                    name: `${ item[0].name } - ${ item[0].valueTypes[item[1]].name }`,
+                    name: `${item[0].name} - ${item[0].valueTypes[item[1]].name}`,
                 };
             });
         } else {
-            return this.available.map(item => {
+            return this.items.map(item => {
                 return {
                     id: item.id,
                     value: item.id,

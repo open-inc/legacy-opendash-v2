@@ -1,41 +1,35 @@
-<div ng-if="$ctrl.config.search">
+<div ng-if="$ctrl.config.search" class="od-select-item__search">
+    <input type="search" class="od-select-item__search__input" ng-model="$ctrl.searchText" ng-change="$ctrl.searchOnChange()" placeholder="{{ 'od.select.item.search' | translate }}" aria-label="{{ 'od.select.item.search' | translate }}">
 
+    <div class="od-select-item__search__flags">
+
+    </div>
 </div>
 
-<div ng-show="$ctrl.hasResults" ng-if="!$ctrl.config.dropdown" class="od-select-item">
-  <div ng-if="!$ctrl.vo" class="od-select-item__item" ng-repeat="item in $ctrl.available" ng-click="$ctrl.toggleSelected(item.id)">
-    <div class="od-select-item__item__icon">
-      <img ng-src="{{ item.icon }}">
+<div ng-if="!$ctrl.config.dropdown" class="od-select-item">
+    <div ng-if="!$ctrl.vo" class="od-select-item__item" ng-repeat="item in $ctrl.items track by $index" ng-click="$ctrl.toggleSelected(item.id)">
+        <div class="od-select-item__item__icon">
+            <img ng-src="{{ item.icon }}">
+        </div>
+        <div class="od-select-item__item__check" ng-show="$ctrl.isSelected(item.id)">
+            <i class="fa fa-check" aria-hidden="true"></i>
+        </div>
+        <div class="od-select-item__item__name">
+            {{ item.name }}
+        </div>
     </div>
-    <div class="od-select-item__item__check" ng-show="$ctrl.isSelected(item.id)">
-      <i class="fa fa-check" aria-hidden="true"></i>
+    <div ng-if="$ctrl.vo" class="od-select-item__item" ng-repeat="item in $ctrl.items track by $index" ng-click="$ctrl.toggleSelected([item[0].id, item[1]])">
+        <div class="od-select-item__item__icon">
+            <img ng-src="{{ item[0].icon }}">
+        </div>
+        <div class="od-select-item__item__check" ng-show="$ctrl.isSelected([item[0].id, item[1]])">
+            <i class="fa fa-check" aria-hidden="true"></i>
+        </div>
+        <div class="od-select-item__item__name">
+            {{ item[0].name }} - {{ item[0].valueTypes[item[1]].name }}
+        </div>
     </div>
-    <div class="od-select-item__item__name">
-      {{ item.name }}
-    </div>
-  </div>
-  <div ng-if="$ctrl.vo" class="od-select-item__item" ng-repeat="item in $ctrl.available" ng-click="$ctrl.toggleSelected([item[0].id, item[1]])">
-    <div class="od-select-item__item__icon">
-      <img ng-src="{{ item[0].icon }}">
-    </div>
-    <div class="od-select-item__item__check" ng-show="$ctrl.isSelected([item[0].id, item[1]])">
-      <i class="fa fa-check" aria-hidden="true"></i>
-    </div>
-    <div class="od-select-item__item__name">
-      {{ item[0].name }} - {{ item[0].valueTypes[item[1]].name }}
-    </div>
-  </div>
 </div>
 
-<select
-  ng-show="$ctrl.hasResults"
-  ng-if="$ctrl.config.dropdown"
-  ng-model="$ctrl.dropdownValue"
-  ng-change="$ctrl.dropdownOnChange()"
-  ng-options="option.name for option in $ctrl.dropdownOptions track by option.id"
-  >
+<select ng-if="$ctrl.config.dropdown" ng-model="$ctrl.dropdownValue" ng-change="$ctrl.dropdownOnChange()" ng-options="option.name for option in $ctrl.dropdownOptions track by option.id">
 </select>
-
-<div ng-if="!$ctrl.hasResults">
-  {{ 'od.select.items.empty' | translate }}
-</div>
