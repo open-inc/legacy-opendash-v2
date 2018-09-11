@@ -49,6 +49,9 @@ export default ['de', {
             start: 'Startdatum:',
             end: 'Enddatum:',
             since: 'Seit:',
+            item: {
+                search: 'Nach Item Namen suchen...'
+            },
         },
         ui: {
             prev: 'Zurück',
