@@ -1,25 +1,41 @@
 od-select-item {
-    display: block;
     $steps: 4;
     $gutter: 16px;
     $modal-padding: 20px;
     $active-color: $primary;
-    $eud-selection-height: 60px;
-    $eud-nav-item-count: 4;
-    $eud-nav-border: 4px;
-    $eud-nav-div: 80px;
-    $eud-nav-height: 60px;
-    $eud-nav-inline-gap: 4px;
-    $eud-nav-grey: #d6d6d6;
-    $eud-nav-active: $active-color;
-    $eud-nav-done: $primary;
-    $eud-nav-after: $eud-nav-grey - #444;
-    $eud-footer-height: 60px;
+    $item-height: 60px;
+
+    display: block;
+
     .od-select-item {
         background: $od-color-background-light;
+
+        &__search {
+            &__input {
+                width: calc(100% - 80px);
+            }
+
+            &__flags {
+                width: 80px;
+                float: right;
+
+                &__flag {
+                    line-height: 40px;
+                    width: 40px;
+                    font-size: 20px;
+                    text-align: center;
+
+                    &--active {
+                        color: $active-color;
+                    }
+                }
+            }
+        }
+
+        
         &__item {
-            height: $eud-selection-height;
-            line-height: $eud-selection-height; // margin-bottom: $gutter/2;
+            height: $item-height;
+            line-height: $item-height; // margin-bottom: $gutter/2;
             border: 1px solid rgba(0, 0, 0, .1);
             &:hover {
                 background: rgba(0, 0, 0, .02);
@@ -28,8 +44,8 @@ od-select-item {
                 border-bottom-width: 0px;
             }
             &__name {
-                margin: 0 $eud-selection-height;
-                height: $eud-selection-height;
+                margin: 0 $item-height;
+                height: $item-height;
                 padding: 0 $gutter;
                 i {
                     color: rgba(0, 0, 0, .4);
@@ -38,21 +54,21 @@ od-select-item {
             }
             &__check {
                 float: right;
-                height: $eud-selection-height;
-                width: $eud-selection-height;
+                height: $item-height;
+                width: $item-height;
                 padding: 0 $gutter/2;
                 text-align: right;
                 font-size: 1.2em;
                 color: $active-color;
                 i {
-                    height: $eud-selection-height;
-                    line-height: $eud-selection-height;
+                    height: $item-height;
+                    line-height: $item-height;
                 }
             }
             &__icon {
                 float: left;
-                height: $eud-selection-height;
-                width: $eud-selection-height;
+                height: $item-height;
+                width: $item-height;
                 padding: $gutter/2;
                 img {
                     padding: $gutter/2;

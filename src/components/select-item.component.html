@@ -1,9 +1,11 @@
 <div ng-if="$ctrl.config.search" class="od-select-item__search">
-    <input type="search" class="od-select-item__search__input" ng-model="$ctrl.searchText" ng-change="$ctrl.searchOnChange()" placeholder="{{ 'od.select.item.search' | translate }}" aria-label="{{ 'od.select.item.search' | translate }}">
+    <input type="search" class="od-select-item__search__input" ng-model="$ctrl.searchText" ng-change="$ctrl.searchOnChange()"
+        placeholder="{{ 'od.select.item.search' | translate }}" aria-label="{{ 'od.select.item.search' | translate }}">
 
     <div class="od-select-item__search__flags">
-
+        <i class="od-select-item__search__flags__flag fa" title="{{ flag.label }}" aria-hidden="true" ng-class="$ctrl.flagClass(flag)" ng-click="$ctrl.flagToggle(flag)" ng-repeat="flag in $ctrl.flags track by $index"></i>
     </div>
+
 </div>
 
 <div ng-if="!$ctrl.config.dropdown" class="od-select-item">
@@ -29,6 +31,10 @@
             {{ item[0].name }} - {{ item[0].valueTypes[item[1]].name }}
         </div>
     </div>
+</div>
+
+<div ng-show="$ctrl.items.length === 0">
+    {{ 'od.select.item.empty' | translate }}
 </div>
 
 <select ng-if="$ctrl.config.dropdown" ng-model="$ctrl.dropdownValue" ng-change="$ctrl.dropdownOnChange()" ng-options="option.name for option in $ctrl.dropdownOptions track by option.id">

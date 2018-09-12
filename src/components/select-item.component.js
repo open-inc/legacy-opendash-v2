@@ -18,6 +18,27 @@ class controller {
 
         $q = $injector.get('$q');
 
+        this.flags = [
+            {
+                icon: 'fa-clock-o',
+                label: 'Show virtual sensors',
+                active: true,
+                filter: (active, item, dimension) => {
+                    // only show virtual sensors if active
+                    return (item.meta.virtualSensor) ? active : true;
+                },
+            },
+            {
+                icon: 'fa-calculator',
+                label: 'Show alarm sensors',
+                active: true,
+                filter: (active, item, dimension) => {
+                    // only show alarm sensors if active
+                    return (item.meta.alarm) ? active : true;
+                },
+            },
+        ];
+
         this.output = [];
         this.dropdownValue = null;
     }
@@ -63,6 +84,8 @@ class controller {
             }
 
             await $q.resolve();
+
+            this.searchOnChange();
         } catch (error) {
             console.error(error);
         }
@@ -73,23 +96,34 @@ class controller {
     }
 
     searchOnChange() {
+        this.searchResult = this.available;
+
         if (this.searchText) {
-            console.log(this.searchText);
 
-            console.log(this.available);
-
-            this.searchResult = this.available.filter(i => {
+            this.searchResult = this.searchResult.filter(i => {
                 let item = (this.vo) ? i[0] : i;
-
-                console.log(item.name.toLowerCase());
 
                 let nameMatch = item.name.toLowerCase().includes(this.searchText.toLowerCase());
 
                 return nameMatch;
             });
-        } else {
-            this.searchResult = null;
         }
+
+        for (const flag of this.flags) {
+            this.searchResult = this.searchResult.filter(i => flag.filter(flag.active, (this.vo) ? i[0] : i, (this.vo) ? i[1] : null));
+        }
+
+        return this.searchResult;
+    }
+
+    flagToggle(flag) {
+        flag.active = !flag.active;
+
+        this.searchOnChange();
+    }
+
+    flagClass(flag) {
+        return flag.icon + ((flag.active) ? ' od-select-item__search__flags__flag--active' : '');
     }
 
     dropdownOnChange() {
