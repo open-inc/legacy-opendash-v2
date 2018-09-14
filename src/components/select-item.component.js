@@ -24,7 +24,7 @@ class controller {
                 label: 'Show virtual sensors',
                 active: true,
                 filter: (active, item, dimension) => {
-                    // only show virtual sensors if active
+                    // hide virtual sensors if not active
                     return (item.meta.virtualSensor) ? active : true;
                 },
             },
@@ -33,74 +33,75 @@ class controller {
                 label: 'Show alarm sensors',
                 active: true,
                 filter: (active, item, dimension) => {
-                    // only show alarm sensors if active
+                    // hide alarm sensors if not active
                     return (item.meta.alarm) ? active : true;
                 },
             },
         ];
 
+        this.available = [];
+        this.items = [];
         this.output = [];
         this.dropdownValue = null;
     }
 
     async $onInit() {
-        try {
+        // validate data bindings
+        if (!_.isObject(this.config)) {
+            throw new Error('Bad usage of od-select-item config attribute. Must be an Object.');
+        }
 
+        if (!_.isFunction(this.watch)) {
+            throw new Error('Bad usage of od-select-item watch attribute. Must be a Function.');
+        }
+
+        try {
             await $user.wait();
             await $data.wait();
 
-            if (!_.isObject(this.config)) {
-                throw new Error('Bad usage of od-select-item config attribute. Must be an Object.');
-            }
-
-            if (!_.isFunction(this.watch)) {
-                throw new Error('Bad usage of od-select-item watch attribute. Must be a Function.');
-            }
-
-            const query = $data.query();
-
-            if (this.config.root) {
-                query.root();
-            }
-
-            if (this.config.containers) {
-                query.container();
-            }
-
-            if (this.config.items) {
-                query.items();
-            }
-
-            if (this.config.filter && _.isFunction(this.config.filter)) {
-                query.filter(this.config.filter);
-            }
-
-            if (this.config.type) {
-                this.available = $data.listByType(this.config.type, query.run());
-                this.vo = true;
-            } else {
-                this.available = query.run();
-                this.vo = false;
-            }
+            await this.queryAvailable();
+            await this.searchOnChange();
 
             await $q.resolve();
-
-            this.searchOnChange();
         } catch (error) {
             console.error(error);
         }
     }
 
-    get items() {
-        return (this.searchResult) ? this.searchResult : this.available;
+    async queryAvailable() {
+        const query = $data.query();
+
+        if (this.config.root) {
+            query.root();
+        }
+
+        if (this.config.containers) {
+            query.container();
+        }
+
+        if (this.config.items) {
+            query.items();
+        }
+
+        if (this.config.filter && _.isFunction(this.config.filter)) {
+            query.filter(this.config.filter);
+        }
+
+        if (this.config.type) {
+            this.available = $data.listByType(this.config.type, query.run());
+            this.vo = true;
+        } else {
+            this.available = query.run();
+            this.vo = false;
+        }
     }
 
     searchOnChange() {
-        this.searchResult = this.available;
+        this.items = this.available;
 
         if (this.searchText) {
 
-            this.searchResult = this.searchResult.filter(i => {
+            this.items = this.items.filter(i => {
                 let item = (this.vo) ? i[0] : i;
 
                 let nameMatch = item.name.toLowerCase().includes(this.searchText.toLowerCase());
@@ -110,10 +111,10 @@ class controller {
         }
 
         for (const flag of this.flags) {
-            this.searchResult = this.searchResult.filter(i => flag.filter(flag.active, (this.vo) ? i[0] : i, (this.vo) ? i[1] : null));
+            this.items = this.items.filter(i => flag.filter(flag.active, (this.vo) ? i[0] : i, (this.vo) ? i[1] : null));
         }
 
-        return this.searchResult;
+        return this.items;
     }
 
     flagToggle(flag) {
