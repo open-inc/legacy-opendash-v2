@@ -14,7 +14,7 @@ const $store = new Map();
 const $root = [];
 
 const waiting = [];
-
+let  globalready = false;
 let valueValidation;
 
 export default class OpenDashDataService {
@@ -31,7 +31,7 @@ export default class OpenDashDataService {
 
         valueValidation = $env('OD-DATA-VALIDATION', null, true);
 
-        this.ready = false;
+        this.ready = globalready;
 
         const adapters = $injector.get('od.adapter.register').map((AdapterFactory) => new AdapterFactory({}, $user));
 
@@ -45,6 +45,13 @@ export default class OpenDashDataService {
         });
     }
 
+    get ready(){
+        return globalready; 
+    }
+
+    set ready(state){
+        globalready = state; 
+    }
     wait() {
         return $q((resolve, reject) => {
             if (this.ready) {
@@ -531,11 +538,31 @@ class OpenDashDataContext {
         return $store.get(id);
     }
 
-    create(payload) {
-        $store.set(payload.id, new OpenDashDataItem(this.adapter, payload));
+    create(payload, update) {
+        
+        let oldItem = $store.get(payload.id);
+        let newItem = new OpenDashDataItem(this.adapter, payload);
+        if(update && oldItem!=null){
+            oldItem.notify('name', newItem.name, oldItem.name);
+        }
+        $store.set(payload.id, newItem);
+/*
+        console.log("Old:", oldItem);
+        console.log("New:", newItem);
+        */
     }
 
     createContainer(payload) {
         $store.set(payload.id, new OpenDashDataContainer(this.adapter, payload));
+    }
+
+    clear(){
+        $store.clear();
+    }
+    update(operation){
+        globalready = false;
+        operation.then(()=>{
+            globalready = true;
+        });
     }
 }
