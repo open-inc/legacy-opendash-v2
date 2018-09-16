@@ -63,6 +63,7 @@ export default class HeaderService {
         }
 
         const item = {
+            hidden: false,
             icon: input.icon || null,
             text: input.text || 'Neuer Eintrag',
             action: input.action || defaultAction,
@@ -84,6 +85,7 @@ export default class HeaderService {
         };
 
         const item = {
+            hidden: false,
             icon: input.icon || '',
             action: input.action || defaultAction,
             active: false,
