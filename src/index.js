@@ -31,6 +31,7 @@ const docs = 'http://docs.opendash.de';
 let instanceStarted = false;
 
 let ngModule = null;
+let ngDependencies = [angularTranslate, 'gridster'];
 
 class openDASH {
 
@@ -44,7 +45,7 @@ class openDASH {
 
     get module() {
         if (!ngModule) {
-            this.init();
+            throw new Error(`You need to call instance.start() before getting the angular module, see ${docs}`);
         }
 
         return ngModule;
@@ -54,7 +55,7 @@ class openDASH {
         return routerService;
     }
 
-    get env () {
+    get env() {
         return envService;
     }
 
@@ -66,25 +67,14 @@ class openDASH {
         return this.module.name;
     }
 
-    init(options) {
+    init(options = {}) {
         if (ngModule) {
             throw new Error(`You need to call instance.init() before calling any other method, see ${docs}`);
         }
 
-        options = options || {};
-
-        const dependencies = [angularTranslate, 'gridster'];
-
-        if (options.dependencies && _.isArray(options.dependencies)) {
-            options.dependencies.forEach(dependency => {
-                if (_.isString(dependency)) {
-                    dependencies.push(dependency);
-                    logger.log(`Angular Dependency "${dependency}" has been registered.`);
-                }
-            });
+        if (options.dependencies) {
+            this.registerAngularDependency(options.dependencies)
         }
-
-        ngModule = angular.module('opendash', dependencies);
     }
 
     registerUserAdapter(adapter, options = {}) {
@@ -95,12 +85,36 @@ class openDASH {
         this.dataAdapters.push(adapter);
     }
 
+    registerAngularDependency(dependency) {
+        if (_.isArray(dependency)) {
+            for (const d of dependency) {
+                this.registerAngularDependency(d)
+            }
+
+            return;
+        }
+
+        if (_.isString(dependency)) {
+            ngDependencies.push(dependency);
+            logger.log(`Angular Dependency "${dependency}" has been registered.`);
+            return;
+        }
+
+        logger.warn(`Angular Dependencies must be Strings or an Array of Strings.`);
+    }
+
     use(plugin, options = {}) {
         if (!_.isFunction(plugin)) {
             throw new Error('The \'plugin\' parameter must be a function.');
         }
 
-        this.plugins.push(plugin(options));
+        plugin = plugin(options);
+
+        if (!_.isFunction(plugin)) {
+            throw new Error('The \'plugin\' parameter must return a function.');
+        }
+
+        this.plugins.push(plugin);
     }
 
     registerWidgets(widgets) {
@@ -208,9 +222,10 @@ class openDASH {
     }
 
     registerTranslation(translation) {
-        if (_.isArray(translation) && translation.length === 2) {
-            this.translations.push(translation);
-        }
+        logger.assert(_.isArray(translation), 'A translation must be an Array');
+        logger.assert(translation.length === 2, 'The length of an translation Array must be 2');
+
+        this.translations.push(translation);
     }
 
     i18n(settings) {
@@ -227,6 +242,8 @@ class openDASH {
 
     start() {
         instanceStarted = true;
+
+        ngModule = angular.module('opendash', ngDependencies);
 
         this.module.config(config);
 
