@@ -563,6 +563,7 @@ class OpenDashDataContext {
         globalready = false;
         operation.then(()=>{
             globalready = true;
+            $q.resolve();
         });
     }
 }
