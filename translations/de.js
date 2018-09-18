@@ -30,7 +30,10 @@ export default ['de', {
             },
         },
         dashboard: {
-            empty: 'Keine Widgets gefunden :(',
+            empty: {
+                message: 'Keine Widgets gefunden :(',
+                action: 'Widget aus Vorlage hinzufügen',
+            },
             widgets: {
                 add: 'Widget aus Vorlage hinzufügen',
                 rename: 'Geben Sie dem Widget einen neuen Namen:',

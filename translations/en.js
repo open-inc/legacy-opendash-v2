@@ -30,7 +30,10 @@ export default ['en', {
             },
         },
         dashboard: {
-            empty: 'No Widgets found :(',
+            empty: {
+                message: 'No Widgets found :(',
+                action: 'Add Widget from presets',
+            },
             widgets: {
                 add: 'Add Widget from template',
                 rename: 'Provide a name for the widget:',

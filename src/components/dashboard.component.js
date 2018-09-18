@@ -20,6 +20,14 @@ class controller {
     get empty() {
         return this.ready && this.$dashboard.current.widgets.length === 0;
     }
+
+    onEmptyAction() {
+        if (this.$dashboard.dashboardOnEmptyActionOverwrite) {
+            this.$dashboard.dashboardOnEmptyActionOverwrite();
+        } else {
+            this.$presets.open()
+        }
+    }
 }
 
 let component = {

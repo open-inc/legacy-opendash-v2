@@ -7,9 +7,9 @@
 		</ul>
 	</div>
 	<div class="od_dashboard__empty" ng-show="$ctrl.empty">
-		<div class="od_dashboard__empty__message">{{ 'od.dashboard.empty' | translate }}</div>
+		<div class="od_dashboard__empty__message">{{ 'od.dashboard.empty.message' | translate }}</div>
 		<div class="od_dashboard__empty__suggestions">
-			<button ng-click="$ctrl.$presets.open()">{{ 'od.dashboard.widgets.add' | translate }}</button>
+			<button ng-click="$ctrl.onEmptyAction()">{{ 'od.dashboard.empty.action' | translate }}</button>
 		</div>
 	</div>
 </div>

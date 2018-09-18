@@ -117,6 +117,10 @@ export default class Dashboard {
         }
     }
 
+    setDashboardOnEmptyAction(action) {
+        this.dashboardOnEmptyActionOverwrite = action;
+    }
+
     initGridsterConfig() {
 
         // https://github.com/ManifestWebDesign/angular-gridster#configuration
@@ -198,6 +202,12 @@ export default class Dashboard {
 
     removeWidget(widget) {
         this.current.removeWidget(widget);
+        $event.emit('od-widgets-removed');
+        return true;
+    }
+
+    removeAllWidgets() {
+        this.current.removeAllWidgets();
         $event.emit('od-widgets-removed');
         return true;
     }
@@ -352,6 +362,10 @@ class OpenDashDashboard {
 
     removeWidget(widget) {
         _.pull(this.widgets, widget);
+    }
+
+    removeAllWidgets() {
+        this.widgets.length = 0;
     }
 
     toJSON() {
