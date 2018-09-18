@@ -8,7 +8,7 @@
 
 </div>
 
-<div ng-if="!$ctrl.config.dropdown" class="od-select-item">
+<div ng-if="!$ctrl.config.dropdown" class="od-select-item" ng-style="$ctrl.style">
     <div ng-if="!$ctrl.vo" class="od-select-item__item" ng-repeat="item in $ctrl.items track by $index" ng-click="$ctrl.toggleSelected(item.id)">
         <div class="od-select-item__item__icon">
             <img ng-src="{{ item.icon }}">
