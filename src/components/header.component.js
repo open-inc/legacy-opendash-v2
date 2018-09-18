@@ -3,7 +3,7 @@ import template from './header.component.html';
 class controller {
 
     static get $inject() {
-        return ['$injector']; 
+        return ['$injector'];
     }
 
     constructor($injector) {
@@ -14,6 +14,7 @@ class controller {
         this.$presets = $injector.get('opendash/services/presets');
         this.$modal = $injector.get('opendash/services/modal');
         this.$env = $injector.get('opendash/services/env');
+        this.$router = $injector.get('opendash/services/router');
 
         this.sidebarMode = this.$env('OD-HEADER-SIDEBAR-MODE', null, true);
 
@@ -21,6 +22,18 @@ class controller {
 
         this.overlay.active = false;
         this.overlay.index = 5001;
+    }
+
+    get showHamburger() {
+        try {
+            return this.$user.auth && this.$router.current.component === 'od-dashboard';
+        } catch (error) {
+            return false;
+        }
+    }
+
+    get topbarItems() {
+        return this.$header.topbar.filter(e => !e.hidden);
     }
 
     get sidebar() {
