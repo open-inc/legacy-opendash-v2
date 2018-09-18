@@ -9,12 +9,14 @@ let $q;
 class controller {
 
     static get $inject() {
-        return ['$injector'];
+        return ['$injector', '$element'];
     }
 
-    constructor($injector) {
+    constructor($injector, $element) {
         $user = $injector.get('opendash/services/user');
         $data = $injector.get('opendash/services/data');
+
+        this.$element = $element;
 
         $q = $injector.get('$q');
 
@@ -39,6 +41,7 @@ class controller {
             },
         ];
 
+        this.style = {};
         this.available = [];
         this.items = [];
         this.output = [];
@@ -61,6 +64,29 @@ class controller {
 
             await this.queryAvailable();
             await this.searchOnChange();
+
+            if (this.config.maxHeight) {
+                this.style = {
+                    'overflow-y': 'auto',
+                    'max-height': this.config.maxHeight,
+                };
+            }
+
+            console.log(this.available);
+
+            if (this.config.initialSelection) {
+                if (!_.isArray(this.config.initialSelection)) {
+                    throw new Error('Bad usage of od-select-item config.initialSelection attribute. Must be an Array.');
+                }
+
+                for (const e of this.config.initialSelection) {
+                    if (this.isAvailable(e)) {
+                        this.output.push(e);
+                    }
+                }
+            }
+
+            this.triggerWatch();
 
             await $q.resolve();
         } catch (error) {
@@ -159,6 +185,14 @@ class controller {
         }
     }
 
+    isAvailable(e) {
+        if (this.vo) {
+            return (_.find(this.available, a => a[0].id === e[0] && a[1] === e[1])) ? true : false;
+        } else {
+            return (_.find(this.available, a => a.id === e)) ? true : false;
+        }
+    }
+
     toggleSelected(e) {
         let isSelected = this.isSelected(e);
 
@@ -176,6 +210,10 @@ class controller {
             this.output.push(e);
         }
 
+        this.triggerWatch();
+    }
+
+    triggerWatch() {
         if (this.config.multi) {
             this.watch(this.output);
         } else {
