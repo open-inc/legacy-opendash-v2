@@ -1,90 +1,89 @@
 od-select-item {
-    $steps: 4;
-    $gutter: 16px;
-    $modal-padding: 20px;
-    $active-color: $primary;
-    $item-height: 60px;
+  $steps: 4;
+  $gutter: 16px;
+  $modal-padding: 20px;
+  $active-color: $primary;
+  $item-height: 60px;
 
-    display: block;
+  display: block;
 
-    .od-select-item {
-        background: $od-color-background-light;
+  .od-select-item {
+    background: $od-color-background-light;
 
-        &__search {
-            &__input {
-                width: calc(100% - 80px);
-            }
+    &__search {
+      &__input {
+        width: calc(100% - 80px);
+      }
 
-            &__flags {
-                width: 80px;
-                float: right;
+      &__flags {
+        width: 80px;
+        float: right;
 
-                &__flag {
-                    line-height: 40px;
-                    width: 40px;
-                    font-size: 20px;
-                    text-align: center;
+        &__flag {
+          line-height: 40px;
+          width: 40px;
+          font-size: 20px;
+          text-align: center;
 
-                    &--active {
-                        color: $active-color;
-                    }
-                }
-            }
-        }
-
-        
-        &__item {
-            height: $item-height;
-            line-height: $item-height; // margin-bottom: $gutter/2;
-            border: 1px solid rgba(0, 0, 0, .1);
-            &:hover {
-                background: rgba(0, 0, 0, .02);
-            }
-            &:not(:last-child) {
-                border-bottom-width: 0px;
-            }
-            &__name {
-                margin: 0 $item-height;
-                height: $item-height;
-                padding: 0 $gutter;
-                i {
-                    color: rgba(0, 0, 0, .4);
-                    margin-left: 4px;
-                }
-            }
-            &__check {
-                float: right;
-                height: $item-height;
-                width: $item-height;
-                padding: 0 $gutter/2;
-                text-align: right;
-                font-size: 1.2em;
-                color: $active-color;
-                i {
-                    height: $item-height;
-                    line-height: $item-height;
-                }
-            }
-            &__icon {
-                float: left;
-                height: $item-height;
-                width: $item-height;
-                padding: $gutter/2;
-                img {
-                    padding: $gutter/2;
-                    background: rgba(0, 0, 0, .05);
-                    border-radius: 50%;
-                    border: 1px solid rgba(0, 0, 0, .1);
-                }
-            }
-        }
-        &--clear:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-        &--active {
+          &--active {
             color: $active-color;
+          }
         }
+      }
     }
+
+    &__item {
+      height: $item-height;
+      line-height: $item-height; // margin-bottom: $gutter/2;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      &:hover {
+        background: rgba(0, 0, 0, 0.02);
+      }
+      &:not(:last-child) {
+        border-bottom-width: 0px;
+      }
+      &__name {
+        margin: 0 $item-height;
+        height: $item-height;
+        padding: 0 $gutter;
+        i {
+          color: rgba(0, 0, 0, 0.4);
+          margin-left: 4px;
+        }
+      }
+      &__check {
+        float: right;
+        height: $item-height;
+        width: $item-height;
+        padding: 0 $gutter/2;
+        text-align: right;
+        font-size: 1.2em;
+        color: $active-color;
+        i {
+          height: $item-height;
+          line-height: $item-height;
+        }
+      }
+      &__icon {
+        float: left;
+        height: $item-height;
+        width: $item-height;
+        padding: $gutter/2;
+        img {
+          padding: $gutter/2;
+          background: rgba(0, 0, 0, 0.05);
+          border-radius: 50%;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+    &--clear:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    &--active {
+      color: $active-color;
+    }
+  }
 }

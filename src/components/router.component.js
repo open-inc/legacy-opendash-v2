@@ -1,32 +1,37 @@
 class controller {
+  static get $inject() {
+    return [
+      "$element",
+      "$compile",
+      "$rootScope",
+      "opendash/services/router",
+      "$q"
+    ];
+  }
 
-    static get $inject() {
-        return ['$element', '$compile', '$rootScope', 'opendash/services/router', '$q'];
-    }
+  constructor($element, $compile, $rootScope, $router, $q) {
+    $router.onChange(current => {
+      let scope = $rootScope.$new();
+      let component = current.component;
 
-    constructor($element, $compile, $rootScope, $router, $q) {
-        $router.onChange((current) => {
-            let scope = $rootScope.$new();
-            let component = current.component;
+      scope.current = current;
 
-            scope.current = current;
+      let template = `<${component} route="current"></${component}>`;
 
-            let template = `<${component} route="current"></${component}>`;
+      let element = $compile(template)(scope);
 
-            let element = $compile(template)(scope);
+      $element.html(element);
 
-            $element.html(element);
-
-            $q.resolve()
-        });
-    }
+      $q.resolve();
+    });
+  }
 }
 
-const template = '404 - Routing Failed';
+const template = "404 - Routing Failed";
 
 let component = {
-    controller,
-    template,
+  controller,
+  template
 };
 
 export default component;

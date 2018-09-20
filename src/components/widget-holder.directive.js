@@ -1,13 +1,13 @@
 function WidgetHolder($compile, $rootScope) {
-    return {
-        restrict: 'E',
-        link: function (scope, element, attrs) {
-            const widget = scope.$ctrl.widget;
-            const widgetScope = $rootScope.$new();
+  return {
+    restrict: "E",
+    link: function(scope, element, attrs) {
+      const widget = scope.$ctrl.widget;
+      const widgetScope = $rootScope.$new();
 
-            widgetScope.widget = widget;
+      widgetScope.widget = widget;
 
-            const template = `<div style="display:block;width:100%;height:100%;">
+      const template = `<div style="display:block;width:100%;height:100%;">
                           <od-widget-${widget.type}
                             ng-if="widget.config && widget.state"
                             widget="widget.operations"
@@ -20,13 +20,13 @@ function WidgetHolder($compile, $rootScope) {
                           <od-loading ng-show="widget.state.loading"></od-loading>
                         </div>`;
 
-            const widgetElement = $compile(template)(widgetScope);
+      const widgetElement = $compile(template)(widgetScope);
 
-            element.append(widgetElement);
-        },
-    };
+      element.append(widgetElement);
+    }
+  };
 }
 
-WidgetHolder.$inject = ['$compile', '$rootScope'];
+WidgetHolder.$inject = ["$compile", "$rootScope"];
 
 export default WidgetHolder;

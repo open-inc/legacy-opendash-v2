@@ -1,10 +1,7 @@
 export default class SettingsController {
+  constructor() {}
 
-    constructor() {
-
-    }
-
-    $onInit() {
-        this.loaded = true;
-    }
+  $onInit() {
+    this.loaded = true;
+  }
 }

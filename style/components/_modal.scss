@@ -1,62 +1,62 @@
 od-modal {
+  display: block;
+  max-height: calc(100vh - 100px);
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid $primary;
+  border-bottom: 5px solid $primary;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: $light;
+  margin: 80px auto;
+  z-index: 5005;
+
+  border-radius: 3px;
+
+  &-header {
     display: block;
-    max-height: calc(100vh - 100px);
+    height: 30px;
     width: 100%;
-    max-width: 600px;
-    border: 1px solid $primary;
-    border-bottom: 5px solid $primary;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: $light;
-    margin: 80px auto;
-    z-index: 5005;
+    background-color: $primary;
 
-    border-radius: 3px;
+    &-title {
+      color: $primary-font;
+      margin-left: $gutter;
+      font-weight: $font-weight-normal;
+      display: inline-block;
+      height: 100%;
+      font-size: 1.1em;
+      overflow: hidden;
+      width: 80%;
+    }
+  }
 
-    &-header {
-        display: block;
-        height: 30px;
-        width: 100%;
-        background-color: $primary;
+  &-close {
+    color: $primary-font;
+    display: block;
+    height: 30px;
+    width: 30px;
+    float: right;
+    cursor: pointer;
+    text-align: center;
 
-        &-title{
-            color: $primary-font;
-            margin-left: $gutter;
-            font-weight:  $font-weight-normal;
-            display: inline-block;
-            height: 100%;
-            font-size: 1.1em;
-            overflow: hidden;
-            width: 80%;
-        }
+    &:before {
+      line-height: 30px;
     }
 
-    &-close {
-        color: $primary-font;
-        display: block;
-        height: 30px;
-        width: 30px;
-        float: right;
-        cursor: pointer;
-        text-align: center;
-
-        &:before {
-            line-height: 30px;
-        }
-
-        &:hover{
-            background-color:$primary-hover;
-        }
+    &:hover {
+      background-color: $primary-hover;
     }
-    &-content {
-        display: block;
-        height: auto;
-        max-height: calc(100vh - 200px);
-        overflow: auto;
-        width: 100%;
-        position: relative;
-        padding: $gutter;
-    }
+  }
+  &-content {
+    display: block;
+    height: auto;
+    max-height: calc(100vh - 200px);
+    overflow: auto;
+    width: 100%;
+    position: relative;
+    padding: $gutter;
+  }
 }

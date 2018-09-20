@@ -1,24 +1,24 @@
 html {
-    // Use border-box
-    box-sizing: border-box; // Set base font-size
-    font-size: $html-font-size;
+  // Use border-box
+  box-sizing: border-box; // Set base font-size
+  font-size: $html-font-size;
 }
 
 // Inherit box-sizing from html
 *,
 *:before,
 *:after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
-    font-family: $font-family;
-    font-size: $body-font-size;
-    font-weight: $font-weight-normal;
-    letter-spacing: .01em;
-    line-height: 1.6;
-    background: $light;
-    color: $light-font;
+  font-family: $font-family;
+  font-size: $body-font-size;
+  font-weight: $font-weight-normal;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+  background: $light;
+  color: $light-font;
 }
 
 h1,
@@ -27,16 +27,16 @@ h3,
 h4,
 h5,
 h6 {
-    color: $light-font;
+  color: $light-font;
 }
 
 a {
-    color: $primary;
-    &:hover {
-        color: darken($primary, 10%);
-    }
+  color: $primary;
+  &:hover {
+    color: darken($primary, 10%);
+  }
 }
 
 img {
-    max-width: 100%;
+  max-width: 100%;
 }

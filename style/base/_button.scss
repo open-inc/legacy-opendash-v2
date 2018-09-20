@@ -2,88 +2,89 @@
 // ––––––––––––––––––––––––––––––––––––––––––––––––––
 .button,
 button,
-input[type='button'],
-input[type='reset'],
-input[type='submit'] {
-    background-color: $primary;
-    border: 1px solid $primary;
-    border-radius: 4px;
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  background-color: $primary;
+  border: 1px solid $primary;
+  border-radius: 4px;
+  color: $primary-font;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  height: 40px;
+  letter-spacing: 1px;
+  line-height: 40px;
+  padding: 0 $gutter;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-bottom: $gutter;
+  &:focus,
+  &:hover {
+    background-color: $primary-hover;
+    border-color: $primary-hover;
     color: $primary-font;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    height: 40px;
-    letter-spacing: 1px;
-    line-height: 40px;
-    padding: 0 $gutter;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    white-space: nowrap;
-    margin-bottom: $gutter;
+    outline: 0;
+  }
+  &[disabled] {
+    cursor: default;
+    opacity: 0.5;
     &:focus,
     &:hover {
-        background-color: $primary-hover;
-        border-color: $primary-hover;
-        color: $primary-font;
-        outline: 0;
+      background-color: $primary;
+      border-color: $primary;
+    }
+  }
+  &.button-outline,
+  &.button--outline {
+    background-color: transparent;
+    color: $primary;
+    border-width: 2px;
+    &:focus,
+    &:hover {
+      background-color: transparent;
+      border-color: $primary-hover;
+      color: $primary-hover;
     }
     &[disabled] {
-        cursor: default;
-        opacity: .5;
-        &:focus,
-        &:hover {
-            background-color: $primary;
-            border-color: $primary;
-        }
-    }
-    &.button-outline, &.button--outline {
-        background-color: transparent;
+      &:focus,
+      &:hover {
+        border-color: inherit;
         color: $primary;
-        border-width: 2px;
-        &:focus,
-        &:hover {
-            background-color: transparent;
-            border-color: $primary-hover;
-            color: $primary-hover;
-        }
-        &[disabled] {
-            &:focus,
-            &:hover {
-                border-color: inherit;
-                color: $primary;
-            }
-        }
+      }
     }
-    &.button-clear {
-        background-color: transparent;
-        border-color: transparent;
+  }
+  &.button-clear {
+    background-color: transparent;
+    border-color: transparent;
+    color: $primary;
+    &:focus,
+    &:hover {
+      background-color: transparent;
+      border-color: transparent;
+      color: $primary-hover;
+    }
+    &[disabled] {
+      &:focus,
+      &:hover {
         color: $primary;
-        &:focus,
-        &:hover {
-            background-color: transparent;
-            border-color: transparent;
-            color: $primary-hover;
-        }
-        &[disabled] {
-            &:focus,
-            &:hover {
-                color: $primary;
-            }
-        }
+      }
     }
+  }
 }
 
 @each $name, $color in $colors {
-    .button--#{$name} {
-        background: map-get($color, 'font');
-        color: white;
-        border-color: darken(map-get($color, 'font'), 10%);
-        &:focus,
-        &:hover {
-            background-color: darken(map-get($color, 'font'), 10%);
-            border-color: darken(map-get($color, 'font'), 20%);
-        }
+  .button--#{$name} {
+    background: map-get($color, "font");
+    color: white;
+    border-color: darken(map-get($color, "font"), 10%);
+    &:focus,
+    &:hover {
+      background-color: darken(map-get($color, "font"), 10%);
+      border-color: darken(map-get($color, "font"), 20%);
     }
+  }
 }

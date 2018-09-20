@@ -1,113 +1,111 @@
-import _ from 'lodash';
+import _ from "lodash";
 
 let $timeout;
 let $header;
 
 export default class Shortcut {
+  static get $inject() {
+    return ["$injector"];
+  }
 
-    static get $inject() {
-        return ['$injector'];
-    }
+  constructor($injector) {
+    $timeout = $injector.get("$timeout");
+    $header = $injector.get("opendash/services/header");
 
-    constructor($injector) {
-        $timeout = $injector.get('$timeout');
-        $header = $injector.get('opendash/services/header');
+    this.notifications = [];
+  }
 
-        this.notifications = [];
-    }
+  create(input) {
+    const notification = new OpenDashNotification(input, $header, $timeout);
 
-    create(input) {
+    this.notifications.push(notification);
+  }
 
-        const notification = new OpenDashNotification(input, $header, $timeout);
+  delete(notification) {
+    notification.show = false;
+  }
 
-        this.notifications.push(notification);
-    }
+  success(message) {
+    return this.create({
+      message: message,
+      class: "notification--success"
+    });
+  }
 
-    delete(notification) {
-        notification.show = false;
-    }
+  info(message) {
+    return this.create({
+      message: message,
+      class: "notification--info"
+    });
+  }
 
-    success(message) {
-        return this.create({
-            message: message,
-            class: 'notification--success',
-        });
-    }
+  warning(message) {
+    return this.create({
+      message: message,
+      class: "notification--warning"
+    });
+  }
 
-    info(message) {
-        return this.create({
-            message: message,
-            class: 'notification--info',
-        });
-    }
-
-    warning(message) {
-        return this.create({
-            message: message,
-            class: 'notification--warning',
-        });
-    }
-
-    danger(message) {
-        return this.create({
-            message: message,
-            class: 'notification--danger',
-        });
-    }
+  danger(message) {
+    return this.create({
+      message: message,
+      class: "notification--danger"
+    });
+  }
 }
 
 class OpenDashNotification {
-    constructor(input, $header, $timeout) {
+  constructor(input, $header, $timeout) {
+    this.watcher = [];
 
-        this.watcher = [];
+    let defaults = {
+      show: true,
+      focus: false,
+      time: 5000
+    };
 
-        let defaults = {
-            show: true,
-            focus: false,
-            time: 5000,
-        };
-
-        if (_.isString(input)) {
-            _.defaults(this, { message: input }, defaults);
-        }
-
-        if (_.isObject(input)) {
-            _.defaults(this, input, defaults);
-        }
-
-        if (this.time) {
-            $timeout(() => { this.close; }, this.time);
-        }
-
-        if (this.focus) {
-
-            let overlay = $header.createOverlay();
-
-            this.style = { 'z-index': overlay.index + 1 };
-
-            overlay.onClose(() => {
-                if (this.show) {
-                    this.close();
-                }
-            });
-
-            this.onClose(() => {
-                overlay.close();
-            });
-        }
+    if (_.isString(input)) {
+      _.defaults(this, { message: input }, defaults);
     }
 
-    close() {
-        this.show = false;
-        this.watcher.forEach(cb => cb());
+    if (_.isObject(input)) {
+      _.defaults(this, input, defaults);
     }
 
-    onClose(callback) {
-        if (!this.show) {
-            callback();
-            return;
+    if (this.time) {
+      $timeout(() => {
+        this.close;
+      }, this.time);
+    }
+
+    if (this.focus) {
+      let overlay = $header.createOverlay();
+
+      this.style = { "z-index": overlay.index + 1 };
+
+      overlay.onClose(() => {
+        if (this.show) {
+          this.close();
         }
+      });
 
-        this.watcher.push(callback);
+      this.onClose(() => {
+        overlay.close();
+      });
     }
+  }
+
+  close() {
+    this.show = false;
+    this.watcher.forEach(cb => cb());
+  }
+
+  onClose(callback) {
+    if (!this.show) {
+      callback();
+      return;
+    }
+
+    this.watcher.push(callback);
+  }
 }

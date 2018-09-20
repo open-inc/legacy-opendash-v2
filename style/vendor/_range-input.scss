@@ -28,19 +28,29 @@ $range-input-track-border-color: #000 !default;
 $range-input-track-radius: 5px !default;
 $range-input-contrast: 5% !default;
 
-@mixin range-input-shadow($range-input-shadow-size, $range-input-shadow-blur, $range-input-shadow-color) {
-  box-shadow: $range-input-shadow-size $range-input-shadow-size $range-input-shadow-blur $range-input-shadow-color, 0 0 $range-input-shadow-size lighten($range-input-shadow-color, 5%);
+@mixin range-input-shadow(
+  $range-input-shadow-size,
+  $range-input-shadow-blur,
+  $range-input-shadow-color
+) {
+  box-shadow: $range-input-shadow-size $range-input-shadow-size
+      $range-input-shadow-blur $range-input-shadow-color,
+    0 0 $range-input-shadow-size lighten($range-input-shadow-color, 5%);
 }
 
 @mixin range-input-track() {
   width: $range-input-track-width;
   height: $range-input-track-height;
   cursor: pointer;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 @mixin range-input-thumb() {
-  @include range-input-shadow($range-input-thumb-shadow-size, $range-input-thumb-shadow-blur, $range-input-thumb-shadow-color);
+  @include range-input-shadow(
+    $range-input-thumb-shadow-size,
+    $range-input-thumb-shadow-blur,
+    $range-input-thumb-shadow-color
+  );
   border: $range-input-thumb-border-width solid $range-input-thumb-border-color;
   height: $range-input-thumb-height;
   width: $range-input-thumb-width;
@@ -49,7 +59,7 @@ $range-input-contrast: 5% !default;
   cursor: pointer;
 }
 
-[type=range] {
+[type="range"] {
   -webkit-appearance: none;
   margin: $range-input-thumb-height / 2 0;
   width: $range-input-track-width;
@@ -60,16 +70,23 @@ $range-input-contrast: 5% !default;
 
   &::-webkit-slider-runnable-track {
     @include range-input-track();
-    @include range-input-shadow($range-input-track-shadow-size, $range-input-track-shadow-blur, $range-input-track-shadow-color);
+    @include range-input-shadow(
+      $range-input-track-shadow-size,
+      $range-input-track-shadow-blur,
+      $range-input-track-shadow-color
+    );
     background: $range-input-track-color;
-    border: $range-input-track-border-width solid $range-input-track-border-color;
+    border: $range-input-track-border-width solid
+      $range-input-track-border-color;
     border-radius: $range-input-track-radius;
   }
 
   &::-webkit-slider-thumb {
     @include range-input-thumb();
     -webkit-appearance: none;
-    margin-top: ((-$range-input-track-border-width * 2 + $range-input-track-height) / 2) - ($range-input-thumb-height / 2);
+    margin-top: (
+        (-$range-input-track-border-width * 2 + $range-input-track-height) / 2
+      ) - ($range-input-thumb-height / 2);
   }
 
   &:focus::-webkit-slider-runnable-track {
@@ -78,9 +95,14 @@ $range-input-contrast: 5% !default;
 
   &::-moz-range-track {
     @include range-input-track();
-    @include range-input-shadow($range-input-track-shadow-size, $range-input-track-shadow-blur, $range-input-track-shadow-color);
+    @include range-input-shadow(
+      $range-input-track-shadow-size,
+      $range-input-track-shadow-blur,
+      $range-input-track-shadow-color
+    );
     background: $range-input-track-color;
-    border: $range-input-track-border-width solid $range-input-track-border-color;
+    border: $range-input-track-border-width solid
+      $range-input-track-border-color;
     border-radius: $range-input-track-radius;
   }
 
@@ -97,16 +119,26 @@ $range-input-contrast: 5% !default;
   }
 
   &::-ms-fill-lower {
-    @include range-input-shadow($range-input-track-shadow-size, $range-input-track-shadow-blur, $range-input-track-shadow-color);
+    @include range-input-shadow(
+      $range-input-track-shadow-size,
+      $range-input-track-shadow-blur,
+      $range-input-track-shadow-color
+    );
     background: darken($range-input-track-color, $range-input-contrast);
-    border: $range-input-track-border-width solid $range-input-track-border-color;
+    border: $range-input-track-border-width solid
+      $range-input-track-border-color;
     border-radius: $range-input-track-radius * 2;
   }
 
   &::-ms-fill-upper {
-    @include range-input-shadow($range-input-track-shadow-size, $range-input-track-shadow-blur, $range-input-track-shadow-color);
+    @include range-input-shadow(
+      $range-input-track-shadow-size,
+      $range-input-track-shadow-blur,
+      $range-input-track-shadow-color
+    );
     background: $range-input-track-color;
-    border: $range-input-track-border-width solid $range-input-track-border-color;
+    border: $range-input-track-border-width solid
+      $range-input-track-border-color;
     border-radius: $range-input-track-radius * 2;
   }
 

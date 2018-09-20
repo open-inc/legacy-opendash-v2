@@ -1,21 +1,21 @@
 $od-container-width: 100% !default;
 
 .container {
-    margin: 0 auto;
-    min-width: 300px;
-    max-width: $od-container-width;
-    padding: 0 $gutter;
-    position: relative;
-    width: 100%;
+  margin: 0 auto;
+  min-width: 300px;
+  max-width: $od-container-width;
+  padding: 0 $gutter;
+  position: relative;
+  width: 100%;
 }
 
 @media only screen and (max-width: 550px) {
-    .container {
-        margin: 0;
-        min-width: 300px;
-        max-width: $od-container-width;
-        padding: 0;
-        position: relative;
-        width: 100%;
-    }
+  .container {
+    margin: 0;
+    min-width: 300px;
+    max-width: $od-container-width;
+    padding: 0;
+    position: relative;
+    width: 100%;
+  }
 }

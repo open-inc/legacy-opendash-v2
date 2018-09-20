@@ -1,92 +1,93 @@
-import _ from 'lodash';
+import _ from "lodash";
 
-import template from './select-step.component.html';
-
-let $data;
+import template from "./select-step.component.html";
 
 class controller {
+  static get $inject() {
+    return [];
+  }
 
-    static get $inject() {
-        return [];
+  constructor() {
+    this.currentStep = 0;
+    this.steps = [];
+  }
+
+  $onInit() {
+    if (!_.isArray(this.config)) {
+      throw new Error(
+        "Bad usage of od-select-step config attribute. Must be an Array."
+      );
     }
 
-    constructor() {
-        this.currentStep = 0;
-        this.steps = [];
+    if (!_.isFunction(this.watch)) {
+      throw new Error(
+        "Bad usage of od-select-step watch attribute. Must be a Function."
+      );
     }
 
-    $onInit() {
-        if (!_.isArray(this.config)) {
-            throw new Error('Bad usage of od-select-step config attribute. Must be an Array.');
-        }
+    this.steps.push(...this.config);
 
-        if (!_.isFunction(this.watch)) {
-            throw new Error('Bad usage of od-select-step watch attribute. Must be a Function.');
-        }
+    this.ready = true;
+  }
 
-        this.steps.push(...this.config);
+  get current() {
+    return this.currentStep;
+  }
 
-        this.ready = true;
+  set current(value) {
+    this.currentStep = value;
+  }
+
+  get last() {
+    return this.steps.length - 1;
+  }
+
+  getCurrent() {
+    return this.steps[this.currentStep];
+  }
+
+  navigate(step) {
+    if (step === "next") {
+      return this.navigate(this.currentStep + 1);
+    } else if (step === "prev") {
+      return this.navigate(this.currentStep - 1);
     }
 
-    get current() {
-        return this.currentStep;
+    if (step < 0) {
+      return this.navigate(0);
     }
 
-    set current(value) {
-        this.currentStep = value;
+    if (step > this.last) {
+      return this.navigate(this.last);
     }
 
-    get last() {
-        return this.steps.length - 1;
+    this.currentStep = step;
+
+    this.watch(step);
+  }
+
+  getNavClass(i) {
+    const base = "od__select-steps__icons__item";
+
+    if (i < this.currentStep) {
+      return `${base}--done`;
     }
 
-    getCurrent() {
-        return this.steps[this.currentStep];
+    if (i === this.currentStep) {
+      return `${base}--active`;
     }
 
-    navigate(step) {
-        if (step === 'next') {
-            return this.navigate(this.currentStep + 1);
-        } else if (step === 'prev') {
-            return this.navigate(this.currentStep - 1);
-        }
-
-        if (step < 0) {
-            return this.navigate(0);
-        }
-
-        if (step > this.last) {
-            return this.navigate(this.last);
-        }
-
-        this.currentStep = step;
-
-        this.watch(step);
-    }
-
-    getNavClass(i) {
-        const base = 'od__select-steps__icons__item';
-
-        if (i < this.currentStep) {
-            return `${base}--done`;
-        }
-
-        if (i === this.currentStep) {
-            return `${base}--active`;
-        }
-
-        return '';
-    }
+    return "";
+  }
 }
 
 let component = {
-    controller,
-    template,
-    bindings: {
-        config: '<',
-        watch: '<',
-    },
+  controller,
+  template,
+  bindings: {
+    config: "<",
+    watch: "<"
+  }
 };
 
 export default component;

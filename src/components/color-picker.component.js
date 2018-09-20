@@ -1,64 +1,66 @@
-import Logger from '../helper/logger';
+import Logger from "../helper/logger";
 
-const logger = Logger('od.ui.color-picker');
+const logger = Logger("od.ui.color-picker");
 
-import template from './color-picker.component.html';
-import COLORS from './colors.array';
+import template from "./color-picker.component.html";
+import COLORS from "./colors.array";
 
-import _ from 'lodash';
+import _ from "lodash";
 
 const MOUSE_POS = {};
 
-document.addEventListener('mousemove', onMouseUpdate, false);
-document.addEventListener('mouseenter', onMouseUpdate, false);
+document.addEventListener("mousemove", onMouseUpdate, false);
+document.addEventListener("mouseenter", onMouseUpdate, false);
 
 function onMouseUpdate(e) {
-    MOUSE_POS.x = e.pageX;
-    MOUSE_POS.y = e.pageY;
+  MOUSE_POS.x = e.pageX;
+  MOUSE_POS.y = e.pageY;
 }
 
 class controller {
-    constructor() {
-        this.colors = _.uniq(COLORS);
+  constructor() {
+    this.colors = _.uniq(COLORS);
 
-        this.active = false;
+    this.active = false;
+  }
+
+  $onInit() {
+    if (this.color) {
+      if (!this.validateHex(this.color)) {
+        logger.warn(
+          "Bad usage of od-color-picker default attribute. Must be a Hex Color."
+        );
+      }
+    } else {
+      this.color = COLORS[0];
     }
+  }
 
-    $onInit() {
-        if (this.color) {
-            if (!this.validateHex(this.color)) {
-                logger.warn('Bad usage of od-color-picker default attribute. Must be a Hex Color.');
-            }
-        } else {
-            this.color = COLORS[0];
-        }
-    }
+  togglePicker() {
+    this.active = !this.active;
 
-    togglePicker() {
-        this.active = !this.active;
+    this.pickerStyle = {
+      top: MOUSE_POS.y,
+      left: MOUSE_POS.x
+    };
+  }
 
-        this.pickerStyle = {
-            top: MOUSE_POS.y,
-            left: MOUSE_POS.x,
-        };
-    }
+  select(color) {
+    this.color = color;
+    this.togglePicker();
+  }
 
-    select(color) {
-        this.color = color;
-        this.togglePicker();
-    }
-
-    validateHex() {
-        return true;
-    }
+  validateHex() {
+    return true;
+  }
 }
 
 let component = {
-    controller,
-    template,
-    bindings: {
-        color: '=',
-    },
+  controller,
+  template,
+  bindings: {
+    color: "="
+  }
 };
 
 export default component;

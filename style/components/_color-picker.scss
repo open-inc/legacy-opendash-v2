@@ -4,58 +4,57 @@ $od-color-picker-rows: 14 !default;
 $od-color-picker-item-size: 20px !default;
 
 od-color-picker {
+  display: inline-block;
 
-    display: inline-block;
+  height: $od-color-picker-height;
+  width: $od-color-picker-height + $od-color-picker-input-width;
 
+  .selection {
+    position: relative;
     height: $od-color-picker-height;
-    width: $od-color-picker-height + $od-color-picker-input-width;
+    width: 100%;
+    height: 3.8rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
 
-    .selection {
-        position: relative;
-        height: $od-color-picker-height;
-        width: 100%;
-        height: 3.8rem;
-        margin-bottom: 1.5rem;
-        cursor: pointer;
-
-        &-input {
-            // width: 110px;
-            text-align: center;
-            border: 0;
-            border-bottom: 2px solid $od-color-border;
-        }
-
-        &-preview {
-            display: block;
-
-            position: absolute;
-            bottom: 0px;
-            right: 5px;
-
-            height: $od-color-picker-height;
-            width: $od-color-picker-height;
-
-            border: .1rem solid $od-color-border;
-            // margin-top: 1.1rem;
-        }
+    &-input {
+      // width: 110px;
+      text-align: center;
+      border: 0;
+      border-bottom: 2px solid $od-color-border;
     }
 
-    .picker {
-        @extend .clearfix;
+    &-preview {
+      display: block;
 
-        position: absolute;
-        background: black;
-        width: $od-color-picker-rows * $od-color-picker-item-size + 4px;
-        padding: 2px;
+      position: absolute;
+      bottom: 0px;
+      right: 5px;
 
-        z-index: 5010;
+      height: $od-color-picker-height;
+      width: $od-color-picker-height;
+
+      border: 0.1rem solid $od-color-border;
+      // margin-top: 1.1rem;
     }
-    
-    .picker-item {
-        display: block;
-        cursor: pointer;
-        float: left;
-        width: $od-color-picker-item-size;
-        height: $od-color-picker-item-size;
-    }
+  }
+
+  .picker {
+    @extend .clearfix;
+
+    position: absolute;
+    background: black;
+    width: $od-color-picker-rows * $od-color-picker-item-size + 4px;
+    padding: 2px;
+
+    z-index: 5010;
+  }
+
+  .picker-item {
+    display: block;
+    cursor: pointer;
+    float: left;
+    width: $od-color-picker-item-size;
+    height: $od-color-picker-item-size;
+  }
 }

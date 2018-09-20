@@ -1,16 +1,13 @@
-import template from './opendash.component.html';
+import template from "./opendash.component.html";
 
 class controller {
-
-    constructor() {
-    }
+  constructor() {}
 }
 
 let component = {
-    controller,
-    template,
-    bindings: {
-    },
+  controller,
+  template,
+  bindings: {}
 };
 
 export default component;

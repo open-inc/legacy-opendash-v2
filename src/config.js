@@ -1,8 +1,7 @@
 function config($sceDelegateProvider) {
-
-    $sceDelegateProvider.resourceUrlWhitelist(['**']);
+  $sceDelegateProvider.resourceUrlWhitelist(["**"]);
 }
 
-config.$inject = ['$sceDelegateProvider'];
+config.$inject = ["$sceDelegateProvider"];
 
 export default config;
