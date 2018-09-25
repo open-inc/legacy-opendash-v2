@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import Logger from "../helper/logger";
 
 const logger = Logger("opendash/services/user");
@@ -123,7 +125,7 @@ export default class UserService {
     };
 
     this.getData = key => {
-      if (logging) logger.log("Method Call: getData()");
+      if (logging) logger.log(`Method Call: getData(${key})`);
 
       return $q
         .resolve(adapter.getData(key))
@@ -139,7 +141,7 @@ export default class UserService {
     };
 
     this.setData = (key, value) => {
-      if (logging) logger.log("Method Call: setData()");
+      if (logging) logger.log(`Method Call: setData(${key})`);
 
       return $q
         .resolve(adapter.setData(key, JSON.stringify(value)))
@@ -219,58 +221,82 @@ export default class UserService {
           let result = await adapter.deleteDashboard(id);
           return result;
         } else {
-          return await this.getData(`dashboard:${id}`);
+          let meta = await this.getData(`dashboard`);
+
+          _.pull(meta.dashboards, id);
+
+          await this.setData(`dashboard`, meta);
+          await this.setData(`dashboard:${id}`, null);
+
+          return true;
         }
       } catch (error) {
         logger.error(error);
       }
     };
 
-    this.createDashboard = async ({
-      name = "Home",
-      widgets = [],
-      id = uuidv4(),
-      version = 2
-    }) => {
+    this.createDashboard = async dashboard => {
       if (logging) logger.log("Method Call: createDashboard()");
 
       try {
         if (adapter.createDashboard) {
-          let result = await adapter.createDashboard({
-            name,
-            widgets,
-            id,
-            version
-          });
-          return result;
+          return await adapter.createDashboard(dashboard);
         } else {
           let meta = await this.getData(`dashboard`);
 
-          if (meta.version === version) {
-            if (!meta.dashboards) {
-              meta.dashboards = [];
-            }
-
-            meta.dashboards.push(id);
-
-            await this.setData(`dashboard`, meta);
+          if (!dashboard.id) {
+            dashboard.id = uuidv4();
           }
 
-          await this.setData(`dashboard:${id}`, {
-            id,
-            version,
-            name,
-            widgets
-          });
+          if (!meta.dashboards) {
+            meta.dashboards = [];
+          }
 
-          return id;
+          meta.dashboards.push(dashboard.id);
+
+          await this.setData(`dashboard`, meta);
+
+          await this.setData(`dashboard:${dashboard.id}`, dashboard);
+
+          return dashboard.id;
         }
       } catch (error) {
         logger.error(error);
       }
     };
 
+    this.getCurrentLocations = async () => {
+      if (logging) logger.log("Method Call: getCurrentLocations()");
+
+      try {
+        if (adapter.getCurrentLocations) {
+          return await adapter.getCurrentLocations();
+        } else {
+          return await this.getData("location:current");
+        }
+      } catch (error) {
+        logger.error(error);
+        return null;
+      }
+    };
+
+    this.setCurrentLocations = async ids => {
+      if (logging) logger.log("Method Call: setCurrentLocations()");
+
+      try {
+        if (adapter.setCurrentLocations) {
+          return await adapter.setCurrentLocations(ids);
+        } else {
+          return await this.setData("location:current", ids);
+        }
+      } catch (error) {
+        logger.error(error);
+        return null;
+      }
+    };
+
     const optionalMethods = [
+      "listLocations",
       "listUsers",
       "shareDashboardWithUser",
       "listSharedData",
@@ -284,7 +310,14 @@ export default class UserService {
       if (adapter[method] && typeof adapter[method] === "function") {
         this[method] = async (...args) => {
           if (logging) logger.log(`Method Call: ${method}()`);
-          return await adapter[method](...args);
+          try {
+            return await adapter[method](...args);
+          } catch (error) {
+            logger.assert(
+              false,
+              `Error on method call: ${method}() \n ${error}`
+            );
+          }
         };
       }
     }

@@ -43,7 +43,7 @@ class controller {
   createDashboard() {
     this.$modal.prompt("od.header.dashboards.create_prompt").then(response => {
       if (response) {
-        this.$dashboard.changeDashboard(response);
+        this.$dashboard.createDashboard(response);
       }
     });
   }

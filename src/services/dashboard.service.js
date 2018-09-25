@@ -1,19 +1,14 @@
 import _ from "lodash";
 
 import OpenDashDashboard from "../classes/Dashboard";
-import OpenDashDashboardStore from "../classes/DashboardStore";
-import OpenDashWidget from "../classes/Widget";
 
 import Observable from "../helper/observable.class";
 import Logger from "../helper/logger";
 
 const logger = Logger("opendash/services/dashboard");
-
-let reload = true;
-
 let $user;
+let $location;
 let $event;
-let $env;
 let $notification;
 
 let $timeout;
@@ -29,14 +24,12 @@ export default class Dashboard {
 
   constructor($injector) {
     $user = $injector.get("opendash/services/user");
+    $location = $injector.get("opendash/services/location");
     $event = $injector.get("opendash/services/event");
-    $env = $injector.get("opendash/services/env");
     $notification = $injector.get("opendash/services/notification");
     $timeout = $injector.get("$timeout");
     $scope = $injector.get("$rootScope");
     $q = $injector.get("$q");
-
-    reload = $env("OD-DASHBOARD-RELOAD", null, true);
 
     this.widgetActions = [];
 
@@ -44,8 +37,11 @@ export default class Dashboard {
     this.dashboards = [];
 
     this.init();
+    this.initOnce();
     this.initGridsterConfig();
     this.initWidgetResizeEvent();
+
+    $location.onChange(() => this.init());
   }
 
   get data() {
@@ -71,9 +67,38 @@ export default class Dashboard {
     );
   }
 
+  get editMode() {
+    return (
+      this.gridsterConfig.draggable.enabled &&
+      this.gridsterConfig.resizable.enabled
+    );
+  }
+
+  set editMode(value) {
+    if (this.editMode === value) {
+      return;
+    }
+
+    this.gridsterConfig.draggable.enabled = value;
+    this.gridsterConfig.resizable.enabled = value;
+
+    $event.emit("od-dashboard-editmode-toggle");
+
+    if (value) {
+      $event.emit("od-dashboard-editmode-enabled");
+    } else {
+      $event.emit("od-dashboard-editmode-disabled");
+    }
+  }
+
   async init() {
+    if (this.initializing) return;
+    this.initializing = true;
+    this.ready = false;
+
     try {
       await $user.wait();
+      await $location.wait();
 
       this.meta = await $user.getData("dashboard");
 
@@ -90,10 +115,12 @@ export default class Dashboard {
         let def = null;
 
         for (let name of Object.keys(this.meta.dashboards)) {
-          let id = await $user.createDashboard({
-            name,
-            widgets: this.meta.dashboards[name].widgets
-          });
+          let id = await $user.createDashboard(
+            new OpenDashDashboard({
+              name,
+              widgets: this.meta.dashboards[name].widgets
+            })
+          );
 
           if (name === this.meta.default) {
             def = id;
@@ -111,18 +138,59 @@ export default class Dashboard {
         await $user.setData("dashboard", this.meta);
       }
 
+      // get current location
+      let location = await $location.current;
+
+      // get all dashboards
       let dashboards = await $user.listDashboards();
+
+      console.log("--------------");
+      console.log(dashboards);
 
       // Check if there are no dashboards
       if (dashboards.length === 0) {
-        await $user.createDashboard({ name: "Home" });
-        dashboards = await $user.listDashboards();
+        dashboards[0] = await $user.createDashboard(
+          new OpenDashDashboard({
+            name: "Home",
+            location: location[0].id
+          }).toJSON()
+        );
       }
 
-      // load the all dashboards
-      this.dashboards = await Promise.all(
+      // load all dashboards
+      dashboards = await Promise.all(
         dashboards.map(id => $user.getDashboard(id))
       );
+
+      // Create instances of OpenDashDashboard from the dashboards
+      dashboards.map(dashboard => new OpenDashDashboard(dashboard));
+
+      // Filter dashboards by location
+      console.log(location && location[0]);
+      if (location && location[0]) {
+        dashboards = dashboards.filter(
+          dashboard => dashboard.location === location[0].id
+        );
+
+        // Check if there still dashboards
+        if (dashboards.length === 0) {
+          dashboards[0] = await $user.createDashboard(
+            new OpenDashDashboard({
+              name: "Home",
+              location: location[0].id
+            }).toJSON()
+          );
+
+          dashboards = await Promise.all(
+            dashboards.map(id => $user.getDashboard(id))
+          );
+
+          // Create instances of OpenDashDashboard from the dashboards
+          dashboards.map(dashboard => new OpenDashDashboard(dashboard));
+        }
+      }
+
+      this.dashboards = dashboards;
 
       // get the id of the current dashboard
       let cid = this.ls || this.meta.default;
@@ -147,6 +215,18 @@ export default class Dashboard {
 
       $event.emit("od-dashboard-ready");
 
+      await $q.resolve();
+    } catch (error) {
+      logger.error(error);
+      $notification.danger("od.dashboard.errors.init");
+      await $q.resolve();
+    }
+
+    this.initializing = false;
+  }
+
+  async initOnce() {
+    try {
       this.observable = new Observable(this.current);
 
       this.observable.onChange(() => {
@@ -176,8 +256,11 @@ export default class Dashboard {
 
   async createDashboard(name) {
     try {
-      this.ls = await $user.createDashboard({ name });
-      if (reload) location.reload();
+      let location = $location.current ? $location.current.id : null;
+      let dashboard = new OpenDashDashboard({ name, location });
+      this.ls = await $user.createDashboard(dashboard);
+
+      this.init();
     } catch (error) {
       logger.error(error);
       $notification.danger("od.dashboard.errors.create");
@@ -188,7 +271,8 @@ export default class Dashboard {
     try {
       if (id === this.ls) return;
       this.ls = id;
-      if (reload) location.reload();
+
+      this.init();
     } catch (error) {
       logger.error(error);
       $notification.danger("od.dashboard.errors.change");
@@ -199,40 +283,11 @@ export default class Dashboard {
     try {
       await $user.deleteDashboard(this.current.id);
 
-      if (reload) location.reload();
+      this.init();
     } catch (error) {
       logger.error(error);
       $notification.danger("od.dashboard.errors.delete");
     }
-
-    let currentDashboard = this.ls || this.data.default;
-
-    logger.log(`Dashboard selected: ${currentDashboard}`);
-
-    this.data.current = currentDashboard;
-
-    this.ready = true;
-
-    $event.emit("od-dashboard-ready");
-
-    this.observable = new Observable(this.data);
-
-    this.observable.onChange(() => {
-      $event.emit("od-dashboard-changed");
-      $event.emit("od-widgets-changed");
-    });
-
-    $event.on(
-      [
-        "od-dashboard-changed",
-        "od-widgets-created",
-        "od-widgets-removed",
-        "od-dashboard-editmode-disabled"
-      ],
-      () => {
-        this.save();
-      }
-    );
   }
 
   setDashboardOnEmptyAction(action) {
@@ -287,12 +342,7 @@ export default class Dashboard {
   }
 
   initWidgetResizeEvent() {
-    // $(window).resize(event => {
-    //   $event.emit('od-widgets-resize');
-    // });
-
     $event.on(["od-widgets-resize", "od-widgets-changed"], () => {
-      //logger.log("RESIZE");
       if (
         navigator.userAgent.indexOf("MSIE") !== -1 ||
         navigator.appVersion.indexOf("Trident/") > 0
@@ -332,45 +382,15 @@ export default class Dashboard {
     return true;
   }
 
-  toggleEditMode() {
-    const isEditMode = this.getEditMode();
-
-    if (isEditMode) {
-      if (
-        navigator.userAgent.indexOf("MSIE") !== -1 ||
-        navigator.appVersion.indexOf("Trident/") > 0
-      ) {
-        let evt = document.createEvent("UIEvents");
-        evt.initUIEvent("resize", true, false, window, 0);
-        window.dispatchEvent(evt);
-      } else {
-        window.dispatchEvent(new Event("resize"));
-      }
-    }
-
-    this.gridsterConfig.draggable.enabled = !isEditMode;
-    this.gridsterConfig.resizable.enabled = !isEditMode;
-
-    $event.emit("od-dashboard-editmode-toggle");
-
-    if (this.gridsterConfig.draggable.enabled) {
-      $event.emit("od-dashboard-editmode-enabled");
-    } else {
-      $event.emit("od-dashboard-editmode-disabled");
-    }
-  }
-
-  getEditMode() {
-    return (
-      this.gridsterConfig.draggable.enabled &&
-      this.gridsterConfig.resizable.enabled
-    );
-  }
-
-  save() {
-    return $user.setDashboard(this.current).then(data => {
+  async save() {
+    try {
+      await $user.setDashboard(this.current);
       $event.emit("od-dashboard-save");
       return true;
-    });
+    } catch (error) {
+      $notification.danger("od.dashboard.errors.save");
+      logger.error(error);
+      return false;
+    }
   }
 }

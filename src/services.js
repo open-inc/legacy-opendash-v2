@@ -1,4 +1,5 @@
 import userService from "./services/user.service";
+import locationService from "./services/location.service";
 import dataService from "./services/data.service";
 import eventService from "./services/event.service";
 import dashboardService from "./services/dashboard.service";
@@ -11,6 +12,7 @@ import routerService from "./services/router.service";
 
 export default [
   ["user", userService],
+  ["location", locationService],
   ["data", dataService],
   ["event", eventService],
   ["modal", modalService],

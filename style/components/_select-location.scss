@@ -1,0 +1,60 @@
+od-select-location {
+  $steps: 4;
+  $gutter: 16px;
+  $modal-padding: 20px;
+  $active-color: $primary;
+  $item-height: 40px;
+
+  display: block;
+
+  .od-select-location {
+    background: $od-color-background-light;
+
+    &__search {
+      &__input {
+      }
+    }
+
+    &__item {
+      height: $item-height;
+      line-height: $item-height; // margin-bottom: $gutter/2;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      &:hover {
+        background: rgba(0, 0, 0, 0.02);
+      }
+      &:not(:last-child) {
+        border-bottom-width: 0px;
+      }
+      &__name {
+        margin-right: $item-height;
+        height: $item-height;
+        padding: 0 $gutter;
+        i {
+          color: rgba(0, 0, 0, 0.4);
+          margin-left: 4px;
+        }
+      }
+      &__check {
+        float: right;
+        height: $item-height;
+        width: $item-height;
+        padding: 0 $gutter/2;
+        text-align: right;
+        font-size: 1.2em;
+        color: $active-color;
+        i {
+          height: $item-height;
+          line-height: $item-height;
+        }
+      }
+    }
+    &--clear:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    &--active {
+      color: $active-color;
+    }
+  }
+}

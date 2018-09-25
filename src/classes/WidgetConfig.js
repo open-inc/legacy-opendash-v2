@@ -1,34 +1,33 @@
 export default class OpenDashWidgetConfig {
-    constructor(data) {
-        this.listener = new Map();
-        this.data = (_.isObject(data)) ? data : {};
+  constructor(data) {
+    this.listener = new Map();
+    this.data = _.isObject(data) ? data : {};
+  }
+
+  watch(key, callback) {
+    if (_.isArray(key)) {
+      return key.forEach(k => this.watch(k, callback));
     }
 
-    watch(key, callback) {
-        if (_.isArray(key)) {
-            return key.forEach(k => this.watch(k, callback));
-        }
-
-        if (!this.listener.has(key)) {
-            this.listener.set(key, [callback]);
-        } else {
-            this.listener.get(key).push(callback);
-        }
-
-        callback(this.data[key]);
+    if (!this.listener.has(key)) {
+      this.listener.set(key, [callback]);
+    } else {
+      this.listener.get(key).push(callback);
     }
 
-    notify(key, value, oldValue) {
-        if (this.listener.has(key)) {
-            this.listener.get(key).forEach(callback => callback(value, oldValue));
-        }
-    }
+    callback(this.data[key]);
+  }
 
-    toJSON() {
-        return this.data;
+  notify(key, value, oldValue) {
+    if (this.listener.has(key)) {
+      this.listener.get(key).forEach(callback => callback(value, oldValue));
     }
+  }
+
+  toJSON() {
+    return this.data;
+  }
 }
-
 
 /*  Use:
 

@@ -1,0 +1,26 @@
+<div ng-if="$ctrl.config.search" class="od-select-location__search">
+    <input type="search" class="od-select-location__search__input" ng-model="$ctrl.searchText" ng-change="$ctrl.searchOnChange()"
+        placeholder="{{ 'od.select.item.search' | translate }}" aria-label="{{ 'od.select.item.search' | translate }}">
+</div>
+
+<div ng-if="!$ctrl.config.dropdown" class="od-select-location" ng-style="$ctrl.style">
+    <div ng-if="!$ctrl.vo" class="od-select-location__item" ng-repeat="item in $ctrl.items track by $index" ng-click="$ctrl.toggleSelected(item.id)">
+        <div class="od-select-location__item__check" ng-show="$ctrl.isSelected(item.id)">
+            <i class="fa fa-check" aria-hidden="true"></i>
+        </div>
+        <div class="od-select-location__item__name">
+            {{ item.name }}
+
+            <i>
+                {{ item.data.address }}
+            </i>
+        </div>
+    </div>
+</div>
+
+<div ng-show="$ctrl.items.length === 0">
+    {{ 'od.select.location.empty' | translate }}
+</div>
+
+<select ng-if="$ctrl.config.dropdown" ng-model="$ctrl.dropdownValue" ng-change="$ctrl.dropdownOnChange()" ng-options="option.name for option in $ctrl.dropdownOptions track by option.id">
+</select>

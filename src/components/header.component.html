@@ -47,9 +47,8 @@
                     </div>
                 </nav>
             </section>
-            <a ng-click="$ctrl.$dashboard.toggleEditMode()">
-                <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.getEditMode(), 'fa-floppy-o': $ctrl.$dashboard.getEditMode()}"
-                    aria-hidden="true"></i>
+            <a ng-click="$ctrl.$dashboard.editMode = !$ctrl.$dashboard.editMode">
+                <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.editMode, 'fa-floppy-o': $ctrl.$dashboard.editMode}" aria-hidden="true"></i>
             </a>
             <a ng-repeat="link in $ctrl.topbarItems track by $index" ng-click="link.action()">
                 <i class="fa {{ link.icon }}" aria-hidden="true"></i>
@@ -65,8 +64,8 @@
             -->
             <!-- </od-sidebar> -->
             <!-- <div class="float-right">
-                <a ng-show="$ctrl.$user.auth" style="line-height: 40px;font-size: 30px;" ng-click="$ctrl.$dashboard.toggleEditMode()">
-                    <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.getEditMode(), 'fa-floppy-o': $ctrl.$dashboard.getEditMode()}"
+                <a ng-show="$ctrl.$user.auth" style="line-height: 40px;font-size: 30px;" ng-click="$ctrl.$dashboard.editMode = !$ctrl.$dashboard.editMode">
+                    <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.editMode, 'fa-floppy-o': $ctrl.$dashboard.editMode}"
                         aria-hidden="true"></i>
                 </a>
                 <a ng-show="$ctrl.$user.auth" style="line-height: 40px;font-size: 30px;" ng-click="link.action()" ng-repeat="link in $ctrl.$header.topbar">
@@ -80,7 +79,8 @@
     <main>
         <section>
             <header>{{ 'od.header.dashboards.header' | translate }}</header>
-            <a ui-sref="od.dashboard.home" ng-repeat="db in $ctrl.$dashboard.dashboards" ng-click="$ctrl.$dashboard.changeDashboard(db.id)">{{ db.name }}</a>
+            <a ui-sref="od.dashboard.home" ng-repeat="db in $ctrl.$dashboard.dashboards" ng-click="$ctrl.$dashboard.changeDashboard(db.id)">{{
+                db.name }}</a>
         </section>
         <section>
             <header>{{ 'od.header.dashboards.manage' | translate }}</header>
