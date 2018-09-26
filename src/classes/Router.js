@@ -1,5 +1,9 @@
 import Route from "./Route";
 
+import Logger from "../helper/logger";
+
+const logger = Logger("opendash/services/router");
+
 export default class OpenDashRouter {
   constructor() {
     this.path = "/";
@@ -14,7 +18,7 @@ export default class OpenDashRouter {
   }
 
   go(path) {
-    // console.log(`[opendash/core/router] Route go: ${path}`);
+    logger.log(`[opendash/core/router] Route go: ${path}`);
     if (path !== this.path) {
       this.path = path;
 
@@ -41,7 +45,7 @@ export default class OpenDashRouter {
       params: params
     };
 
-    // console.log(`[opendash/core/router] Route go: ${this.path}`);
+    logger.log(`[opendash/core/router] Route go: ${this.path}`);
     this.observer.forEach(cb => cb(this.current));
   }
 
@@ -64,7 +68,11 @@ export default class OpenDashRouter {
 
     this.routes.push(new Route(name, path, component));
 
-    // console.log(`[opendash/core/router] Route Added: #${this.routes.length} ${name} (default: ${this.default})`);
+    logger.log(
+      `[opendash/core/router] Route Added: #${
+        this.routes.length
+      } ${name} (default: ${this.default})`
+    );
   }
 
   getByName(name) {

@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 import OpenDashDashboard from "../classes/Dashboard";
 
 import Observable from "../helper/observable.class";
@@ -139,20 +137,17 @@ export default class Dashboard {
       }
 
       // get current location
-      let location = await $location.current;
+      let location = await $location.currentHash;
 
       // get all dashboards
       let dashboards = await $user.listDashboards();
-
-      console.log("--------------");
-      console.log(dashboards);
 
       // Check if there are no dashboards
       if (dashboards.length === 0) {
         dashboards[0] = await $user.createDashboard(
           new OpenDashDashboard({
             name: "Home",
-            location: location[0].id
+            location
           }).toJSON()
         );
       }
@@ -166,10 +161,9 @@ export default class Dashboard {
       dashboards.map(dashboard => new OpenDashDashboard(dashboard));
 
       // Filter dashboards by location
-      console.log(location && location[0]);
       if (location && location[0]) {
         dashboards = dashboards.filter(
-          dashboard => dashboard.location === location[0].id
+          dashboard => dashboard.location === location
         );
 
         // Check if there still dashboards
@@ -177,7 +171,7 @@ export default class Dashboard {
           dashboards[0] = await $user.createDashboard(
             new OpenDashDashboard({
               name: "Home",
-              location: location[0].id
+              location
             }).toJSON()
           );
 
@@ -205,6 +199,13 @@ export default class Dashboard {
 
       this.current = new OpenDashDashboard(current);
 
+      this.observable = new Observable(this.current);
+
+      this.observable.onChange(() => {
+        $event.emit("od-dashboard-changed");
+        $event.emit("od-widgets-changed");
+      });
+
       this.ls = current.id;
 
       logger.log(
@@ -227,13 +228,6 @@ export default class Dashboard {
 
   async initOnce() {
     try {
-      this.observable = new Observable(this.current);
-
-      this.observable.onChange(() => {
-        $event.emit("od-dashboard-changed");
-        $event.emit("od-widgets-changed");
-      });
-
       $event.on(
         [
           "od-dashboard-changed",
@@ -256,7 +250,7 @@ export default class Dashboard {
 
   async createDashboard(name) {
     try {
-      let location = $location.current ? $location.current.id : null;
+      let location = $location.currentHash;
       let dashboard = new OpenDashDashboard({ name, location });
       this.ls = await $user.createDashboard(dashboard);
 

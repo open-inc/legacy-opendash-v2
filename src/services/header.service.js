@@ -1,6 +1,10 @@
 import _ from "lodash";
 import defaultLogo from "../assets/opendash.png";
 
+import Logger from "../helper/logger";
+
+const logger = Logger("opendash/services/header");
+
 let $event;
 let $router;
 
@@ -93,7 +97,7 @@ export default class HeaderService {
   }
 
   setOverlay(input) {
-    console.warn("Depricated: [opendash/services/header] setOverlay()"); // eslint-disable-line
+    logger.warn("Depricated: [opendash/services/header] setOverlay()"); // eslint-disable-line
 
     if (input) {
       this.navOverlay.open();
@@ -103,13 +107,13 @@ export default class HeaderService {
   }
 
   onOverlayOpen(fn) {
-    console.warn("Depricated: [opendash/services/header] onOverlayOpen()"); // eslint-disable-line
+    logger.warn("Depricated: [opendash/services/header] onOverlayOpen()"); // eslint-disable-line
 
     $event.on("od-header-overlay-open", fn);
   }
 
   onOverlayClose(fn) {
-    console.warn("Depricated: [opendash/services/header] onOverlayClose()"); // eslint-disable-line
+    logger.warn("Depricated: [opendash/services/header] onOverlayClose()"); // eslint-disable-line
 
     $event.on("od-header-overlay-close", fn);
   }

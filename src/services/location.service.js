@@ -20,6 +20,7 @@ export default class LocationService {
     this.loading = true;
     this.supported = false;
     this.current = null;
+    this.currentHash = null;
     this.locations = [];
 
     this.init();
@@ -49,6 +50,22 @@ export default class LocationService {
 
       if (!current) {
         current = [locations[0].id];
+      }
+
+      logger.assert(_.isArray(locations), "Locations must be an Array.");
+
+      logger.assert(
+        locations.length > 0,
+        "There must be at least one location."
+      );
+
+      for (const loc of locations) {
+        logger.assert(_.isObject(loc), "Each location must be an Object.");
+
+        logger.assert(
+          _.isObject(loc),
+          "Each location must have an id attribute."
+        );
       }
 
       this.locations.push(...locations);
@@ -81,6 +98,24 @@ export default class LocationService {
       "Setting the current location failed. ids must be an Array."
     );
 
+    if (ids.length < 1) {
+      logger.log(
+        "Setting the current location failed. ids must have at least one entry."
+      );
+      return;
+    }
+
+    ids = _.sortBy(ids);
+
+    let newHash = ids.join(",");
+
+    if (this.currentHash === newHash) {
+      logger.log(
+        "Setting the current location failed. ids must not be the same as before."
+      );
+      return;
+    }
+
     let locations = ids.map(id =>
       this.locations.find(location => location.id === id)
     );
@@ -92,11 +127,18 @@ export default class LocationService {
       );
     });
 
-    logger.log(`Locations set (${ids.join(",")})`);
-
     this.current = locations;
+    this.currentHash = newHash;
+
+    logger.log(`Locations set (${this.currentHash})`);
 
     this.observer.forEach(async observer => observer(this.current));
+
+    for (const observer of this.observer) {
+      observer().then(null, error => {
+        logger.error("Error in observer: \n", error);
+      });
+    }
 
     $user.setCurrentLocations(ids).then(null, error => logger.error(error));
   }

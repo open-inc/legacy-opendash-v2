@@ -3,7 +3,7 @@ import "javascript-detect-element-resize";
 import angular from "angular";
 import "angular-gridster";
 
-import classes from "./classes";
+import classes from "../classes";
 
 import angularTranslate from "angular-translate";
 

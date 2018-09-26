@@ -121,11 +121,7 @@ class controller {
   }
 
   triggerWatch() {
-    if (this.config.multi) {
-      this.watch(this.output);
-    } else {
-      this.watch(this.output[0] || undefined);
-    }
+    this.watch(this.output);
   }
 }
 

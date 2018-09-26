@@ -29,4 +29,33 @@ export default class OpenDashConfig {
 
     lodash.merge(this.config, obj);
   }
+
+  toJSON() {
+    return this.config;
+  }
+
+  toString() {
+    return (
+      "OpenDashConfig: \n" +
+      lodash
+        .map(flatten(this.config), (value, key) => `- ${key}: ${value}`)
+        .join("\n")
+    );
+  }
+}
+
+function flatten(object, separator = ".") {
+  return Object.assign(
+    {},
+    ...(function _flatten(child, path = []) {
+      return [].concat(
+        ...Object.keys(child).map(
+          key =>
+            typeof child[key] === "object"
+              ? _flatten(child[key], path.concat([key]))
+              : { [path.concat([key]).join(separator)]: child[key] }
+        )
+      );
+    })(object)
+  );
 }

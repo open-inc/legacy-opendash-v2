@@ -8,7 +8,7 @@ const logger = Logger("opendash/services/data");
 
 import defaultIcon from "file-loader!../assets/default-item.svg";
 
-let $timeout, $q, $user, $env;
+let $timeout, $q, $user, $env, $location;
 
 const $store = new Map();
 const $root = [];
@@ -26,6 +26,7 @@ export default class OpenDashDataService {
     $q = $injector.get("$q");
     $timeout = $injector.get("$timeout");
     $user = $injector.get("opendash/services/user");
+    $location = $injector.get("opendash/services/location");
     $env = $injector.get("opendash/services/env");
 
     valueValidation = $env("OD-DATA-VALIDATION", null, true);
@@ -34,7 +35,7 @@ export default class OpenDashDataService {
 
     const adapters = $injector
       .get("od.adapter.register")
-      .map(AdapterFactory => new AdapterFactory({}, $user));
+      .map(AdapterFactory => new AdapterFactory({}, { $user, $location }));
 
     const promises = adapters.map(adapter =>
       adapter.init(new OpenDashDataContext(adapter))
@@ -634,10 +635,6 @@ class OpenDashDataContext {
       oldItem.notify("name", newItem.name, oldItem.name);
     }
     $store.set(payload.id, newItem);
-    /*
-        console.log("Old:", oldItem);
-        console.log("New:", newItem);
-        */
   }
 
   createContainer(payload) {
