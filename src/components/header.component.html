@@ -103,12 +103,6 @@
             <a ng-click="link.action()" ng-repeat="link in links">{{ link.text | translate }}</a>
         </section>
     </main>
-    <footer>
-        <a ng-click="link.action()" ng-repeat="link in $ctrl.$header.sidebarFooter">
-            <i ng-if="link.icon" class="fa {{ link.icon }}" aria-hidden="true"></i>{{ link.text }}</a>
-        <a ng-click="$ctrl.$user.logout()">
-            <i class="fa fa-sign-out" aria-hidden="true"></i>{{ 'od.auth.logout' | translate }}</a>
-    </footer>
 </od-sidebar>
 
 <od-notification></od-notification>
