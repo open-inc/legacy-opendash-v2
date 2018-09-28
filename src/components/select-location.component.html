@@ -1,6 +1,6 @@
 <div ng-if="$ctrl.config.search" class="od-select-location__search">
     <input type="search" class="od-select-location__search__input" ng-model="$ctrl.searchText" ng-change="$ctrl.searchOnChange()"
-        placeholder="{{ 'od.select.item.search' | translate }}" aria-label="{{ 'od.select.item.search' | translate }}">
+        placeholder="{{ 'od.select.location.search' | translate }}" aria-label="{{ 'od.select.location.search' | translate }}">
 </div>
 
 <div ng-if="!$ctrl.config.dropdown" class="od-select-location" ng-style="$ctrl.style">
@@ -12,7 +12,7 @@
             {{ item.name }}
 
             <i>
-                {{ item.data.address }}
+                {{ item.postcode }} {{ item.city }}, {{ item.address }}
             </i>
         </div>
     </div>
