@@ -41,34 +41,49 @@ od-topbar {
     display: block;
     float: right;
 
+    height: $od-topbar-height;
+
+    position: relative;
+
+    &.active {
+      background: $primary-hover;
+    }
+
+    &:hover {
+      background: $primary-hover;
+    }
+
     img {
       height: $od-topbar-height;
       width: $od-topbar-height;
       border-radius: 50%;
       padding: $gutter/2;
-
-      &:hover {
-        background: $primary;
-      }
     }
 
     &-actions {
-      display: none;
-
       position: absolute;
-      top: 60px;
+      top: $od-topbar-height - 2px;
       right: 0;
-      width: 300px;
+
+      padding: 1px;
+      background: $primary-hover;
 
       a {
         color: $primary-font;
         background: $primary;
 
         display: block;
-        line-height: $od-topbar-height;
-        width: 300px;
+        line-height: 40px;
 
-        padding: 0 $gutter/2;
+        min-width: 200px;
+
+        padding: 0 $gutter;
+
+        border-bottom: 1px solid $primary-hover;
+
+        &:first-of-type {
+          border-top: 1px solid $primary-hover;
+        }
 
         &:hover {
           color: $primary-hover-font;

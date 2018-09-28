@@ -24,6 +24,8 @@ class controller {
     this.overlay.index = 5001;
 
     this.user = null;
+    this.userActions = [];
+    this.userActionsActive = false;
 
     this.$user.wait().then(() => {
       try {
@@ -40,14 +42,11 @@ class controller {
             label: "od.auth.logout",
             icon: "fa fa-sign-out",
             onClick: () => {
-              console.log("logout");
+              this.$user.logout();
             }
           }
         ];
-
-        console.warn(this.user);
       } catch (error) {
-        console.error(error);
         this.user = null;
       }
     });

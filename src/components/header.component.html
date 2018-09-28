@@ -13,9 +13,9 @@
             <img ng-src="{{ $ctrl.$header.logo.url }}">
         </od-topbar-logo>
 
-        <od-topbar-user ng-if="$ctrl.user">
+        <od-topbar-user ng-if="$ctrl.user" ng-click="$ctrl.userActionsActive = !$ctrl.userActionsActive" ng-class="{'active': $ctrl.userActionsActive}">
             <img ng-src="{{ $ctrl.user.profile }}">
-            <od-topbar-user-actions>
+            <od-topbar-user-actions ng-show="$ctrl.userActionsActive">
                 <a ng-repeat="action in $ctrl.userActions track by $index" ng-click="action.onClick()">
                     <i ng-class="action.icon" aria-hidden="true"></i>
                     <span>{{ action.label | translate }}</span>
