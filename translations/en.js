@@ -28,6 +28,9 @@ export default [
           header: "Widgets",
           presets: "Add Widget from template",
           eud: "Create new analytic Widget"
+        },
+        user: {
+          profile_alt: "Nutzer Profilbild"
         }
       },
       dashboard: {

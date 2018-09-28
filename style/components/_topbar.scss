@@ -37,6 +37,47 @@ od-topbar {
     }
   }
 
+  &-user {
+    display: block;
+    float: right;
+
+    img {
+      height: $od-topbar-height;
+      width: $od-topbar-height;
+      border-radius: 50%;
+      padding: $gutter/2;
+
+      &:hover {
+        background: $primary;
+      }
+    }
+
+    &-actions {
+      display: none;
+
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 300px;
+
+      a {
+        color: $primary-font;
+        background: $primary;
+
+        display: block;
+        line-height: $od-topbar-height;
+        width: 300px;
+
+        padding: 0 $gutter/2;
+
+        &:hover {
+          color: $primary-hover-font;
+          background: $primary-hover;
+        }
+      }
+    }
+  }
+
   &-navigation {
     display: block;
     float: right;

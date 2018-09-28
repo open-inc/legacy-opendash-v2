@@ -29,6 +29,9 @@ export default [
           header: "Widgets",
           presets: "Hinzufügen aus Vorlage",
           eud: "Neues Analyse-Widget erstellen"
+        },
+        user: {
+          profile_alt: "Nutzer Profilbild"
         }
       },
       dashboard: {

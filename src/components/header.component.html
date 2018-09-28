@@ -13,6 +13,16 @@
             <img ng-src="{{ $ctrl.$header.logo.url }}">
         </od-topbar-logo>
 
+        <od-topbar-user ng-if="$ctrl.user">
+            <img ng-src="{{ $ctrl.user.profile }}">
+            <od-topbar-user-actions>
+                <a ng-repeat="action in $ctrl.userActions track by $index" ng-click="action.onClick()">
+                    <i ng-class="action.icon" aria-hidden="true"></i>
+                    <span>{{ action.label | translate }}</span>
+                </a>
+            </od-topbar-user-actions>
+        </od-topbar-user>
+
         <od-topbar-navigation class="float-right" ng-show="$ctrl.$user.auth">
             <section ng-if="!$ctrl.sidebarMode">
                 <header>{{ 'od.header.dashboards.header' | translate }}</header>
@@ -47,14 +57,15 @@
                     </div>
                 </nav>
             </section>
-            <a ng-click="$ctrl.$dashboard.editMode = !$ctrl.$dashboard.editMode">
+            <a ng-show="$ctrl.showEditMode" ng-click="$ctrl.$dashboard.editMode = !$ctrl.$dashboard.editMode">
                 <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.editMode, 'fa-floppy-o': $ctrl.$dashboard.editMode}" aria-hidden="true"></i>
             </a>
             <a ng-repeat="link in $ctrl.topbarItems track by $index" ng-click="link.action()">
                 <i class="fa {{ link.icon }}" aria-hidden="true"></i>
                 <span>{{ link.text }}</span>
             </a>
-            <!--
+        </od-topbar-navigation>
+        <!--
             <footer>
                 <a ng-click="link.action()" ng-repeat="link in $ctrl.$header.sidebarFooter">
                     <i ng-if="link.icon" class="fa {{ link.icon }}" aria-hidden="true"></i>{{ link.text }}</a>
@@ -62,8 +73,8 @@
                     <i class="fa fa-sign-out" aria-hidden="true"></i>{{ 'od.auth.logout' | translate }}</a>
             </footer>
             -->
-            <!-- </od-sidebar> -->
-            <!-- <div class="float-right">
+        <!-- </od-sidebar> -->
+        <!-- <div class="float-right">
                 <a ng-show="$ctrl.$user.auth" style="line-height: 40px;font-size: 30px;" ng-click="$ctrl.$dashboard.editMode = !$ctrl.$dashboard.editMode">
                     <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.editMode, 'fa-floppy-o': $ctrl.$dashboard.editMode}"
                         aria-hidden="true"></i>
