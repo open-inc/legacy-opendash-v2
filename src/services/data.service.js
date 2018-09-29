@@ -58,6 +58,7 @@ export default class OpenDashDataService {
   set ready(state) {
     globalready = state;
   }
+
   wait() {
     return $q((resolve, reject) => {
       if (this.ready) {
@@ -155,6 +156,7 @@ class OpenDashDataContainer {
 
     this.id = payload.id;
     this.name = payload.name;
+    this.owner = payload.owner;
     this.icon = payload.icon || defaultIcon;
     this.parent = $store.get(payload.parent) || null;
     this.path = [];
@@ -225,6 +227,7 @@ class OpenDashDataItem {
 
     this.id = payload.id;
     this.name = payload.name;
+    this.owner = payload.owner;
     this.icon = payload.icon || defaultIcon;
     this.parents = _(payload.parents || [])
       .map(x => $store.get(x))
