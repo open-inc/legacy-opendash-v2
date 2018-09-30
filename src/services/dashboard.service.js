@@ -8,12 +8,15 @@ let $user;
 let $location;
 let $event;
 let $notification;
+let $env;
 
 let $timeout;
 let $scope;
 let $q;
 
 const version = 2;
+
+let DASHBOARDS_BY_LOCATION = false;
 
 export default class Dashboard {
   static get $inject() {
@@ -25,9 +28,13 @@ export default class Dashboard {
     $location = $injector.get("opendash/services/location");
     $event = $injector.get("opendash/services/event");
     $notification = $injector.get("opendash/services/notification");
+    $env = $injector.get("opendash/services/env");
+
     $timeout = $injector.get("$timeout");
     $scope = $injector.get("$rootScope");
     $q = $injector.get("$q");
+
+    DASHBOARDS_BY_LOCATION = $env("OD-DASHBOARDS-BY-LOCATION", null, false);
 
     this.widgetActions = [];
 
@@ -39,7 +46,9 @@ export default class Dashboard {
     this.initGridsterConfig();
     this.initWidgetResizeEvent();
 
-    $location.onChange(() => this.init());
+    if (DASHBOARDS_BY_LOCATION) {
+      $location.onChange(() => this.init());
+    }
   }
 
   get data() {
@@ -161,7 +170,7 @@ export default class Dashboard {
       dashboards.map(dashboard => new OpenDashDashboard(dashboard));
 
       // Filter dashboards by location
-      if (location && location[0]) {
+      if (DASHBOARDS_BY_LOCATION && location && location[0]) {
         dashboards = dashboards.filter(
           dashboard => dashboard.location === location
         );
