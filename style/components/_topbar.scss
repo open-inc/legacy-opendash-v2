@@ -37,57 +37,95 @@ od-topbar {
     }
   }
 
-  &-user {
-    display: block;
-    float: right;
+  .od-topbar {
+    &__user {
+      display: block;
+      float: right;
 
-    height: $od-topbar-height;
-
-    position: relative;
-
-    &.active {
-      background: $primary-hover;
-    }
-
-    &:hover {
-      background: $primary-hover;
-    }
-
-    img {
       height: $od-topbar-height;
-      width: $od-topbar-height;
-      border-radius: 50%;
-      padding: $gutter/2;
-    }
 
-    &-actions {
-      position: absolute;
-      top: $od-topbar-height - 2px;
-      right: 0;
+      position: relative;
 
-      padding: 1px;
-      background: $primary-hover;
+      &:hover {
+        // background: $primary;
 
-      a {
-        color: $primary-font;
-        background: $primary;
+        .od-topbar__user__icon i {
+          color: $primary;
+        }
+      }
 
+      &__icon {
         display: block;
-        line-height: 40px;
+        height: $od-topbar-height;
+        width: $od-topbar-height;
 
-        min-width: 200px;
+        i {
+          line-height: $od-topbar-height;
+          height: $od-topbar-height;
+          width: $od-topbar-height;
+          color: #333;
+          text-align: center;
+          font-size: 30px;
+        }
 
-        padding: 0 $gutter;
-
-        border-bottom: 1px solid $primary-hover;
-
-        &:first-of-type {
-          border-top: 1px solid $primary-hover;
+        img {
+          border-radius: 50%;
+          padding: $gutter/2;
         }
 
         &:hover {
-          color: $primary-hover-font;
-          background: $primary-hover;
+          i {
+            // color: white;
+          }
+        }
+      }
+
+      &__actions {
+        display: block;
+
+        position: absolute;
+        top: $od-topbar-height - 8px;
+        right: 0;
+
+        padding: 1px;
+        background: $primary-hover;
+
+        $arrow-size: 5px;
+
+        &:before {
+          width: 0;
+          height: 0;
+          border-left: $arrow-size solid transparent;
+          border-right: $arrow-size solid transparent;
+
+          border-bottom: $arrow-size solid $primary-hover;
+          content: "";
+          position: absolute;
+          top: -$arrow-size;
+          right: $od-topbar-height/2-$arrow-size;
+        }
+
+        a {
+          color: $primary-font;
+          background: $primary;
+
+          display: block;
+          line-height: 40px;
+
+          min-width: 200px;
+
+          padding: 0 $gutter;
+
+          border-bottom: 1px solid $primary-hover;
+
+          &:first-of-type {
+            border-top: 1px solid $primary-hover;
+          }
+
+          &:hover {
+            color: $primary-hover-font;
+            background: $primary-hover;
+          }
         }
       }
     }

@@ -13,15 +13,18 @@
             <img ng-src="{{ $ctrl.$header.logo.url }}">
         </od-topbar-logo>
 
-        <od-topbar-user ng-if="$ctrl.user" ng-click="$ctrl.userActionsActive = !$ctrl.userActionsActive" ng-class="{'active': $ctrl.userActionsActive}">
-            <img ng-src="{{ $ctrl.user.profile }}">
-            <od-topbar-user-actions ng-show="$ctrl.userActionsActive">
+        <div class="od-topbar__user" ng-if="$ctrl.user" ng-click="$ctrl.userActionsActive = !$ctrl.userActionsActive" ng-class="{'active': $ctrl.userActionsActive}">
+            <div class="od-topbar__user__icon">
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                <!-- <img ng-src="{{ $ctrl.user.profile }}"> -->
+            </div>
+            <div class="od-topbar__user__actions" ng-show="$ctrl.userActionsActive">
                 <a ng-repeat="action in $ctrl.userActions track by $index" ng-click="action.onClick()">
                     <i ng-class="action.icon" aria-hidden="true"></i>
                     <span>{{ action.label | translate }}</span>
                 </a>
-            </od-topbar-user-actions>
-        </od-topbar-user>
+            </div>
+        </div>
 
         <od-topbar-navigation class="float-right" ng-show="$ctrl.$user.auth">
             <section ng-if="!$ctrl.sidebarMode">
