@@ -13,7 +13,8 @@
             <img ng-src="{{ $ctrl.$header.logo.url }}">
         </od-topbar-logo>
 
-        <div class="od-topbar__user" ng-if="$ctrl.user" ng-click="$ctrl.userActionsActive = !$ctrl.userActionsActive" ng-class="{'active': $ctrl.userActionsActive}">
+        <div class="od-topbar__user" ng-if="$ctrl.user" ng-click="$ctrl.userActionsActive = !$ctrl.userActionsActive"
+            ng-class="{'active': $ctrl.userActionsActive}">
             <div class="od-topbar__user__icon">
                 <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                 <!-- <img ng-src="{{ $ctrl.user.profile }}"> -->
@@ -61,11 +62,13 @@
                 </nav>
             </section>
             <a ng-show="$ctrl.showEditMode" ng-click="$ctrl.$dashboard.editMode = !$ctrl.$dashboard.editMode">
-                <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.editMode, 'fa-floppy-o': $ctrl.$dashboard.editMode}" aria-hidden="true"></i>
+                <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.editMode, 'fa-floppy-o': $ctrl.$dashboard.editMode}"
+                    aria-hidden="true"></i>
+                <span>{{ 'od.header.dashboards.edit_mode_button' | translate }}</span>
             </a>
-            <a ng-repeat="link in $ctrl.topbarItems track by $index" ng-click="link.action()">
+            <a ng-repeat="link in $ctrl.topbarItems track by $index" ng-hide="link.hidden || link.isHidden()" ng-click="link.action()">
                 <i class="fa {{ link.icon }}" aria-hidden="true"></i>
-                <span>{{ link.text }}</span>
+                <span>{{ link.text | translate }}</span>
             </a>
         </od-topbar-navigation>
         <!--
@@ -110,5 +113,5 @@
 
 <od-notification></od-notification>
 
-<div class="od-header__overlay" ng-class="{ 'active': overlay.active }" ng-style="{ 'z-index': overlay.index }" ng-click="overlay.close()"
-    ng-repeat="overlay in $ctrl.$header.overlays"></div>
+<div class="od-header__overlay" ng-class="{ 'active': overlay.active }" ng-style="{ 'z-index': overlay.index }"
+    ng-click="overlay.close()" ng-repeat="overlay in $ctrl.$header.overlays"></div>

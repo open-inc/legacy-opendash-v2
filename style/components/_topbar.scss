@@ -145,8 +145,16 @@ od-topbar {
       line-height: $od-topbar-height;
 
       > i.fa {
-        font-size: 30px;
+        font-size: 20px;
         line-height: $od-topbar-height;
+        margin-right: 5px;
+      }
+
+      > span {
+        display: block;
+        float: right;
+        line-height: $od-topbar-height;
+        height: $od-topbar-height;
       }
 
       &:hover {

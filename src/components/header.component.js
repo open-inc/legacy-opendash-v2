@@ -73,7 +73,7 @@ class controller {
   }
 
   get topbarItems() {
-    return this.$header.topbar.filter(e => !e.hidden);
+    return this.$header.topbar; //.filter(e => !(e.hidden || e.isHidden()));
   }
 
   get sidebar() {

@@ -83,10 +83,13 @@ export default class HeaderService {
 
   addTopbarItem(input) {
     const defaultAction = () => {};
+    const defaultIsHidden = () => false;
 
     const item = {
       hidden: false,
-      icon: input.icon || "",
+      isHidden: input.isHidden || defaultIsHidden,
+      text: input.text || "Label Missing",
+      icon: input.icon || "fa-exclamation-triangle",
       action: input.action || defaultAction,
       active: false
     };

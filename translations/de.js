@@ -18,6 +18,7 @@ export default [
         dashboards: {
           header: "Dashboards",
           manage: "Dashboards verwalten",
+          edit_mode_button: "Edit Mode",
           create: "Neues Dashboard erstellen",
           create_prompt:
             "Bitte Namen für neues Dashboard angeben und auf erstellen klicken.",
