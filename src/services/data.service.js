@@ -16,6 +16,7 @@ const $root = [];
 const waiting = [];
 let globalready = false;
 let valueValidation;
+let adapters;
 
 export default class OpenDashDataService {
   static get $inject() {
@@ -33,7 +34,7 @@ export default class OpenDashDataService {
 
     this.ready = globalready;
 
-    const adapters = $injector
+    adapters = $injector
       .get("od.adapter.register")
       .map(AdapterFactory => new AdapterFactory({}, { $user, $location }));
 
@@ -89,6 +90,16 @@ export default class OpenDashDataService {
 
   get(id) {
     return $store.get(id);
+  }
+
+  async emitMessage(type, payload) {
+    let promises = adapters.map(a => a.onMessage(type, payload));
+
+    try {
+      await Promise.all(promises);
+    } catch (error) {
+      logger.warn(error);
+    }
   }
 }
 
