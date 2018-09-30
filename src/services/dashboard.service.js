@@ -61,17 +61,21 @@ export default class Dashboard {
   }
 
   get ls() {
+    // load old value:
+    if (window.localStorage.getItem("od.dashboard.service-current-dashboard")) {
+      this.ls = window.localStorage.getItem(
+        "od.dashboard.service-current-dashboard"
+      );
+      window.localStorage.removeItem("od.dashboard.service-current-dashboard");
+    }
     return (
-      window.localStorage.getItem("od.dashboard.service-current-dashboard") ||
+      window.localStorage.getItem("opendash/services/dashboard::current") ||
       null
     );
   }
 
   set ls(value) {
-    window.localStorage.setItem(
-      "od.dashboard.service-current-dashboard",
-      value
-    );
+    window.localStorage.setItem("opendash/services/dashboard::current", value);
   }
 
   get editMode() {
