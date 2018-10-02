@@ -67,7 +67,13 @@ class controller {
               scope.output[element.key] = selection;
             };
 
-            scope.helper[element.key].settings = element.settings;
+            scope.helper[element.key].settings = Object.assign(
+              {},
+              element.settings,
+              {
+                initialSelection: scope.output[element.key]
+              }
+            );
 
             template += `<od-select-item
                           config="helper['${element.key}'].settings"
