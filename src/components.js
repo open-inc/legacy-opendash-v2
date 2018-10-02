@@ -7,6 +7,7 @@ import dashboardComponent from "./components/dashboard.component";
 import headerComponent from "./components/header.component";
 import odWidgetComponent from "./components/widget.component";
 import highchartComponent from "./components/highchart.component";
+import formComponent from "./components/form.component";
 import selectItemComponent from "./components/select-item.component";
 import selectLocationComponent from "./components/select-location.component";
 import selectStepComponent from "./components/select-step.component";
@@ -36,6 +37,7 @@ export default [
   ["highchart", highchartComponent],
 
   // UI
+  ["od-form", formComponent],
   ["od-select-step", selectStepComponent],
   ["od-select-item", selectItemComponent],
   ["od-select-location", selectLocationComponent],
