@@ -74,7 +74,7 @@ class OpenDashNotification {
 
     if (this.time) {
       $timeout(() => {
-        this.close;
+        this.close();
       }, this.time);
     }
 
