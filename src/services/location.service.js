@@ -72,7 +72,7 @@ export default class LocationService {
         idArray.push(loc.id);
       }
 
-      if (!current || !this.validateCurrent(current)) {
+      if (!current || !this.validateCurrent(locations, current)) {
         current = [locations[0].id];
       }
 
