@@ -81,10 +81,33 @@ class controller {
   }
 
   searchOnChange() {
-    this.items = this.available;
+    // let items = this.available;
+    // if (this.searchText) {
+    //   items = items.filter(i => {
+    //     let item = this.vo ? i[0] : i;
+    //     let nameMatch = item.name
+    //       .toLowerCase()
+    //       .includes(this.searchText.toLowerCase());
+    //     return nameMatch;
+    //   });
+    // }
+    // if (this.config.filter) {
+    //   try {
+    //     items = items.filter(i => {
+    //       return this.config.filter(i);
+    //     });
+    //   } catch (error) {
+    //     logger.error("filter function error:", error);
+    //   }
+    // }
+    // this.items = items;
+  }
+
+  get items() {
+    let items = this.available;
 
     if (this.searchText) {
-      this.items = this.items.filter(i => {
+      items = items.filter(i => {
         let item = this.vo ? i[0] : i;
 
         let nameMatch = item.name
@@ -94,7 +117,21 @@ class controller {
         return nameMatch;
       });
     }
+
+    if (this.config.filter) {
+      try {
+        items = items.filter(i => {
+          return this.config.filter(i);
+        });
+      } catch (error) {
+        logger.error("filter function error:", error);
+      }
+    }
+
+    return items;
   }
+
+  set items(values) {}
 
   isSelected(e) {
     return this.output.indexOf(e) >= 0;
