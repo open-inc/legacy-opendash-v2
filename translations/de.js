@@ -70,7 +70,7 @@ export default [
           search: "Nach Item Namen suchen..."
         },
         location: {
-          search: "Search for a location..."
+          search: "Nach Standorten suchen..."
         }
       },
       ui: {
