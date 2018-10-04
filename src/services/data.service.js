@@ -1,6 +1,6 @@
 import _ from "lodash";
 import moment from "moment";
-import Map from "collections/map";
+// import Map from "collections/map";
 
 import Logger from "../helper/logger";
 
@@ -71,7 +71,7 @@ export default class OpenDashDataService {
   }
 
   list() {
-    return $store.toArray();
+    return [...$store.values()];
   }
 
   query(input) {
@@ -79,7 +79,7 @@ export default class OpenDashDataService {
   }
 
   listByType(type) {
-    return _($store.toArray())
+    return _([...$store.values()])
       .map(item =>
         _.map(item.valueTypes, (v, k) => (v.type === type ? [item, k] : null))
       )
@@ -187,7 +187,7 @@ class OpenDashDataContainer {
   }
 
   get children() {
-    return $store.filter(x => x.parents.indexOf(this) >= 0).toArray();
+    return [...$store.values()].filter(x => x.parents.indexOf(this) >= 0);
   }
 
   get allChildren() {
@@ -203,7 +203,7 @@ class OpenDashDataContainer {
   }
 
   get items() {
-    return _($store.toArray())
+    return _([...$store.values()])
       .filter(item => !(item instanceof OpenDashDataContainer))
       .filter(item => item.isParent(this))
       .value();
@@ -268,7 +268,7 @@ class OpenDashDataItem {
   }
 
   get children() {
-    return $store.filter(x => x.parents.indexOf(this) >= 0).toArray();
+    return [...$store.values()].filter(x => x.parents.indexOf(this) >= 0);
   }
 
   getAllChildren(all) {
