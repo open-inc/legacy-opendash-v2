@@ -18,9 +18,12 @@ export default class OpenDashRouter {
   }
 
   go(path) {
-    console.log("Router Service");
-    console.log(path,this.path);
     logger.log(`[opendash/core/router] Route go: ${path}`);
+
+    if (path.slice(-1) === "/") {
+      path = path.substring(0, path.length - 1);
+    }
+
     if (path !== this.path) {
       this.path = path;
 
@@ -66,6 +69,10 @@ export default class OpenDashRouter {
 
     if (def) {
       this.default = name;
+    }
+
+    if (path.slice(-1) === "/") {
+      path = path.substring(0, path.length - 1);
     }
 
     this.routes.push(new Route(name, path, component));
