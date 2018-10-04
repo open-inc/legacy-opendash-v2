@@ -18,6 +18,8 @@ export default class OpenDashRouter {
   }
 
   go(path) {
+    console.log("Router Service");
+    console.log(path,this.path);
     logger.log(`[opendash/core/router] Route go: ${path}`);
     if (path !== this.path) {
       this.path = path;
