@@ -65,6 +65,9 @@ export default [
         since: "Seit:",
         item: {
           search: "Search for an item name..."
+        },
+        location: {
+          search: "Search for a location..."
         }
       },
       ui: {
