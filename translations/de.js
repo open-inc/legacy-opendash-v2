@@ -67,10 +67,12 @@ export default [
         end: "Enddatum:",
         since: "Seit:",
         item: {
+          label: "Sensoren auswählen",
           empty: "Keine Sensoren gefunden.",
           search: "Nach Sensoren suchen..."
         },
         location: {
+          label: "Standort auswählen",
           empty: "Keine Standorte gefunden.",
           search: "Nach Standorten suchen..."
         }

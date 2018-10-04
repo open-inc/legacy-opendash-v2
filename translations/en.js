@@ -64,10 +64,12 @@ export default [
         end: "Enddatum:",
         since: "Seit:",
         item: {
+          label: "Select Sensor",
           empty: "No result available",
           search: "Search for an item name..."
         },
         location: {
+          label: "Select location",
           empty: "No result available",
           search: "Search for a location..."
         }
