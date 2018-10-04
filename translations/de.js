@@ -32,6 +32,7 @@ export default [
           eud: "Neues Analyse-Widget erstellen"
         },
         user: {
+          greeting: "Hallo,",
           profile_alt: "Nutzer Profilbild"
         }
       },

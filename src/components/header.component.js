@@ -29,13 +29,7 @@ class controller {
 
     this.$user.wait().then(() => {
       try {
-        this.user = {
-          email: this.$user.user.email
-          // profile:
-          //   "https://s.gravatar.com/avatar/" +
-          //   Hash.md5(this.$user.user.email) +
-          //   "?s=80&d=retro"
-        };
+        this.user = this.$user.user;
 
         this.userActions = [
           {
@@ -47,6 +41,7 @@ class controller {
           }
         ];
       } catch (error) {
+        console.log(error);
         this.user = null;
       }
     });

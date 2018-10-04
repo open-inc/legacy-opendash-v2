@@ -20,6 +20,10 @@
                 <!-- <img ng-src="{{ $ctrl.user.profile }}"> -->
             </div>
             <div class="od-topbar__user__actions" ng-show="$ctrl.userActionsActive">
+                <div class="od-topbar__user__wellcome">
+                    <div class="od-topbar__user__wellcome__message">{{ 'od.header.user.greeting' | translate }}</div>
+                    <div class="od-topbar__user__wellcome__name">{{ $ctrl.user.username }}</div>
+                </div>
                 <a ng-repeat="action in $ctrl.userActions track by $index" ng-click="action.onClick()">
                     <i ng-class="action.icon" aria-hidden="true"></i>
                     <span>{{ action.label | translate }}</span>

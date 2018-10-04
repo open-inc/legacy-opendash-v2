@@ -30,6 +30,7 @@ export default [
           eud: "Create new analytic Widget"
         },
         user: {
+          greeting: "Hello,",
           profile_alt: "Nutzer Profilbild"
         }
       },
