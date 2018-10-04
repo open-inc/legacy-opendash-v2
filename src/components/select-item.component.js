@@ -139,7 +139,15 @@ class controller {
           .toLowerCase()
           .includes(this.searchText.toLowerCase());
 
-        return nameMatch;
+        let ownerMatch = item.owner
+          .toLowerCase()
+          .includes(this.searchText.toLowerCase());
+
+        let metaMatch = JSON.stringify(item.meta)
+          .toLowerCase()
+          .includes(this.searchText.toLowerCase());
+
+        return nameMatch || ownerMatch || metaMatch;
       });
     }
 
