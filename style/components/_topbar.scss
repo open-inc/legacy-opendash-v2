@@ -162,10 +162,14 @@ od-topbar {
       }
 
       > span {
-        display: block;
+        display: none;
         float: right;
         line-height: $od-topbar-height;
         height: $od-topbar-height;
+
+        @include media(">800px") {
+          display: block;
+        }
       }
 
       &:hover {
