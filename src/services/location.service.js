@@ -47,10 +47,7 @@ export default class LocationService {
 
       let current = await $user.getCurrentLocations();
       let locations = await $user.listLocations();
-
-      if (!current) {
-        current = [locations[0].id];
-      }
+      let idArray = [];
 
       logger.assert(_.isArray(locations), "Locations must be an Array.");
 
@@ -66,6 +63,17 @@ export default class LocationService {
           _.isObject(loc),
           "Each location must have an id attribute."
         );
+
+        logger.assert(
+          !idArray.includes(loc.id),
+          "Each location must have an uniq id attribute."
+        );
+
+        idArray.push(loc.id);
+      }
+
+      if (!current || !this.validateCurrent(current)) {
+        current = [locations[0].id];
       }
 
       this.locations.push(...locations);
@@ -116,18 +124,12 @@ export default class LocationService {
       return;
     }
 
-    let locations = ids.map(id =>
-      this.locations.find(location => location.id === id)
+    logger.assert(
+      this.validateCurrent(this.locations, ids),
+      "Setting the current location failed. All ids must be in the list of locations."
     );
 
-    locations.forEach(location => {
-      logger.assert(
-        location,
-        "Setting the current location failed. All ids must be in the list of locations."
-      );
-    });
-
-    this.current = locations;
+    this.current = ids.map(id => this.locations.find(id));
     this.currentHash = newHash;
 
     logger.log(`Locations set (${this.currentHash})`);
@@ -141,6 +143,18 @@ export default class LocationService {
     }
 
     $user.setCurrentLocations(ids).then(null, error => logger.error(error));
+  }
+
+  validateCurrent(locations, current) {
+    if (!_.isArray(current)) {
+      return false;
+    }
+
+    let availableIds = locations.map(loc => loc.id);
+    let result = current
+      .map(id => availableIds.includes(id))
+      .reduce((acc, value) => acc && value, true);
+    return result;
   }
 
   onChange(observer) {
