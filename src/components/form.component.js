@@ -102,7 +102,8 @@ class controller {
         }
       }
 
-      template += "<pre>{{ output }}</pre>";
+      // For debugging:
+      // template += "<pre>{{ output }}</pre>";
       template += "</div>";
 
       // create new element and use it as form html
