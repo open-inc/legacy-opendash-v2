@@ -129,7 +129,7 @@ export default class LocationService {
       "Setting the current location failed. All ids must be in the list of locations."
     );
 
-    this.current = ids.map(id => this.locations.find(id));
+    this.current = ids.map(id => this.locations.find(loc => loc.id === id));
     this.currentHash = newHash;
 
     logger.log(`Locations set (${this.currentHash})`);
