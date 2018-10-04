@@ -157,12 +157,12 @@ export default class LocationService {
     return result;
   }
 
-  onChange(observer) {
+  async onChange(observer) {
     if (_.isFunction(observer)) {
       this.observer.push(observer);
 
       if (this.current) {
-        observer(this.current);
+        await observer(this.current);
       }
     }
   }
