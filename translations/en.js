@@ -64,9 +64,11 @@ export default [
         end: "Enddatum:",
         since: "Seit:",
         item: {
+          empty: "No result available",
           search: "Search for an item name..."
         },
         location: {
+          empty: "No result available",
           search: "Search for a location..."
         }
       },

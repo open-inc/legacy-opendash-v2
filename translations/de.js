@@ -67,9 +67,11 @@ export default [
         end: "Enddatum:",
         since: "Seit:",
         item: {
-          search: "Nach Item Namen suchen..."
+          empty: "Keine Sensoren gefunden.",
+          search: "Nach Sensoren suchen..."
         },
         location: {
+          empty: "Keine Standorte gefunden.",
           search: "Nach Standorten suchen..."
         }
       },
