@@ -1,5 +1,7 @@
 <nav>
-  <a href="" ng-repeat="tab in $tabs.tabs" ng-class="{'active': tab.active}" ng-click="$tabs.select(tab)">{{tab.label}}</a>
+  <a href="" ng-repeat="tab in $tabs.tabs" ng-class="{'active': tab.active}" ng-click="$tabs.select(tab)">
+    {{ tab.label | translate }}
+  </a>
 </nav>
 
 <ng-transclude></ng-transclude>
