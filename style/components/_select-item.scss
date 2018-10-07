@@ -43,9 +43,10 @@ od-select-item {
         border-bottom-width: 0px;
       }
       &__name {
-        margin: 0 $item-height;
+        margin: 0 0 0 $item-height;
         height: $item-height;
         padding: 0 $gutter;
+        overflow: hidden;
         i {
           color: rgba(0, 0, 0, 0.4);
           margin-left: 4px;
