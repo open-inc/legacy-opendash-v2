@@ -32,6 +32,10 @@ export default class OpenDashDataService {
 
     valueValidation = $env("OD-DATA-VALIDATION", null, true);
 
+    adapters = $injector
+      .get("od.adapter.register")
+      .map(AdapterFactory => new AdapterFactory({}, { $user, $location }));
+
     let LOCK = false;
 
     $location.onChange(async () => {
@@ -44,10 +48,6 @@ export default class OpenDashDataService {
       this.ready = false;
 
       $store.clear();
-
-      adapters = $injector
-        .get("od.adapter.register")
-        .map(AdapterFactory => new AdapterFactory({}, { $user, $location }));
 
       const promises = adapters.map(adapter =>
         adapter.init(new OpenDashDataContext(adapter))
