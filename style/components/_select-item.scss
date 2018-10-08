@@ -9,6 +9,7 @@ od-select-item {
 
   .od-select-item {
     background: $od-color-background-light;
+    margin-bottom: $gutter;
 
     &__search {
       &__input {
