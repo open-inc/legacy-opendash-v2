@@ -32,24 +32,39 @@ export default class OpenDashDataService {
 
     valueValidation = $env("OD-DATA-VALIDATION", null, true);
 
-    this.ready = globalready;
+    let LOCK = false;
 
-    adapters = $injector
-      .get("od.adapter.register")
-      .map(AdapterFactory => new AdapterFactory({}, { $user, $location }));
+    $location.onChange(async () => {
+      if (LOCK) {
+        return;
+      }
 
-    const promises = adapters.map(adapter =>
-      adapter.init(new OpenDashDataContext(adapter))
-    );
+      LOCK = true;
 
-    $q.all(promises)
-      .then(() => {
-        return $user.wait();
-      })
-      .then(() => {
-        this.ready = true;
-        waiting.forEach(resolve => resolve());
-      });
+      this.ready = false;
+
+      $store.clear();
+
+      adapters = $injector
+        .get("od.adapter.register")
+        .map(AdapterFactory => new AdapterFactory({}, { $user, $location }));
+
+      const promises = adapters.map(adapter =>
+        adapter.init(new OpenDashDataContext(adapter))
+      );
+
+      $q.all(promises)
+        .then(() => {
+          return $user.wait();
+        })
+        .then(() => {
+          this.ready = true;
+          waiting.forEach(resolve => resolve());
+          waiting.length = 0;
+        });
+
+      LOCK = false;
+    });
   }
 
   get ready() {
@@ -655,9 +670,8 @@ class OpenDashDataContext {
     $store.set(payload.id, new OpenDashDataContainer(this.adapter, payload));
   }
 
-  clear() {
-    $store.clear();
-  }
+  clear() {}
+
   update(operation) {
     globalready = false;
     operation.then(() => {
