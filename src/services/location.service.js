@@ -134,10 +134,8 @@ export default class LocationService {
 
     logger.log(`Locations set (${this.currentHash})`);
 
-    this.observer.forEach(async observer => observer(this.current));
-
     for (const observer of this.observer) {
-      observer().then(null, error => {
+      observer(this.current).then(null, error => {
         logger.error("Error in observer: \n", error);
       });
     }
