@@ -13,7 +13,7 @@ od-topbar {
   right: 0;
 
   background: $od-topbar-background;
-  border-bottom: 2px solid #439eca;
+  border-bottom: 2px solid $primary;
 
   z-index: 5050;
 
@@ -63,7 +63,7 @@ od-topbar {
           line-height: $od-topbar-height;
           height: $od-topbar-height;
           width: $od-topbar-height;
-          color: #333;
+          color: $white-font;
           text-align: center;
           font-size: 30px;
         }
@@ -151,6 +151,8 @@ od-topbar {
       float: left;
 
       padding: 0 $gutter/2;
+
+      color: $white-font;
 
       height: $od-topbar-height;
       line-height: $od-topbar-height;
@@ -265,7 +267,7 @@ od-topbar {
       $hamburger-width: $od-topbar-height - $gutter;
       $hamburger-line-height: 2px;
       $hamburger-line-offset: 8px;
-      $hamburger-line-color: #253447 - #111;
+      $hamburger-line-color: $white-font;
       width: $hamburger-width;
       height: $hamburger-height;
       position: relative;
