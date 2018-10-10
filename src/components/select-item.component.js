@@ -138,22 +138,18 @@ class controller {
     this.items = this.available;
 
     if (this.searchText) {
+      let searchTextArray = this.searchText.toLowerCase().split(" ");
       this.items = this.items.filter(i => {
         let item = this.vo ? i[0] : i;
+        let itemJson = JSON.stringify(item).toLowerCase();
 
-        let nameMatch = item.name
-          .toLowerCase()
-          .includes(this.searchText.toLowerCase());
+        for (const searchText of searchTextArray) {
+          if (!itemJson.includes(searchText)) {
+            return false;
+          }
+        }
 
-        let ownerMatch = item.owner
-          .toLowerCase()
-          .includes(this.searchText.toLowerCase());
-
-        let metaMatch = JSON.stringify(item.meta)
-          .toLowerCase()
-          .includes(this.searchText.toLowerCase());
-
-        return nameMatch || ownerMatch || metaMatch;
+        return true;
       });
     }
 
