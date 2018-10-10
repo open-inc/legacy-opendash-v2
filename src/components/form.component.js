@@ -57,7 +57,7 @@ class controller {
                           ng-model="output['${element.key}']"
                           ng-options="o.value as o.label for o in helper['${
                             element.key
-                          }'].options track by o.value"
+                          }'].options"
                           ></select>`;
 
             break;
