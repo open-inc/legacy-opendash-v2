@@ -23,6 +23,9 @@ export default class LocationService {
     this.currentHash = null;
     this.locations = [];
 
+    // debounce trigger observers
+    this.triggerObservers = _.debounce(this.triggerObservers, 100);
+
     this.init();
   }
 
@@ -134,11 +137,7 @@ export default class LocationService {
 
     logger.log(`Locations set (${this.currentHash})`);
 
-    for (const observer of this.observer) {
-      observer(this.current).then(null, error => {
-        logger.error("Error in observer: \n", error);
-      });
-    }
+    this.triggerObservers();
 
     $user.setCurrentLocations(ids).then(null, error => logger.error(error));
   }
@@ -153,6 +152,20 @@ export default class LocationService {
       .map(id => availableIds.includes(id))
       .reduce((acc, value) => acc && value, true);
     return result;
+  }
+
+  triggerObservers() {
+    logger.log(`Trigger observers (${this.currentHash})`);
+
+    for (const observer of this.observer) {
+      try {
+        observer(this.current).then(null, error => {
+          logger.error("Observer is throwing an error: \n", error);
+        });
+      } catch (error) {
+        logger.error("Observer is throwing an error: \n", error);
+      }
+    }
   }
 
   async onChange(observer) {

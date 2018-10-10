@@ -25,8 +25,16 @@ class controller {
     this.style = {};
     this.available = [];
     this.items = [];
-    this.output = [];
+    this._output = [];
     this.dropdownValue = null;
+  }
+
+  get output() {
+    if (this.lsm) {
+      return $location.current.map(loc => loc.id);
+    } else {
+      return this._output;
+    }
   }
 
   async $onInit() {
@@ -37,7 +45,15 @@ class controller {
       );
     }
 
-    if (!_.isFunction(this.watch)) {
+    this.available = $location.locations;
+
+    if (this.config.locationServiceMode || this.config.lsm) {
+      this.lsm = true;
+    } else {
+      this.lsm = false;
+    }
+
+    if (!this.lsm && !_.isFunction(this.watch)) {
       throw new Error(
         "Bad usage of od-select-location watch attribute. Must be a Function."
       );
@@ -46,8 +62,6 @@ class controller {
     try {
       await $user.wait();
       await $location.wait();
-
-      this.available = $location.locations;
 
       this.searchOnChange();
 
@@ -58,7 +72,7 @@ class controller {
         };
       }
 
-      if (this.config.initialSelection) {
+      if (!this.lsm && this.config.initialSelection) {
         if (!_.isArray(this.config.initialSelection)) {
           throw new Error(
             "Bad usage of od-select-location config.initialSelection attribute. Must be an Array."
@@ -80,28 +94,7 @@ class controller {
     }
   }
 
-  searchOnChange() {
-    // let items = this.available;
-    // if (this.searchText) {
-    //   items = items.filter(i => {
-    //     let item = this.vo ? i[0] : i;
-    //     let nameMatch = item.name
-    //       .toLowerCase()
-    //       .includes(this.searchText.toLowerCase());
-    //     return nameMatch;
-    //   });
-    // }
-    // if (this.config.filter) {
-    //   try {
-    //     items = items.filter(i => {
-    //       return this.config.filter(i);
-    //     });
-    //   } catch (error) {
-    //     logger.error("filter function error:", error);
-    //   }
-    // }
-    // this.items = items;
-  }
+  searchOnChange() {}
 
   get items() {
     let items = this.available;
@@ -144,21 +137,39 @@ class controller {
   toggleSelected(e) {
     let isSelected = this.isSelected(e);
 
-    if (!this.config.multi) {
-      this.output.length = 0;
-    }
+    if (this.lsm) {
+      let output = [...this.output];
 
-    if (isSelected) {
-      _.pull(this.output, e);
+      if (!this.config.multi) {
+        output.length = 0;
+      }
+
+      if (isSelected) {
+        _.pull(output, e);
+      } else {
+        output.push(e);
+      }
+
+      $location.setLocation(output);
     } else {
-      this.output.push(e);
-    }
+      if (!this.config.multi) {
+        this.output.length = 0;
+      }
 
-    this.triggerWatch();
+      if (isSelected) {
+        _.pull(this.output, e);
+      } else {
+        this.output.push(e);
+      }
+
+      this.triggerWatch();
+    }
   }
 
   triggerWatch() {
-    this.watch(this.output);
+    if (!this.lsm) {
+      this.watch(this.output);
+    }
   }
 }
 
