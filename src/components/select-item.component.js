@@ -85,9 +85,15 @@ class controller {
           );
         }
 
-        for (const e of this.config.initialSelection) {
-          if (this.isAvailable(e)) {
-            this.output.push(e);
+        if (this.config.multi) {
+          for (const e of this.config.initialSelection) {
+            if (this.isAvailable(e)) {
+              this.output.push(e);
+            }
+          }
+        } else {
+          if (this.isAvailable(this.config.initialSelection)) {
+            this.output.push(this.config.initialSelection);
           }
         }
       }
