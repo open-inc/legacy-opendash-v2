@@ -502,14 +502,14 @@ class OpenDashDataItem {
 
   liveValues(callback) {
     if (this.value) {
-      $timeout(() => {
+      $q.resolve().then(() => {
         callback(this.value);
       });
     }
 
     this.watch((key, newValue, oldValue) => {
       if (key === "value") {
-        $timeout(() => {
+        $q.resolve().then(() => {
           callback(newValue);
         });
       }
