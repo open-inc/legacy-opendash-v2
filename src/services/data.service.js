@@ -223,6 +223,10 @@ class OpenDashDataContainer {
       .filter(item => item.isParent(this))
       .value();
   }
+
+  toJSON() {
+    return _.pick(this, ["id", "name", "owner", "meta"]);
+  }
 }
 
 class OpenDashDataItem {
@@ -390,17 +394,26 @@ class OpenDashDataItem {
     valueTypes.forEach(x => {
       if (!_.isObject(x) || !x.name || !x.type) {
         throw new Error(
-          "[opendash/services/data] OpenDashDataItem: Invalid property valueTypes: Each type needs to be an object with a name and type property."
+          "[opendash/services/data] OpenDashDataItem: Invalid property valueTypes: Each type needs to be an object with a name, type and possibly unit property."
         );
       }
 
-      if (types.indexOf(x.type) < 0) {
-        throw new Error(
-          `[opendash/services/data] OpenDashDataItem: Invalid property valueTypes: Unsupported type. Must be one of [${types.join(
-            ", "
-          )}]`
-        );
-      }
+      logger.assert(
+        _.isString(x.name),
+        "OpenDashDataItem: Invalid property valueTypes: type.name must be a String"
+      );
+
+      logger.assert(
+        types.includes(x.type),
+        `OpenDashDataItem: Invalid property valueTypes: Unsupported type. Must be one of [${types.join(
+          ", "
+        )}]`
+      );
+
+      logger.assert(
+        _.isString(x.unit),
+        "OpenDashDataItem: Invalid property valueTypes: type.unit must be a String"
+      );
     });
   }
 
@@ -645,6 +658,10 @@ class OpenDashDataItem {
 
         return data;
       });
+  }
+
+  toJSON() {
+    return _.pick(this, ["id", "name", "owner", "meta", "valueTypes"]);
   }
 }
 
