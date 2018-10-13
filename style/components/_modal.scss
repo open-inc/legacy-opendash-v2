@@ -33,6 +33,22 @@ od-modal {
     }
   }
 
+  &-footer {
+    display: block;
+    height: 61px;
+    width: 100%;
+    padding: 10px ($gutter - 5px);
+
+    overflow: hidden;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    background: $light-hover;
+
+    button {
+      margin: 0 5px;
+    }
+  }
+
   &-close {
     color: $primary-font;
     display: block;

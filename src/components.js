@@ -15,6 +15,7 @@ import selectDateComponent from "./components/select-date.component";
 import colorPickerComponent from "./components/color-picker.component";
 import fitTextComponent from "./components/fit-text.component";
 import odPresetsComponent from "./components/presets.component";
+import defaultModalComponent from "./components/default-modal.component";
 
 import odWidgetHolderDirective from "./components/widget-holder.directive";
 import odTabsDirective from "./components/tabs.directive";
@@ -43,6 +44,7 @@ export default [
   ["od-select-location", selectLocationComponent],
   ["od-select-date", selectDateComponent],
   ["od-color-picker", colorPickerComponent],
+  ["od-default-modal", defaultModalComponent],
 
   ["fitText", fitTextComponent],
 

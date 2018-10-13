@@ -78,6 +78,8 @@ export default [
         }
       },
       ui: {
+        ok: "OK",
+        cancel: "Abbrechen",
         prev: "Zurück",
         next: "Weiter"
       }

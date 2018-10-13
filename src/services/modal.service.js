@@ -1,6 +1,8 @@
 import angular from "angular";
 import $ from "jquery";
 
+import ModalInstance from "../classes/ModalInstance";
+
 let $animate;
 let $document;
 let $compile;
@@ -39,42 +41,64 @@ export default class Modal {
     return $animate.enter(child, parent);
   }
 
-  prompt(message) {
-    return $translate(message)
-      .then(msg => msg, id => id)
-      .then(msg => {
-        const response = prompt(msg);
-        if (response !== null) {
-          return response;
-        } else {
-          return $q.reject(new Error("[opendash/services/modal] No response."));
-        }
-      });
+  async prompt(message) {
+    const prompt = true;
+
+    const modal = await this.open({
+      component: "od-default-modal",
+      data: {
+        message,
+        prompt
+      }
+    });
+
+    return await modal.close;
   }
 
-  confirm(message) {
-    return $translate(message)
-      .then(msg => msg, id => id)
-      .then(msg => {
-        const response = confirm(msg);
-        if (response !== null) {
-          return response;
-        } else {
-          return $q.reject(new Error("[opendash/services/modal] No response."));
-        }
-      });
+  async confirm(message) {
+    const modal = await this.open({
+      component: "od-default-modal",
+      data: {
+        message
+      }
+    });
+
+    return await modal.close;
   }
 
   async open({ component, width, data }) {
-    let template = `<${component} ng-if="ready" modal="modalSettings"></${component}>`;
+    let noWrapper = true;
+
+    let template = `
+          <od-modal-header ng-show="modalSettings.header">
+              <od-modal-header-title ng-show="modalSettings.header.title">
+                {{ modalSettings.header.title | translate }}
+              </od-modal-header-title>
+              <od-modal-close class="fa fa-times" aria-hidden="true" ng-click="close()">
+              </od-modal-close>
+          </od-modal-header>
+          <od-modal-content>
+          <${component} ng-if="ready" modal="modalSettings"></${component}>
+          </od-modal-content>
+          <od-modal-footer ng-show="modalSettings.footer.length > 0">
+            <button ng-repeat="btn in modalSettings.footer track by $index"
+              ng-show="btn.isVisible()"
+              ng-class="btn.cls"
+              ng-style="{ float: btn.floatRight ? 'right' : 'left' }"
+              ng-disabled="btn.isDisabled()"
+              ng-click="btn.action(modalSettings)">
+              {{ btn.label | translate }}
+            </button>
+          </od-modal-footer>`;
+
     let controller = [
       "$scope",
       "close",
       ($scope, close) => {
-        $scope.modalSettings = {
+        $scope.modalSettings = new ModalInstance({
           close,
           data
-        };
+        });
 
         $scope.ready = true;
       }
@@ -83,12 +107,15 @@ export default class Modal {
     let options = {
       controller,
       template,
-      width
+      width,
+      noWrapper
     };
 
-    await this.showModal(options);
+    let modal = await this.showModal(options);
 
     await $q.resolve();
+
+    return modal;
   }
 
   showModal(options) {
@@ -129,6 +156,13 @@ export default class Modal {
                     ${options.template}
                 </od-modal-content>
             </od-modal>`;
+
+    if (options.noWrapper) {
+      template = `
+              <od-modal class="animated fadeInDown" style="${style}">
+                      ${options.template}
+              </od-modal>`;
+    }
 
     let closed = false;
 

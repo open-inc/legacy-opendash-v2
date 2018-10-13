@@ -75,6 +75,8 @@ export default [
         }
       },
       ui: {
+        ok: "OK",
+        cancel: "Cancel",
         prev: "Back",
         next: "Next"
       }
