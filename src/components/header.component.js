@@ -1,7 +1,5 @@
 import template from "./header.component.html";
 
-import Hash from "../classes/Hash";
-
 class controller {
   static get $inject() {
     return ["$injector"];
