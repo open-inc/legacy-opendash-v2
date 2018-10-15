@@ -8,7 +8,7 @@ const logger = Logger("opendash/services/data");
 
 import defaultIcon from "file-loader!../assets/default-item.svg";
 
-let $timeout, $q, $user, $env, $location;
+let $q, $user, $env, $location;
 
 const $store = new Map();
 const $root = [];
@@ -25,7 +25,6 @@ export default class OpenDashDataService {
 
   constructor($injector) {
     $q = $injector.get("$q");
-    $timeout = $injector.get("$timeout");
     $user = $injector.get("opendash/services/user");
     $location = $injector.get("opendash/services/location");
     $env = $injector.get("opendash/services/env");
@@ -38,7 +37,7 @@ export default class OpenDashDataService {
 
     let LOCK = false;
 
-    $location.onChange(async () => {
+    const init = async () => {
       if (LOCK) {
         return;
       }
@@ -64,6 +63,12 @@ export default class OpenDashDataService {
         });
 
       LOCK = false;
+    };
+
+    init();
+
+    $location.onChange(async () => {
+      init();
     });
   }
 
@@ -410,10 +415,12 @@ class OpenDashDataItem {
         )}]`
       );
 
-      logger.assert(
-        _.isString(x.unit),
-        "OpenDashDataItem: Invalid property valueTypes: type.unit must be a String"
-      );
+      if (x.unit) {
+        logger.assert(
+          _.isString(x.unit),
+          "OpenDashDataItem: Invalid property valueTypes: type.unit must be a String"
+        );
+      }
     });
   }
 

@@ -84,7 +84,10 @@ export default class LocationService {
       this.supported = true;
       this.loading = false;
     } catch (error) {
-      logger.error(error);
+      logger.log(
+        "The following message is not an Error, if you don't want to support multi location within your user adapter:"
+      );
+      logger.log(error);
       this.supported = false;
     }
 
