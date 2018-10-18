@@ -96,8 +96,8 @@ class openDASH {
     this.userAdapter = new adapter(options);
   }
 
-  registerDataAdapter(adapter) {
-    this.dataAdapters.push(adapter);
+  registerDataAdapter(adapter, options = {}) {
+    this.dataAdapters.push([adapter, options]);
   }
 
   registerAngularDependency(dependency) {
