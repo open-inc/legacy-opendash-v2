@@ -26,6 +26,12 @@ class controller {
       scope.output = this.data;
       scope.helper = {};
       scope.label = {};
+      scope.error = {};
+      scope.isVisible = {};
+
+      function onChange(key, value) {
+        // console.log(key);
+      }
 
       for (const element of this.form) {
         if (!this.validateFormElement(element)) {
@@ -36,16 +42,30 @@ class controller {
         // add helper object:
         scope.helper[element.key] = {};
 
+        scope.isVisible[element.key] = function() {
+          if (!_.isFunction(element.isVisible)) {
+            return true;
+          }
+
+          return element.isVisible();
+        };
+
         // add label:
         scope.label[element.key] = element.label;
 
+        template += `<div ng-show="isVisible['${element.key}']()">`;
         template += `<span>{{ label['${element.key}'] | translate }}</span>`;
 
         switch (element.type) {
           case "input":
+            scope.helper[element.key].onChange = function() {
+              onChange(element.key, null);
+            };
+
             template += `<input
                           type="${element.settings.type || "text"}"
                           ng-model="output['${element.key}']"
+                          ng-change="helper['${element.key}'].onChange()"
                           >`;
 
             break;
@@ -53,11 +73,16 @@ class controller {
           case "select":
             scope.helper[element.key].options = element.settings.options;
 
+            scope.helper[element.key].onChange = function() {
+              onChange(element.key, null);
+            };
+
             template += `<select
                           ng-model="output['${element.key}']"
                           ng-options="o.value as o.label for o in helper['${
                             element.key
                           }'].options"
+                          ng-change="helper['${element.key}'].onChange()"
                           ></select>`;
 
             break;
@@ -65,6 +90,7 @@ class controller {
           case "select-item":
             scope.helper[element.key].watcher = function(selection) {
               scope.output[element.key] = selection;
+              onChange(element.key, selection);
             };
 
             scope.helper[element.key].settings = Object.assign(
@@ -85,6 +111,7 @@ class controller {
           case "select-date":
             scope.helper[element.key].watcher = function(selection) {
               scope.output[element.key] = selection;
+              onChange(element.key, selection);
             };
 
             scope.helper[element.key].settings = element.settings;
@@ -100,6 +127,8 @@ class controller {
             logger.warn("Unknown type.");
             break;
         }
+
+        template += "</div>";
       }
 
       // For debugging:
@@ -131,7 +160,8 @@ let component = {
   template,
   bindings: {
     form: "<",
-    data: "<"
+    data: "<",
+    valid: "="
   }
 };
 
