@@ -68,6 +68,10 @@ export default [
           empty: "No result available",
           search: "Search for an item name..."
         },
+        icon: {
+          label: "Icon",
+          placeholder: "None selected."
+        },
         location: {
           label: "Select location",
           empty: "No result available",

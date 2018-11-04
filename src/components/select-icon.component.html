@@ -1,0 +1,29 @@
+<div class="od-select-icon">
+    <div class="od-select-icon__selection" ng-click="$ctrl.toggleDropdown()">
+        <div class="od-select-icon__selection__icon">
+            <i class="fa" ng-class="$ctrl.current.icon" aria-hidden="true"></i>
+        </div>
+        <div class="od-select-icon__selection__dropdown">
+            <i class="fa " ng-class="$ctrl.active ? 'fa-chevron-up' : 'fa-chevron-down'" aria-hidden="true"></i>
+        </div>
+        <div class="od-select-icon__selection__label">
+            {{ $ctrl.current.label | translate }}
+        </div>
+    </div>
+
+    <div class="od-select-icon__dropdown" ng-show="$ctrl.active">
+        <div class="od-select-icon__dropdown__option" ng-click="$ctrl.select(option)" ng-repeat="option in $ctrl.icons">
+            <div class="od-select-icon__dropdown__option">
+                <div class="od-select-icon__dropdown__option__icon">
+                    <i class="fa" ng-class="option.icon" aria-hidden="true"></i>
+                </div>
+                <div class="od-select-icon__dropdown__option__checkbox" ng-show="$ctrl.isSelected(option)">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                </div>
+                <div class="od-select-icon__dropdown__option__label">
+                    {{ option.label | translate }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

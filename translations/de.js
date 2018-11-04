@@ -71,6 +71,10 @@ export default [
           empty: "Keine Sensoren gefunden.",
           search: "Nach Sensoren suchen..."
         },
+        icon: {
+          label: "Icon auswählen",
+          placeholder: "Es wurde noch kein Icon gewählt."
+        },
         location: {
           label: "Standort auswählen",
           empty: "Keine Standorte gefunden.",

@@ -9,6 +9,7 @@ import odWidgetComponent from "./components/widget.component";
 import highchartComponent from "./components/highchart.component";
 import formComponent from "./components/form.component";
 import selectItemComponent from "./components/select-item.component";
+import selectIconComponent from "./components/select-icon.component";
 import selectLocationComponent from "./components/select-location.component";
 import selectStepComponent from "./components/select-step.component";
 import selectDateComponent from "./components/select-date.component";
@@ -40,6 +41,7 @@ export default [
   // UI
   ["od-form", formComponent],
   ["od-select-step", selectStepComponent],
+  ["od-select-icon", selectIconComponent],
   ["od-select-item", selectItemComponent],
   ["od-select-location", selectLocationComponent],
   ["od-select-date", selectDateComponent],

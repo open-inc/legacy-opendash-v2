@@ -55,6 +55,18 @@ export default class HeaderService {
     }
   }
 
+  logoAction() {
+    try {
+      for (const overlay of this.overlays) {
+        overlay.close();
+      }
+
+      this.logo.action();
+    } catch (error) {
+      // that's ok
+    }
+  }
+
   addSidebarItem(input) {
     const defaultAction = () => {};
 
