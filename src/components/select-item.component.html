@@ -3,7 +3,8 @@
         placeholder="{{ 'od.select.item.search' | translate }}" aria-label="{{ 'od.select.item.search' | translate }}">
 
     <div class="od-select-item__search__flags">
-        <i class="od-select-item__search__flags__flag fa" title="{{ flag.label }}" aria-hidden="true" ng-class="$ctrl.flagClass(flag)" ng-click="$ctrl.flagToggle(flag)" ng-repeat="flag in $ctrl.flags track by $index"></i>
+        <i class="od-select-item__search__flags__flag fa" title="{{ flag.label }}" aria-hidden="true" ng-class="$ctrl.flagClass(flag)"
+            ng-click="$ctrl.flagToggle(flag)" ng-repeat="flag in $ctrl.flags track by $index"></i>
     </div>
 
 </div>
@@ -11,7 +12,7 @@
 <div ng-if="!$ctrl.config.dropdown" class="od-select-item" ng-style="$ctrl.style">
     <div ng-if="!$ctrl.vo" class="od-select-item__item" ng-repeat="item in $ctrl.items track by $index" ng-click="$ctrl.toggleSelected(item.id)">
         <div class="od-select-item__item__icon">
-            <img ng-src="{{ item.icon }}">
+            <i class="fa" ng-class="$ctrl.iconForUnit(item.valueTypes[0].unit)" aria-hidden="true"></i>
         </div>
         <div class="od-select-item__item__check" ng-show="$ctrl.isSelected(item.id)">
             <i class="fa fa-check" aria-hidden="true"></i>
@@ -22,7 +23,7 @@
     </div>
     <div ng-if="$ctrl.vo" class="od-select-item__item" ng-repeat="item in $ctrl.items track by $index" ng-click="$ctrl.toggleSelected([item[0].id, item[1]])">
         <div class="od-select-item__item__icon">
-            <img ng-src="{{ item[0].icon }}">
+            <i class="fa" ng-class="$ctrl.iconForUnit(item[0].valueTypes[item[1]].unit)" aria-hidden="true"></i>
         </div>
         <div class="od-select-item__item__check" ng-show="$ctrl.isSelected([item[0].id, item[1]])">
             <i class="fa fa-check" aria-hidden="true"></i>

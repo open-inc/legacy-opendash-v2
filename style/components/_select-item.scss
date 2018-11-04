@@ -71,11 +71,17 @@ od-select-item {
         height: $item-height;
         width: $item-height;
         padding: $gutter/2;
-        img {
-          padding: $gutter/2;
+
+        i {
+          display: block;
           background: rgba(0, 0, 0, 0.05);
           border-radius: 50%;
           border: 1px solid rgba(0, 0, 0, 0.1);
+          width: $item-height - $gutter;
+          height: $item-height - $gutter;
+          line-height: $item-height - $gutter - 2px;
+          text-align: center;
+          font-size: 24px;
         }
       }
     }

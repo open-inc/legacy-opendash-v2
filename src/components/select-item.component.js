@@ -134,6 +134,32 @@ class controller {
     }
   }
 
+  iconForUnit(unit) {
+    switch (unit.toLowerCase()) {
+      case "m3":
+        return "fa-cube";
+      case "%":
+        return "fa-percent";
+      case "w":
+      case "kw":
+      case "kwh":
+        return "fa-plug";
+      case "c":
+      case "°c":
+        return "fa-thermometer-empty";
+      case "db":
+        return "fa-volume-down";
+      case "l":
+      case "l/std":
+        return "fa-tint";
+      case "ppm":
+        return "fa-tree";
+
+      default:
+        return "fa-question-circle-o";
+    }
+  }
+
   searchOnChange() {
     this.items = this.available;
 
