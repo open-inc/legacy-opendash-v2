@@ -123,6 +123,22 @@ class controller {
 
             break;
 
+          case "select-icon":
+            scope.helper[element.key].watcher = function(selection) {
+              scope.output[element.key] = selection;
+              onChange(element.key, selection);
+            };
+
+            scope.helper[element.key].settings = element.settings;
+
+            template += `<od-select-icon
+                          selection="output['${element.key}']"
+                          options="helper['${element.key}'].settings.options"
+                          watch="helper['${element.key}'].watcher"
+                          ></od-select-icon>`;
+
+            break;
+
           default:
             logger.warn("Unknown type.");
             break;

@@ -1,0 +1,99 @@
+od-select-icon {
+  $steps: 4;
+  $gutter: 16px;
+  $modal-padding: 20px;
+  $active-color: $primary;
+  $selection-height: 60px;
+  $option-height: 40px;
+
+  $xxx: #ccc;
+
+  display: block;
+
+  .od-select-icon {
+    position: relative;
+
+    &__selection {
+      background: $od-color-background-light;
+      margin-bottom: $gutter;
+      height: $selection-height;
+
+      @include raised;
+
+      &__dropdown,
+      &__icon {
+        height: $selection-height;
+        width: $selection-height;
+        line-height: $selection-height;
+        text-align: center;
+        float: right;
+      }
+
+      &__icon {
+        float: left;
+
+        font-size: 2em;
+      }
+
+      &__label {
+        margin: 0 $selection-height;
+        line-height: $selection-height;
+      }
+    }
+
+    &__dropdown {
+      display: block;
+      position: absolute;
+      top: $selection-height;
+      right: 0;
+      padding: 1px;
+      background: $white;
+      width: 100%;
+      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+
+      // &::before {
+      //   width: 0;
+      //   height: 0;
+      //   border-left: 5px solid transparent;
+      //   border-right: 5px solid transparent;
+      //   border-bottom: 5px solid #333;
+      //   content: "";
+      //   position: absolute;
+      //   top: -5px;
+      //   right: 25px;
+      // }
+
+      &__option {
+        height: $option-height;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid $xxx;
+        }
+
+        &__checkbox,
+        &__icon {
+          height: $option-height;
+          width: $option-height;
+          line-height: $option-height;
+          text-align: center;
+          float: right;
+        }
+
+        &__icon {
+          float: left;
+
+          font-size: 1.2em;
+        }
+
+        &__checkbox {
+          color: $primary;
+        }
+
+        &__label {
+          margin: 0 $option-height;
+          line-height: $option-height;
+        }
+      }
+    }
+  }
+}
