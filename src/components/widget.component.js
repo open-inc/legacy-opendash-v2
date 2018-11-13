@@ -79,11 +79,13 @@ class controller {
   }
 
   rename() {
-    this.$modal.prompt("od.dashboard.widgets.rename").then(response => {
-      if (response) {
-        this.widget.name = response;
-      }
-    });
+    this.$modal
+      .prompt("od.dashboard.widgets.rename", this.widget.name)
+      .then(response => {
+        if (response) {
+          this.widget.name = response;
+        }
+      });
   }
   actionClick(action) {
     action.click(this.widget, this.$element[0]);

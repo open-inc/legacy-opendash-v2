@@ -41,14 +41,15 @@ export default class Modal {
     return $animate.enter(child, parent);
   }
 
-  async prompt(message) {
+  async prompt(message, placeholder) {
     const prompt = true;
 
     const modal = await this.open({
       component: "od-default-modal",
       data: {
         message,
-        prompt
+        prompt,
+        placeholder
       }
     });
 
