@@ -11,6 +11,7 @@
         <!-- <a href="#">open.DASH</a> -->
         <od-topbar-logo ng-click="$ctrl.$header.logoAction()">
             <img ng-src="{{ $ctrl.$header.logo.url }}">
+            <span ng-show="$ctrl.$header.logo.label" ng-bind="$ctrl.$header.logo.label"></span>
         </od-topbar-logo>
 
         <div class="od-topbar__user" ng-if="$ctrl.user" ng-click="$ctrl.userActionsActive = !$ctrl.userActionsActive"
