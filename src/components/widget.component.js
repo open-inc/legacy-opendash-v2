@@ -13,6 +13,7 @@ class controller {
   }
 
   constructor($element, $modal, $dashboard, $event) {
+    this.$element = $element;
     this.$modal = $modal;
     this.$dashboard = $dashboard;
 
@@ -87,6 +88,7 @@ class controller {
         }
       });
   }
+
   actionClick(action) {
     action.click(this.widget, this.$element[0]);
   }

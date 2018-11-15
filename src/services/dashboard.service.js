@@ -9,6 +9,7 @@ let $location;
 let $event;
 let $notification;
 let $env;
+let $modal;
 
 let $timeout;
 let $scope;
@@ -29,6 +30,7 @@ export default class Dashboard {
     $event = $injector.get("opendash/services/event");
     $notification = $injector.get("opendash/services/notification");
     $env = $injector.get("opendash/services/env");
+    $modal = $injector.get("opendash/services/modal");
 
     $timeout = $injector.get("$timeout");
     $scope = $injector.get("$rootScope");
@@ -274,6 +276,75 @@ export default class Dashboard {
     }
   }
 
+  async createDashboardFromConfig(config) {
+    try {
+      let id = null;
+      let location = $location.currentHash;
+
+      config = Object.assign({}, config, { id, location });
+
+      console.log();
+
+      let dashboard = new OpenDashDashboard(config);
+
+      this.ls = await $user.createDashboard(dashboard);
+
+      this.init();
+    } catch (error) {
+      logger.error(error);
+      $notification.danger("od.dashboard.errors.create");
+    }
+  }
+
+  async createDashboardFromConfigDialog(config) {
+    try {
+      let id = null;
+      let name = await $modal.prompt(
+        "od.header.dashboards.create_prompt",
+        this.current.name
+      );
+
+      if (!name) {
+        return;
+      }
+
+      let dashboard = Object.assign({}, config, {
+        id,
+        name
+      });
+
+      console.log(dashboard);
+
+      this.createDashboardFromConfig(dashboard);
+    } catch (error) {
+      logger.error(error);
+      $notification.danger("od.dashboard.errors.create");
+    }
+  }
+
+  async copyCurrentDashboardDialog() {
+    try {
+      let id = null;
+      let name = await $modal.prompt(
+        "od.header.dashboards.create_prompt",
+        this.current.name
+      );
+
+      if (!name) {
+        return;
+      }
+
+      let dashboard = Object.assign({}, this.current.toJSON(), { id, name });
+
+      console.log(dashboard);
+
+      this.createDashboardFromConfig(dashboard);
+    } catch (error) {
+      logger.error(error);
+      $notification.danger("od.dashboard.errors.create");
+    }
+  }
+
   async changeDashboard(id) {
     try {
       if (id === this.ls) return;
@@ -299,6 +370,10 @@ export default class Dashboard {
 
   setDashboardOnEmptyAction(action) {
     this.dashboardOnEmptyActionOverwrite = action;
+  }
+
+  addWidgetAction(action) {
+    this.widgetActions.push(action);
   }
 
   initGridsterConfig() {
