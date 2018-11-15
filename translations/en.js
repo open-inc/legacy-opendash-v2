@@ -39,6 +39,10 @@ export default [
           message: "No Widgets found :(",
           action: "Add Widget from presets"
         },
+        shared: {
+          message: "This is a shared dashboard. You can create a private copy.",
+          action: "Create copy."
+        },
         widgets: {
           add: "Add Widget from template",
           rename: "Provide a name for the widget:",

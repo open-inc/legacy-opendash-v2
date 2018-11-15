@@ -41,6 +41,11 @@ export default [
           message: "Keine Widgets gefunden :(",
           action: "Widget aus Vorlage hinzufügen"
         },
+        shared: {
+          message:
+            "Du bearbeitest ein geteiltes Dashboard. Du kannst eine private Kopie anlegen.",
+          action: "Private Kopie anlegen"
+        },
         widgets: {
           add: "Widget aus Vorlage hinzufügen",
           rename: "Geben Sie dem Widget einen neuen Namen:",

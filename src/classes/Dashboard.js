@@ -7,12 +7,14 @@ export default class OpenDashDashboard {
     name = "Home",
     location = null,
     version = 2,
+    shared = false,
     widgets = []
   }) {
     this.id = id;
     this.name = name;
     this.location = location;
     this.version = version;
+    this.shared = shared;
 
     this.widgets = [];
 
