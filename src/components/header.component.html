@@ -1,122 +1,183 @@
 <od-topbar>
-    <od-topbar-container class="container">
-        <od-topbar-hamburger ng-if="$ctrl.sidebarMode" ng-show="$ctrl.showHamburger" ng-click="$ctrl.toggleSidebar()">
-            <div class="hamburger" ng-class="{ 'open': $ctrl.sidebar }">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </od-topbar-hamburger>
-        <!-- <a href="#">open.DASH</a> -->
-        <od-topbar-logo ng-click="$ctrl.$header.logoAction()">
-            <img ng-src="{{ $ctrl.$header.logo.url }}">
-            <span ng-show="$ctrl.$header.logo.label" ng-bind="$ctrl.$header.logo.label"></span>
-        </od-topbar-logo>
+  <od-topbar-container class="container">
+    <od-topbar-hamburger
+      ng-if="$ctrl.sidebarMode"
+      ng-show="$ctrl.showHamburger"
+      ng-click="$ctrl.toggleSidebar()"
+    >
+      <div class="hamburger" ng-class="{ 'open': $ctrl.sidebar }">
+        <span></span> <span></span> <span></span> <span></span>
+      </div>
+    </od-topbar-hamburger>
+    <!-- <a href="#">open.DASH</a> -->
+    <od-topbar-logo ng-click="$ctrl.$header.logoAction()">
+      <img ng-src="{{ $ctrl.$header.logo.url }}" />
+      <span
+        ng-show="$ctrl.$header.logo.label"
+        ng-bind="$ctrl.$header.logo.label"
+      ></span>
+    </od-topbar-logo>
 
-        <div class="od-topbar__user" ng-if="$ctrl.user" ng-click="$ctrl.userActionsActive = !$ctrl.userActionsActive"
-            ng-class="{'active': $ctrl.userActionsActive}">
-            <div class="od-topbar__user__icon">
-                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                <!-- <img ng-src="{{ $ctrl.user.profile }}"> -->
-            </div>
-            <div class="od-topbar__user__actions" ng-show="$ctrl.userActionsActive">
-                <div class="od-topbar__user__wellcome">
-                    <div class="od-topbar__user__wellcome__message">{{ 'od.header.user.greeting' | translate }}</div>
-                    <div class="od-topbar__user__wellcome__name">{{ $ctrl.user.username }}</div>
-                </div>
-                <a ng-repeat="action in $ctrl.userActions track by $index" ng-click="action.onClick()">
-                    <i ng-class="action.icon" aria-hidden="true"></i>
-                    <span>{{ action.label | translate }}</span>
-                </a>
-            </div>
+    <div
+      class="od-topbar__user"
+      ng-if="$ctrl.user"
+      ng-click="$ctrl.userActionsActive = !$ctrl.userActionsActive"
+      ng-class="{'active': $ctrl.userActionsActive}"
+    >
+      <div class="od-topbar__user__icon">
+        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+        <!-- <img ng-src="{{ $ctrl.user.profile }}"> -->
+      </div>
+      <div class="od-topbar__user__actions" ng-show="$ctrl.userActionsActive">
+        <div class="od-topbar__user__wellcome">
+          <div class="od-topbar__user__wellcome__message">
+            {{ "od.header.user.greeting" | translate }}
+          </div>
+          <div class="od-topbar__user__wellcome__name">
+            {{ $ctrl.user.username }}
+          </div>
         </div>
+        <a
+          ng-repeat="action in $ctrl.userActions track by $index"
+          ng-click="action.onClick()"
+        >
+          <i ng-class="action.icon" aria-hidden="true"></i>
+          <span>{{ action.label | translate }}</span>
+        </a>
+      </div>
+    </div>
 
-        <od-topbar-navigation class="float-right" ng-show="$ctrl.$user.auth">
-            <section ng-if="!$ctrl.sidebarMode">
-                <header>{{ 'od.header.dashboards.header' | translate }}</header>
-                <nav>
-                    <div>
-                        <a ui-sref="od.dashboard.home" ng-repeat="db in $ctrl.$dashboard.dashboards" ng-click="$ctrl.$dashboard.changeDashboard(db.id)">
-                            <i class="fa fa-database" aria-hidden="true"></i>
-                            <span>{{ db.name }}</span>
-                        </a>
-                    </div>
-                    <div>
-                        <header>{{ 'od.header.dashboards.manage' | translate }}</header>
-                        <a ng-click="$ctrl.createDashboard()">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                            <span>{{ 'od.header.dashboards.create' | translate }}</span>
-                        </a>
-                        <a ng-click="$ctrl.deleteDashboard()">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                            <span>{{ 'od.header.dashboards.delete' | translate }}</span>
-                        </a>
-                    </div>
-                </nav>
-            </section>
-            <section ng-if="!$ctrl.sidebarMode" ng-repeat="(header, links) in $ctrl.$header.sidebar">
-                <header>{{ header | translate }}</header>
-                <nav>
-                    <div>
-                        <a ng-click="link.action()" ng-repeat="link in links">
-                            <i class="fa" ng-class="link.icon" aria-hidden="true"></i>
-                            <span>{{ link.text | translate }}</span>
-                        </a>
-                    </div>
-                </nav>
-            </section>
-            <a ng-show="$ctrl.showEditMode" ng-click="$ctrl.$dashboard.editMode = !$ctrl.$dashboard.editMode">
-                <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.editMode, 'fa-floppy-o': $ctrl.$dashboard.editMode}"
-                    aria-hidden="true"></i>
-                <span>{{ 'od.header.dashboards.edit_mode_button' | translate }}</span>
+    <od-topbar-navigation class="float-right" ng-show="$ctrl.$user.auth">
+      <section ng-if="!$ctrl.sidebarMode">
+        <header>{{ "od.header.dashboards.header" | translate }}</header>
+        <nav>
+          <div>
+            <a
+              ui-sref="od.dashboard.home"
+              ng-repeat="db in $ctrl.$dashboard.dashboards"
+              ng-click="$ctrl.$dashboard.changeDashboard(db.id)"
+            >
+              <i class="fa fa-database" aria-hidden="true"></i>
+              <span> {{ db.name }} </span>
             </a>
-            <a ng-repeat="link in $ctrl.topbarItems track by $index" ng-hide="link.hidden || link.isHidden()" ng-click="link.action()">
-                <i class="fa {{ link.icon }}" aria-hidden="true"></i>
-                <span>{{ link.text | translate }}</span>
+          </div>
+          <div>
+            <header>{{ "od.header.dashboards.manage" | translate }}</header>
+            <a ng-click="$ctrl.createDashboard()">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              <span>{{ "od.header.dashboards.create" | translate }}</span>
             </a>
-        </od-topbar-navigation>
-        <!--
-            <footer>
-                <a ng-click="link.action()" ng-repeat="link in $ctrl.$header.sidebarFooter">
-                    <i ng-if="link.icon" class="fa {{ link.icon }}" aria-hidden="true"></i>{{ link.text }}</a>
-                <a ng-click="$ctrl.$user.logout()">
-                    <i class="fa fa-sign-out" aria-hidden="true"></i>{{ 'od.auth.logout' | translate }}</a>
-            </footer>
-            -->
-        <!-- </od-sidebar> -->
-        <!-- <div class="float-right">
-                <a ng-show="$ctrl.$user.auth" style="line-height: 40px;font-size: 30px;" ng-click="$ctrl.$dashboard.editMode = !$ctrl.$dashboard.editMode">
-                    <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.editMode, 'fa-floppy-o': $ctrl.$dashboard.editMode}"
-                        aria-hidden="true"></i>
-                </a>
-                <a ng-show="$ctrl.$user.auth" style="line-height: 40px;font-size: 30px;" ng-click="link.action()" ng-repeat="link in $ctrl.$header.topbar">
-                    <i class="fa {{ link.icon }}" aria-hidden="true"></i>
-                </a>
-            </div> -->
-    </od-topbar-container>
+            <a ng-click="$ctrl.deleteDashboard()">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+              <span>{{ "od.header.dashboards.delete" | translate }}</span>
+            </a>
+          </div>
+        </nav>
+      </section>
+      <section
+        ng-if="!$ctrl.sidebarMode"
+        ng-repeat="(header, links) in $ctrl.$header.sidebar"
+      >
+        <header>{{ header | translate }}</header>
+        <nav>
+          <div>
+            <a ng-click="link.action()" ng-repeat="link in links">
+              <i class="fa" ng-class="link.icon" aria-hidden="true"></i>
+              <span>{{ link.text | translate }}</span>
+            </a>
+          </div>
+        </nav>
+      </section>
+      <a
+        ng-show="$ctrl.showEditMode"
+        ng-click="$ctrl.$dashboard.editMode = !$ctrl.$dashboard.editMode"
+      >
+        <i
+          class="fa"
+          ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.editMode, 'fa-floppy-o': $ctrl.$dashboard.editMode}"
+          aria-hidden="true"
+        ></i>
+        <span>{{ "od.header.dashboards.edit_mode_button" | translate }}</span>
+      </a>
+      <a
+        ng-repeat="link in $ctrl.topbarItems track by $index"
+        ng-hide="link.hidden || link.isHidden()"
+        ng-click="link.action()"
+      >
+        <i class="fa {{ link.icon }}" aria-hidden="true"></i>
+        <span>{{ link.text | translate }}</span>
+      </a>
+    </od-topbar-navigation>
+    <!--
+      <footer>
+          <a ng-click="link.action()" ng-repeat="link in $ctrl.$header.sidebarFooter">
+              <i ng-if="link.icon" class="fa {{ link.icon }}" aria-hidden="true"></i>{{ link.text }}</a>
+          <a ng-click="$ctrl.$user.logout()">
+              <i class="fa fa-sign-out" aria-hidden="true"></i>{{ 'od.auth.logout' | translate }}</a>
+      </footer>
+    -->
+    <!-- </od-sidebar> -->
+    <!--
+      <div class="float-right">
+          <a ng-show="$ctrl.$user.auth" style="line-height: 40px;font-size: 30px;" ng-click="$ctrl.$dashboard.editMode = !$ctrl.$dashboard.editMode">
+              <i class="fa" ng-class="{'fa-pencil-square-o': !$ctrl.$dashboard.editMode, 'fa-floppy-o': $ctrl.$dashboard.editMode}"
+                  aria-hidden="true"></i>
+          </a>
+          <a ng-show="$ctrl.$user.auth" style="line-height: 40px;font-size: 30px;" ng-click="link.action()" ng-repeat="link in $ctrl.$header.topbar">
+              <i class="fa {{ link.icon }}" aria-hidden="true"></i>
+          </a>
+      </div>
+    -->
+  </od-topbar-container>
 </od-topbar>
 
-<od-sidebar ng-if="$ctrl.sidebarMode" ng-class="{ 'active': $ctrl.sidebar }" ng-click="$ctrl.overlay.close()">
-    <main>
-        <section>
-            <header>{{ 'od.header.dashboards.header' | translate }}</header>
-            <a ui-sref="od.dashboard.home" ng-repeat="db in $ctrl.$dashboard.dashboards" ng-click="$ctrl.$dashboard.changeDashboard(db.id)">{{
-                db.name }}</a>
-        </section>
-        <section>
-            <header>{{ 'od.header.dashboards.manage' | translate }}</header>
-            <a ng-click="$ctrl.createDashboard()">{{ 'od.header.dashboards.create' | translate }}</a>
-            <a ng-click="$ctrl.deleteDashboard()">{{ 'od.header.dashboards.delete' | translate }}</a>
-        </section>
-        <section ng-repeat="(header, links) in $ctrl.$header.sidebar">
-            <header>{{ header | translate }}</header>
-            <a ng-click="link.action()" ng-repeat="link in links">{{ link.text | translate }}</a>
-        </section>
-    </main>
+<od-sidebar
+  ng-if="$ctrl.sidebarMode"
+  ng-class="{ 'active': $ctrl.sidebar }"
+  ng-click="$ctrl.overlay.close()"
+>
+  <main>
+    <section>
+      <header>{{ "od.header.dashboards.header" | translate }}</header>
+      <a
+        ui-sref="od.dashboard.home"
+        ng-repeat="db in $ctrl.$dashboard.dashboards"
+        ng-click="$ctrl.$dashboard.changeDashboard(db.id)"
+      >
+        {{ db.name }}
+
+        <span class="badge" ng-if="db.shared">{{
+          "od.header.dashboards.shared" | translate
+        }}</span>
+        <span class="badge" ng-if="db.id === $ctrl.$dashboard.current.id">{{
+          "od.header.dashboards.active" | translate
+        }}</span>
+      </a>
+    </section>
+    <section>
+      <header>{{ "od.header.dashboards.manage" | translate }}</header>
+      <a ng-click="$ctrl.createDashboard()">{{
+        "od.header.dashboards.create" | translate
+      }}</a>
+      <a ng-click="$ctrl.deleteDashboard()">{{
+        "od.header.dashboards.delete" | translate
+      }}</a>
+    </section>
+    <section ng-repeat="(header, links) in $ctrl.$header.sidebar">
+      <header>{{ header | translate }}</header>
+      <a ng-click="link.action()" ng-repeat="link in links">{{
+        link.text | translate
+      }}</a>
+    </section>
+  </main>
 </od-sidebar>
 
 <od-notification></od-notification>
 
-<div class="od-header__overlay" ng-class="{ 'active': overlay.active }" ng-style="{ 'z-index': overlay.index }"
-    ng-click="overlay.close()" ng-repeat="overlay in $ctrl.$header.overlays"></div>
+<div
+  class="od-header__overlay"
+  ng-class="{ 'active': overlay.active }"
+  ng-style="{ 'z-index': overlay.index }"
+  ng-click="overlay.close()"
+  ng-repeat="overlay in $ctrl.$header.overlays"
+></div>

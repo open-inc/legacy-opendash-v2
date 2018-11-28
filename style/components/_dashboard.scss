@@ -26,6 +26,12 @@ od-dashboard-home-component {
       padding-right: $gutter;
     }
 
+    span.who {
+      text-decoration-style: dotted;
+      text-decoration-line: underline;
+      cursor: help;
+    }
+
     button {
       margin-bottom: 0;
     }

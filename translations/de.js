@@ -24,7 +24,9 @@ export default [
             "Bitte Namen für neues Dashboard angeben und auf erstellen klicken.",
           delete: "Aktuelles Dashboard löschen",
           delete_prompt:
-            "Sind Sie sicher, dass das aktuelle Dashboard gelöscht werden soll?"
+            "Sind Sie sicher, dass das aktuelle Dashboard gelöscht werden soll?",
+          active: "aktiv",
+          shared: "geteilt"
         },
         widgets: {
           header: "Widgets",
@@ -44,7 +46,8 @@ export default [
         shared: {
           message:
             "Du bearbeitest ein geteiltes Dashboard. Du kannst eine private Kopie anlegen.",
-          action: "Private Kopie anlegen"
+          action: "Private Kopie anlegen",
+          who: "Mit wem wird geteilt?"
         },
         widgets: {
           add: "Widget aus Vorlage hinzufügen",
