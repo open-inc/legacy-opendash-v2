@@ -1,6 +1,8 @@
 import _ from "lodash";
 
 import Logger from "../helper/logger";
+import Location from "../classes/Location";
+import LocationStore from "../classes/LocationStore";
 
 const logger = Logger("opendash/services/location");
 
@@ -21,12 +23,16 @@ export default class LocationService {
     this.supported = false;
     this.current = null;
     this.currentHash = null;
-    this.locations = [];
+    this.locationIsChild = [];
 
     // debounce trigger observers
     this.triggerObservers = _.debounce(this.triggerObservers, 100);
 
     this.init();
+  }
+
+  get locations() {
+    return [...LocationStore.values()];
   }
 
   // get ls() {
@@ -50,7 +56,6 @@ export default class LocationService {
 
       let current = await $user.getCurrentLocations();
       let locations = await $user.listLocations();
-      let idArray = [];
 
       logger.assert(_.isArray(locations), "Locations must be an Array.");
 
@@ -60,26 +65,19 @@ export default class LocationService {
       );
 
       for (const loc of locations) {
-        logger.assert(_.isObject(loc), "Each location must be an Object.");
+        let location = new Location(loc);
 
-        logger.assert(
-          _.isObject(loc),
-          "Each location must have an id attribute."
-        );
+        if (loc.children && _.isArray(loc.children)) {
+          this.locationIsChild.push(...loc.children);
+        }
 
-        logger.assert(
-          !idArray.includes(loc.id),
-          "Each location must have an uniq id attribute."
-        );
-
-        idArray.push(loc.id);
+        LocationStore.set(location.id, location);
       }
 
-      if (!current || !this.validateCurrent(locations, current)) {
-        current = [locations[0].id];
+      if (!current || !this.validateCurrent(current)) {
+        current = [LocationStore.keys().next().value];
       }
 
-      this.locations.push(...locations);
       this.setLocation(current);
       this.supported = true;
       this.loading = false;
@@ -131,11 +129,11 @@ export default class LocationService {
     }
 
     logger.assert(
-      this.validateCurrent(this.locations, ids),
+      this.validateCurrent(ids),
       "Setting the current location failed. All ids must be in the list of locations."
     );
 
-    this.current = ids.map(id => this.locations.find(loc => loc.id === id));
+    this.current = ids.map(id => LocationStore.get(id));
     this.currentHash = newHash;
 
     logger.log(`Locations set (${this.currentHash})`);
@@ -145,14 +143,13 @@ export default class LocationService {
     $user.setCurrentLocations(ids).then(null, error => logger.error(error));
   }
 
-  validateCurrent(locations, current) {
+  validateCurrent(current) {
     if (!_.isArray(current)) {
       return false;
     }
 
-    let availableIds = locations.map(loc => loc.id);
     let result = current
-      .map(id => availableIds.includes(id))
+      .map(id => LocationStore.has(id))
       .reduce((acc, value) => acc && value, true);
     return result;
   }
@@ -179,5 +176,9 @@ export default class LocationService {
         await observer(this.current);
       }
     }
+  }
+
+  isChild(id) {
+    return this.locationIsChild.includes(id);
   }
 }

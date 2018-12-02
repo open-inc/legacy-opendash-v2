@@ -1,0 +1,17 @@
+<div
+  ng-if="!$ctrl.vo"
+  class="od-select-location__item"
+  ng-click="$ctrl.LocationPicker.toggleSelected(item.id)"
+>
+  <div
+    class="od-select-location__item__check"
+    ng-show="$ctrl.LocationPicker.isSelected(item.id)"
+  >
+    <i class="fa fa-check" aria-hidden="true"></i>
+  </div>
+  <div class="od-select-location__item__name">
+    {{ item.name }}
+
+    <i> {{ item.postCode }} {{ item.city }}, {{ item.address }} </i>
+  </div>
+</div>

@@ -16,7 +16,7 @@ od-select-location {
     }
 
     &__item {
-      height: $item-height;
+      // height: $item-height;
       line-height: $item-height; // margin-bottom: $gutter/2;
       border: 1px solid rgba(0, 0, 0, 0.1);
       &:hover {
@@ -46,6 +46,10 @@ od-select-location {
           height: $item-height;
           line-height: $item-height;
         }
+      }
+
+      &__children {
+        padding: 0 $gutter/2 $gutter/2 $gutter/2;
       }
     }
     &--clear:after {

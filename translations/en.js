@@ -82,7 +82,8 @@ export default [
         location: {
           label: "Select location",
           empty: "No result available",
-          search: "Search for a location..."
+          search: "Search for a location...",
+          min: "There must be at least one ."
         }
       },
       ui: {

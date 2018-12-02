@@ -86,14 +86,16 @@ export default [
         location: {
           label: "Standort auswählen",
           empty: "Keine Standorte gefunden.",
-          search: "Nach Standorten suchen..."
+          search: "Nach Standorten suchen...",
+          min: "Es muss mindestens ein Standort ausgewählt werden."
         }
       },
       ui: {
         ok: "OK",
         cancel: "Abbrechen",
         prev: "Zurück",
-        next: "Weiter"
+        next: "Weiter",
+        notimplemented: "Diese Operation wird nicht unterstützt."
       }
     }
   }
