@@ -10,6 +10,32 @@ od-dashboard-home-component {
 }
 
 .od_dashboard {
+  &__sharing {
+    $warning: map-get($colors, "warning");
+    background: map-get($warning, "background");
+    color: map-get($warning, "font");
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+    margin: $gutter * -1;
+    margin-bottom: $gutter;
+
+    text-align: center;
+    padding: $gutter/2;
+
+    span {
+      padding-right: $gutter;
+    }
+
+    span.who {
+      text-decoration-style: dotted;
+      text-decoration-line: underline;
+      cursor: help;
+    }
+
+    button {
+      margin-bottom: 0;
+    }
+  }
   &__empty {
     text-align: center;
     &__message {

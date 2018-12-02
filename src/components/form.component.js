@@ -70,6 +70,18 @@ class controller {
 
             break;
 
+          case "textarea":
+            scope.helper[element.key].onChange = function() {
+              onChange(element.key, null);
+            };
+
+            template += `<textarea rows="${element.settings.rows || "4"}"
+                            ng-model="output['${element.key}']"
+                            ng-change="helper['${element.key}'].onChange()"
+                            ></textarea>`;
+
+            break;
+
           case "select":
             scope.helper[element.key].options = element.settings.options;
 

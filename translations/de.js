@@ -24,7 +24,9 @@ export default [
             "Bitte Namen für neues Dashboard angeben und auf erstellen klicken.",
           delete: "Aktuelles Dashboard löschen",
           delete_prompt:
-            "Sind Sie sicher, dass das aktuelle Dashboard gelöscht werden soll?"
+            "Sind Sie sicher, dass das aktuelle Dashboard gelöscht werden soll?",
+          active: "aktiv",
+          shared: "geteilt"
         },
         widgets: {
           header: "Widgets",
@@ -40,6 +42,12 @@ export default [
         empty: {
           message: "Keine Widgets gefunden :(",
           action: "Widget aus Vorlage hinzufügen"
+        },
+        shared: {
+          message:
+            "Du bearbeitest ein geteiltes Dashboard. Du kannst eine private Kopie anlegen.",
+          action: "Private Kopie anlegen",
+          who: "Mit wem wird geteilt?"
         },
         widgets: {
           add: "Widget aus Vorlage hinzufügen",
@@ -78,14 +86,16 @@ export default [
         location: {
           label: "Standort auswählen",
           empty: "Keine Standorte gefunden.",
-          search: "Nach Standorten suchen..."
+          search: "Nach Standorten suchen...",
+          min: "Es muss mindestens ein Standort ausgewählt werden."
         }
       },
       ui: {
         ok: "OK",
         cancel: "Abbrechen",
         prev: "Zurück",
-        next: "Weiter"
+        next: "Weiter",
+        notimplemented: "Diese Operation wird nicht unterstützt."
       }
     }
   }

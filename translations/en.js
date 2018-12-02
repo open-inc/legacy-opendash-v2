@@ -22,7 +22,9 @@ export default [
           create_prompt: "Please enter a name for the new Dashboard!",
           delete: "Delete currently selected Dashboard",
           delete_prompt:
-            "Are you sure you want to delete the current Dashboard?"
+            "Are you sure you want to delete the current Dashboard?",
+          active: "active",
+          shared: "shared"
         },
         widgets: {
           header: "Widgets",
@@ -38,6 +40,11 @@ export default [
         empty: {
           message: "No Widgets found :(",
           action: "Add Widget from presets"
+        },
+        shared: {
+          message: "This is a shared dashboard. You can create a private copy.",
+          action: "Create copy.",
+          who: "With whom?"
         },
         widgets: {
           add: "Add Widget from template",
@@ -75,7 +82,8 @@ export default [
         location: {
           label: "Select location",
           empty: "No result available",
-          search: "Search for a location..."
+          search: "Search for a location...",
+          min: "There must be at least one ."
         }
       },
       ui: {

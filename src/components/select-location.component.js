@@ -7,6 +7,7 @@ const logger = Logger("od-select-location");
 
 let $user;
 let $location;
+let $notification;
 let $q;
 
 class controller {
@@ -17,6 +18,7 @@ class controller {
   constructor($injector, $element) {
     $user = $injector.get("opendash/services/user");
     $location = $injector.get("opendash/services/location");
+    $notification = $injector.get("opendash/services/notification");
 
     $q = $injector.get("$q");
 
@@ -126,16 +128,40 @@ class controller {
 
   set items(values) {}
 
-  isSelected(e) {
-    return this.output.indexOf(e) >= 0;
+  showLocation({ id }) {
+    return !$location.isChild(id);
   }
 
-  isAvailable(e) {
-    return _.find(this.available, a => a.id === e) ? true : false;
+  isSelected({ id, children }) {
+    if (!children || children.length === 0) {
+      return this.output.indexOf(id) >= 0;
+    }
+
+    return children
+      .map(child => child.id)
+      .map(id => this.isSelected({ id }))
+      .reduce((acc, value) => acc && value, true);
   }
 
-  toggleSelected(e) {
-    let isSelected = this.isSelected(e);
+  isAvailable(id) {
+    return _.find(this.available, a => a.id === id) ? true : false;
+  }
+
+  toggleSelected({ id, children }) {
+    let isSelected = this.isSelected({ id, children });
+
+    console.log("select", isSelected, id, children);
+
+    if (children && children.length > 0) {
+      if (isSelected) {
+        $notification.danger("od.select.location.min");
+        return;
+      }
+
+      $location.setLocation(children.map(child => child.id));
+
+      return;
+    }
 
     if (this.lsm) {
       let output = [...this.output];
@@ -144,10 +170,14 @@ class controller {
         output.length = 0;
       }
 
-      if (isSelected) {
-        _.pull(output, e);
+      if (output.includes(id)) {
+        _.pull(output, id);
       } else {
-        output.push(e);
+        output.push(id);
+      }
+
+      if (output.length === 0) {
+        $notification.danger("od.select.location.min");
       }
 
       $location.setLocation(output);
@@ -157,9 +187,9 @@ class controller {
       }
 
       if (isSelected) {
-        _.pull(this.output, e);
+        _.pull(this.output, id);
       } else {
-        this.output.push(e);
+        this.output.push(id);
       }
 
       this.triggerWatch();

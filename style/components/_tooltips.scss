@@ -81,14 +81,14 @@ button[od-tooltip] {
     padding: 0.5em 1em;
     position: absolute;
     white-space: nowrap;
-    z-index: 10;
+    z-index: 9999;
   }
   &:before {
     @include svg-arrow($balloon-bg);
     @include base-effects();
     content: "";
     position: absolute;
-    z-index: 10;
+    z-index: 9999;
   }
   &:hover,
   &[od-tooltip-visible] {

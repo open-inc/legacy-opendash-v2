@@ -19,6 +19,14 @@ class controller {
     }
 
     try {
+      if (this.modal.data.placeholder) {
+        this.output = this.modal.data.placeholder;
+      }
+    } catch (error) {
+      this.output = "";
+    }
+
+    try {
       this.prompt = this.modal.data.prompt;
     } catch (error) {
       this.prompt = false;

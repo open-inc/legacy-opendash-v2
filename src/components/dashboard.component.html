@@ -1,16 +1,39 @@
 <od-loading ng-if="!$ctrl.ready"></od-loading>
 <div id="opendash-dashboard" ng-if="$ctrl.ready" class="container">
-	<div class="od_dashboard" gridster="$ctrl.$dashboard.gridsterConfig">
-		<ul class="od_dashboard_widgets">
-			<li gridster-item="$ctrl.$dashboard.gridsterItemConfig" ng-repeat="widget in $ctrl.$dashboard.current.widgets">
-				<od-widget widget="widget" ng-class="{ 'od-widget--alert': widget.state.alert }"></od-widget>
-			</li>
-		</ul>
-	</div>
-	<div class="od_dashboard__empty" ng-show="$ctrl.empty">
-		<div class="od_dashboard__empty__message">{{ 'od.dashboard.empty.message' | translate }}</div>
-		<div class="od_dashboard__empty__suggestions">
-			<button ng-click="$ctrl.onEmptyAction()">{{ 'od.dashboard.empty.action' | translate }}</button>
-		</div>
-	</div>
+  <div class="od_dashboard__sharing" ng-if="$ctrl.isShared()">
+    <div class="od_dashboard__sharing__inner">
+      <span> {{ "od.dashboard.shared.message" | translate }} </span>
+
+      <span ng-show="$ctrl.shared" class="who" od-tooltip="{{ $ctrl.shared }}">
+        {{ "od.dashboard.shared.who" | translate }}
+      </span>
+
+      <button ng-click="$ctrl.$dashboard.copyCurrentDashboardDialog()">
+        {{ "od.dashboard.shared.action" | translate }}
+      </button>
+    </div>
+  </div>
+  <div class="od_dashboard" gridster="$ctrl.$dashboard.gridsterConfig">
+    <ul class="od_dashboard_widgets">
+      <li
+        gridster-item="$ctrl.$dashboard.gridsterItemConfig"
+        ng-repeat="widget in $ctrl.$dashboard.current.widgets"
+      >
+        <od-widget
+          widget="widget"
+          ng-class="{ 'od-widget--alert': widget.state.alert }"
+        ></od-widget>
+      </li>
+    </ul>
+  </div>
+  <div class="od_dashboard__empty" ng-show="$ctrl.empty">
+    <div class="od_dashboard__empty__message">
+      {{ "od.dashboard.empty.message" | translate }}
+    </div>
+    <div class="od_dashboard__empty__suggestions">
+      <button ng-click="$ctrl.onEmptyAction()">
+        {{ "od.dashboard.empty.action" | translate }}
+      </button>
+    </div>
+  </div>
 </div>

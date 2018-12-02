@@ -46,12 +46,15 @@ export default class HeaderService {
     return this.navOverlay && this.navOverlay.active;
   }
 
-  addLogo(url, action) {
+  addLogo(url, action, label) {
     if (url && _.isString(url)) {
       this.logo.url = url;
     }
     if (action && _.isFunction(action)) {
       this.logo.action = action;
+    }
+    if (label && _.isString(label)) {
+      this.logo.label = label;
     }
   }
 

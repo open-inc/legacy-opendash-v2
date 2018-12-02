@@ -100,10 +100,22 @@ export default class OpenDashDataService {
     return new OpenDashDataQuery(input || this.list());
   }
 
-  listByType(type) {
+  listByType(types) {
+    if (_.isString(types)) {
+      types = [types];
+    }
+
+    logger.assert(
+      _.isArray(types),
+      "listByTypes(type) - type must be a String or an Array of Strings"
+    );
+
     return _([...$store.values()])
       .map(item =>
-        _.map(item.valueTypes, (v, k) => (v.type === type ? [item, k] : null))
+        _.map(
+          item.valueTypes,
+          (v, k) => (types.includes(v.type) ? [item, k] : null)
+        )
       )
       .flatten()
       .pull(null)

@@ -30,10 +30,18 @@ od-topbar {
       display: none;
       @include media(">sm") {
         display: block;
+        float: left;
         height: $od-topbar-height;
         width: auto;
         padding: $gutter/2 0;
       }
+    }
+    span {
+        float: right;
+        display: block;
+        line-height: 60px;
+        margin-left: 10px;
+        font-size: 1.2em;
     }
   }
 
