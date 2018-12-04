@@ -24,12 +24,19 @@ const logger = Logger("opendash/core");
 let language = "en";
 
 // Try getting browser default language
-if (
-  navigator.languages &&
-  _.isArray(navigator.languages) &&
-  _.isString(navigator.languages[0])
-) {
-  language = navigator.languages[0].split("-")[0];
+try {
+  if (
+    navigator.languages &&
+    _.isArray(navigator.languages) &&
+    _.isString(navigator.languages[0])
+  ) {
+    language = navigator.languages[0].split("-")[0];
+  } else {
+    language = navigator.language.split("-")[0];
+  }
+} catch (error) {
+  logger.error("Error while trying to detect the language:", error);
+  logger.error("Fallback language is:", language);
 }
 
 const docs = "http://docs.opendash.de";
