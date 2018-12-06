@@ -11,6 +11,7 @@ import defaultIcon from "file-loader!../assets/default-item.svg";
 let $q, $user, $env, $location;
 
 const $store = new Map();
+const $watcherStore = new Map();
 const $root = [];
 
 const waiting = [];
@@ -293,7 +294,9 @@ class OpenDashDataItem {
 
     this.value = null;
 
-    this.watchers = [];
+    if (!$watcherStore.has(this.id)) {
+      $watcherStore.set(this.id, []);
+    }
 
     if (payload.value) {
       this.set("value", payload.value).then(null, err =>
@@ -368,6 +371,10 @@ class OpenDashDataItem {
         return $q.reject(
           new Error("OpenDashDataItem Update Error: Invalid value.")
         );
+      }
+
+      if (this.value && this.value.date >= value.date) {
+        return $q.resolve(false);
       }
 
       let newValue = {
@@ -514,11 +521,11 @@ class OpenDashDataItem {
   }
 
   watch(callback) {
-    this.watchers.push(callback);
+    $watcherStore.get(this.id).push(callback);
   }
 
   notify(event, newValue, oldValue) {
-    this.watchers.forEach(callback => {
+    $watcherStore.get(this.id).forEach(callback => {
       callback(event, newValue, oldValue);
     });
   }
