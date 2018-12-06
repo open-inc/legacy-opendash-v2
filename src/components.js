@@ -15,6 +15,7 @@ import selectStepComponent from "./components/select-step.component";
 import selectDateComponent from "./components/select-date.component";
 import colorPickerComponent from "./components/color-picker.component";
 import fitTextComponent from "./components/fit-text.component";
+import timeRelativeComponent from "./components/time-relative.component";
 import odPresetsComponent from "./components/presets.component";
 import defaultModalComponent from "./components/default-modal.component";
 
@@ -49,6 +50,7 @@ export default [
   ["od-default-modal", defaultModalComponent],
 
   ["fitText", fitTextComponent],
+  ["od-time-relative", timeRelativeComponent],
 
   // Core
   ["od-widget-holder", odWidgetHolderDirective, true],
