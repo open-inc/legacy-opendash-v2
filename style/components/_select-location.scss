@@ -29,6 +29,8 @@ od-select-location {
         margin-right: $item-height;
         height: $item-height;
         padding: 0 $gutter;
+        overflow: hidden;
+
         i {
           color: rgba(0, 0, 0, 0.4);
           margin-left: 4px;
