@@ -38,6 +38,19 @@ export default [
           profile_alt: "Nutzer Profilbild"
         }
       },
+      user: {
+        settings: {
+          data: {
+            header: "Benutzerdefinierte Namen für Sensoren",
+            action: "Sensoren anpassen",
+            col_default: "Standart Name",
+            col_custom: "Benutzerdefinierter Name",
+            click_to_edit: "Anklicken zum Editieren",
+            success: "Namen wurden gespeichert.",
+            error: "Namen konnten nicht gespeichert werden."
+          }
+        }
+      },
       dashboard: {
         empty: {
           message: "Keine Widgets gefunden :(",
@@ -92,6 +105,7 @@ export default [
       },
       ui: {
         ok: "OK",
+        save: "Speichern",
         cancel: "Abbrechen",
         prev: "Zurück",
         next: "Weiter",

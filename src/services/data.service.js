@@ -18,6 +18,7 @@ const waiting = [];
 let globalready = false;
 let valueValidation;
 let adapters;
+let NameMap = {};
 
 export default class OpenDashDataService {
   static get $inject() {
@@ -51,6 +52,8 @@ export default class OpenDashDataService {
 
       $store.clear();
 
+      NameMap = await $user.getData("settings:data:names");
+
       const promises = adapters.map(adapter =>
         adapter.init(new OpenDashDataContext(adapter))
       );
@@ -73,6 +76,10 @@ export default class OpenDashDataService {
     $location.onChange(async () => {
       init();
     });
+  }
+
+  set NameMap(value) {
+    NameMap = value;
   }
 
   get ready() {
@@ -276,7 +283,7 @@ class OpenDashDataItem {
     this.adapter = adapter;
 
     this.id = payload.id;
-    this.name = payload.name;
+    this._name = payload.name;
     this.owner = payload.owner;
     this.icon = payload.icon || defaultIcon;
     this.parents = _(payload.parents || [])
@@ -306,6 +313,14 @@ class OpenDashDataItem {
         )
       );
     }
+  }
+
+  get name() {
+    return NameMap[this.id] || this._name;
+  }
+
+  get isCustomName() {
+    return NameMap[this.id];
   }
 
   get children() {

@@ -1,0 +1,31 @@
+<div class="container">
+  <h1>{{ "od.user.settings.data.header" | translate }}</h1>
+
+  <button ng-click="$ctrl.save()">{{ "od.ui.save" | translate }}</button>
+
+  <div class="od_user_settings__data__table">
+    <div class="od_user_settings__data__table__row">
+      <div class="od_user_settings__data__table__col">
+        {{ "od.user.settings.data.col_default" | translate }}
+      </div>
+      <div class="od_user_settings__data__table__col">
+        {{ "od.user.settings.data.col_custom" | translate }} ({{
+          "od.user.settings.data.click_to_edit" | translate
+        }})
+      </div>
+    </div>
+    <div
+      class="od_user_settings__data__table__row"
+      ng-repeat="item in $ctrl.items"
+    >
+      <div class="od_user_settings__data__table__col">{{ item.name }}</div>
+      <div class="od_user_settings__data__table__col">
+        <input
+          type="text"
+          ng-model="item.customname"
+          placeholder="{{ item.name }}"
+        />
+      </div>
+    </div>
+  </div>
+</div>

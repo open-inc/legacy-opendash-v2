@@ -31,6 +31,13 @@ class controller {
 
         this.userActions = [
           {
+            label: "od.user.settings.data.action",
+            icon: "fa fa-cogs",
+            onClick: () => {
+              this.$router.go("/user/settings/data");
+            }
+          },
+          {
             label: "od.auth.logout",
             icon: "fa fa-sign-out",
             onClick: () => {

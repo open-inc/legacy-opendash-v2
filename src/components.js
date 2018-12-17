@@ -1,4 +1,5 @@
 import opendashComponent from "./components/opendash.component";
+import userSettingsDataComponent from "./components/user-settings-data.component";
 import routerComponent from "./components/router.component";
 import odAuthComponent from "./components/auth.component";
 import notificationComponent from "./components/notification.component";
@@ -35,6 +36,8 @@ export default [
   ["od-header", headerComponent],
   ["od-widget", odWidgetComponent],
   ["od-presets", odPresetsComponent],
+
+  ["od-user-settings-data", userSettingsDataComponent],
 
   // Adapter
   ["highchart", highchartComponent],
