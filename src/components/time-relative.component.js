@@ -19,10 +19,10 @@ class TimeRelativeController {
         }
       }
     }, 900);
-  }
 
-  $onDestroy() {
-    this.interval.cancel();
+    this.$onDestroy = () => {
+      $interval.cancel(this.interval);
+    };
   }
 }
 
