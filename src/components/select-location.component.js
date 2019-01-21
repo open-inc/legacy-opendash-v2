@@ -129,6 +129,10 @@ class controller {
   set items(values) {}
 
   showLocation({ id }) {
+    if (this.searchText) {
+      return true;
+    }
+
     return !$location.isChild(id);
   }
 
