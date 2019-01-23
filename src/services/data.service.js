@@ -316,7 +316,11 @@ class OpenDashDataItem {
   }
 
   get name() {
-    return NameMap[this.id] || this._name;
+    try {
+      return NameMap[this.id] || this._name;
+    } catch (error) {
+      return this._name;
+    }
   }
 
   get isCustomName() {
