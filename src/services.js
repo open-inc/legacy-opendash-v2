@@ -11,12 +11,12 @@ import headerService from "./services/header.service";
 import routerService from "./services/router.service";
 
 export default [
-  ["user", userService],
-  ["location", locationService],
+  ["user", userService, true],
+  ["location", locationService, true],
   ["data", dataService],
   ["event", eventService],
   ["modal", modalService],
-  ["notification", notificationService],
+  ["notification", notificationService, true],
   ["presets", presetsService],
   ["dashboard", dashboardService],
   ["header", headerService],

@@ -8,7 +8,9 @@ const logger = Logger("opendash/services/data");
 
 import defaultIcon from "file-loader!../assets/default-item.svg";
 
-let $q, $user, $env, $location;
+import $user from "../services/user.service";
+import $location from "../services/location.service";
+import $env from "../services/env.service";
 
 const $store = new Map();
 const $watcherStore = new Map();
@@ -16,7 +18,6 @@ const $root = [];
 
 const waiting = [];
 let globalready = false;
-let valueValidation;
 let adapters;
 let NameMap = {};
 
@@ -26,13 +27,6 @@ export default class OpenDashDataService {
   }
 
   constructor($injector) {
-    $q = $injector.get("$q");
-    $user = $injector.get("opendash/services/user");
-    $location = $injector.get("opendash/services/location");
-    $env = $injector.get("opendash/services/env");
-
-    valueValidation = $env("OD-DATA-VALIDATION", null, true);
-
     adapters = $injector
       .get("od.adapter.register")
       .map(([AdapterFactory, cfg]) => {
@@ -52,21 +46,17 @@ export default class OpenDashDataService {
 
       $store.clear();
 
-      NameMap = await $user.getData("settings:data:names");
+      NameMap = (await $user.getData("settings:data:names")) || {};
 
       const promises = adapters.map(adapter =>
         adapter.init(new OpenDashDataContext(adapter))
       );
 
-      $q.all(promises)
-        .then(() => {
-          return $user.wait();
-        })
-        .then(() => {
-          this.ready = true;
-          waiting.forEach(resolve => resolve());
-          waiting.length = 0;
-        });
+      await Promise.all(promises);
+
+      this.ready = true;
+      waiting.forEach(resolve => resolve());
+      waiting.length = 0;
 
       LOCK = false;
     };
@@ -91,7 +81,7 @@ export default class OpenDashDataService {
   }
 
   wait() {
-    return $q((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       if (this.ready) {
         resolve();
       } else {
@@ -357,7 +347,7 @@ class OpenDashDataItem {
 
   set(key, value, saveToDataAdapter, saveToUserAdapter) {
     if (saveToDataAdapter) {
-      return $q.resolve(
+      return Promise.resolve(
         this.adapter.update(new OpenDashDataContext(this.adapter), {
           id: this.id,
           key,
@@ -372,7 +362,7 @@ class OpenDashDataItem {
 
     if (key === "name" && value) {
       if (!_.isString(value)) {
-        return $q.reject(
+        return Promise.reject(
           new Error("OpenDashDataItem Update Error: Invalid name.")
         );
       }
@@ -382,18 +372,21 @@ class OpenDashDataItem {
 
       this.notify("name", this.name, old);
 
-      return $q.resolve(true);
+      return Promise.resolve(true);
     }
 
     if (key === "value" && value) {
-      if (valueValidation && !this.validateValue(value, true)) {
-        return $q.reject(
+      if (
+        $env("OD-DATA-VALIDATION", null, true) &&
+        !this.validateValue(value, true)
+      ) {
+        return Promise.reject(
           new Error("OpenDashDataItem Update Error: Invalid value.")
         );
       }
 
       if (this.value && this.value.date >= value.date) {
-        return $q.resolve(false);
+        return Promise.resolve(false);
       }
 
       let newValue = {
@@ -405,10 +398,10 @@ class OpenDashDataItem {
       this.value = newValue;
       this.notify("value", newValue, oldValue);
 
-      return $q.resolve(true);
+      return Promise.resolve(true);
     }
 
-    return $q.reject(
+    return Promise.reject(
       new Error(
         "[opendash/services/data] Unknown OpenDashDataItem Update Error."
       )
@@ -552,8 +545,8 @@ class OpenDashDataItem {
   value() {
     let response = _.head(this.values);
     return response
-      ? $q.resolve(response)
-      : $q.reject(
+      ? Promise.resolve(response)
+      : Promise.reject(
           new Error(
             "[opendash/services/data] OpenDashDataItem.value(): Item currently has no value."
           )
@@ -562,14 +555,14 @@ class OpenDashDataItem {
 
   liveValues(callback) {
     if (this.value) {
-      $q.resolve().then(() => {
+      Promise.resolve().then(() => {
         callback(this.value);
       });
     }
 
     this.watch((key, newValue, oldValue) => {
       if (key === "value") {
-        $q.resolve().then(() => {
+        Promise.resolve().then(() => {
           callback(newValue);
         });
       }
@@ -681,30 +674,29 @@ class OpenDashDataItem {
 
     options.id = this.id;
 
-    return $q
-      .resolve(
-        this.adapter.history(new OpenDashDataContext(this.adapter), options)
-      )
-      .then(data => {
-        if (!_.isArray(data)) {
-          logger.error(
-            "OpenDashDataItem.history(): Bad response from Data Adapter, must be an Array."
-          );
-          return [];
-        }
+    return Promise.resolve(
+      this.adapter.history(new OpenDashDataContext(this.adapter), options)
+    ).then(data => {
+      if (!_.isArray(data)) {
+        logger.error(
+          "OpenDashDataItem.history(): Bad response from Data Adapter, must be an Array."
+        );
+        return [];
+      }
 
-        if (valueValidation) {
-          let length = valueValidation === "sample" ? 1 : data.length;
-          for (let i = 0; i < length; i++) {
-            let element = data[i];
-            if (!this.validateValue(element, true)) {
-              return [];
-            }
+      if ($env("OD-DATA-VALIDATION", null, true)) {
+        let length =
+          $env("OD-DATA-VALIDATION", null, true) === "sample" ? 1 : data.length;
+        for (let i = 0; i < length; i++) {
+          let element = data[i];
+          if (!this.validateValue(element, true)) {
+            return [];
           }
         }
+      }
 
-        return data;
-      });
+      return data;
+    });
   }
 
   toJSON() {
@@ -740,7 +732,7 @@ class OpenDashDataContext {
     globalready = false;
     operation.then(() => {
       globalready = true;
-      $q.resolve();
+      Promise.resolve();
     });
   }
 }

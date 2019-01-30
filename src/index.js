@@ -11,6 +11,9 @@ import _ from "lodash";
 import moment from "moment";
 
 import services from "./services";
+
+import $user from "./services/user.service";
+
 import components from "./components";
 import config from "./config";
 
@@ -153,6 +156,7 @@ class openDASH {
 
   registerWidget(widget, param2) {
     let name = null;
+    let hasSettings = true;
 
     // Für open.DASH Version < 2.0.0-rc.9
     if (_.isString(widget) && param2) {
@@ -190,10 +194,11 @@ class openDASH {
     }
 
     if (!widget.settingsController) {
-      logger.error(
+      logger.warn(
         `Error in widget "${name}": Widget objects need the property 'settingsController'. See ${docs}/guides/widgets.html`
       );
-      return;
+
+      hasSettings = false;
     }
 
     if (!widget.widgetTemplate) {
@@ -204,10 +209,11 @@ class openDASH {
     }
 
     if (!widget.settingsTemplate) {
-      logger.error(
+      logger.warn(
         `Error in widget "${name}": Widget objects need the property 'settingsTemplate'. See ${docs}/guides/widgets.html`
       );
-      return;
+
+      hasSettings = false;
     }
 
     if (widget.presets && _.isArray(widget.presets)) {
@@ -238,18 +244,20 @@ class openDASH {
       }
     ]);
 
-    components.push([
-      `od-widget-${name}-settings`,
-      {
-        template: widget.settingsTemplate,
-        controller: widget.settingsController,
-        bindings: {
-          widget: "<",
-          config: "<",
-          closeSettingsModal: "<"
+    if (hasSettings) {
+      components.push([
+        `od-widget-${name}-settings`,
+        {
+          template: widget.settingsTemplate,
+          controller: widget.settingsController,
+          bindings: {
+            widget: "<",
+            config: "<",
+            closeSettingsModal: "<"
+          }
         }
-      }
-    ]);
+      ]);
+    }
 
     logger.log(
       `Widget "${name}" has been registered with ${
@@ -296,7 +304,10 @@ class openDASH {
     this.module.value("moment", moment);
     this.module.value("lodash", _);
 
-    this.module.value("od.user.adapter", this.userAdapter);
+    logger.assert(this.userAdapter, "You need an user adapter.");
+
+    $user.init(this.userAdapter);
+
     this.module.value("od.adapter.register", this.dataAdapters);
     this.module.value("od.widget.presets", this.widgetPresets);
 

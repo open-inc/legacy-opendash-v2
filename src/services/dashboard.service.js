@@ -3,9 +3,11 @@ import OpenDashDashboard from "../classes/Dashboard";
 import Observable from "../helper/observable.class";
 import Logger from "../helper/logger";
 
+import $user from "../services/user.service";
+import $location from "../services/location.service";
+
 const logger = Logger("opendash/services/dashboard");
-let $user;
-let $location;
+
 let $event;
 let $notification;
 let $env;
@@ -25,8 +27,6 @@ export default class Dashboard {
   }
 
   constructor($injector) {
-    $user = $injector.get("opendash/services/user");
-    $location = $injector.get("opendash/services/location");
     $event = $injector.get("opendash/services/event");
     $notification = $injector.get("opendash/services/notification");
     $env = $injector.get("opendash/services/env");
