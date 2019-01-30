@@ -65,7 +65,8 @@ export default [
         widgets: {
           add: "Widget aus Vorlage hinzufügen",
           rename: "Geben Sie dem Widget einen neuen Namen:",
-          remove: "Wollen Sie das Widget wirklich löschen?",
+          remove:
+            "Wollen Sie das Widget wirklich aus Ihrem Dashboard entfernen?",
           configurate: "Konfigurieren",
           noconfig: "Dieses Widget muss konfiguriert werden.",
           nodata: "Es stehen keine Daten zur Verfügung.",
