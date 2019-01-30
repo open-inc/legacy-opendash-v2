@@ -41,6 +41,17 @@ export default class Modal {
     return $animate.enter(child, parent);
   }
 
+  async confirm(message) {
+    const modal = await this.open({
+      component: "od-default-modal",
+      data: {
+        message
+      }
+    });
+
+    return await modal.close;
+  }
+
   async prompt(message, placeholder) {
     const prompt = true;
 
@@ -56,11 +67,15 @@ export default class Modal {
     return await modal.close;
   }
 
-  async confirm(message) {
+  async form({ title, message, form, formData = {} }) {
     const modal = await this.open({
       component: "od-default-modal",
+      width: "800px",
       data: {
-        message
+        title,
+        message,
+        form,
+        formData
       }
     });
 
