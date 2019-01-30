@@ -53,7 +53,7 @@ od-select-date {
       @extend .clearfix;
       text-align: center;
       background: $od-color-background-light;
-      border: 1px solid rgba(0, 0, 0, 0.1);
+      border: 1px solid $od-color-border;
       &__item {
         float: left;
         width: 50%;
@@ -62,7 +62,7 @@ od-select-date {
           background: rgba(0, 0, 0, 0.02);
         }
         &:not(:last-child) {
-          border-right: 1px solid rgba(0, 0, 0, 0.1);
+          border-right: 1px solid $od-color-border;
         }
         &--3 {
           width: 33.333333%;
