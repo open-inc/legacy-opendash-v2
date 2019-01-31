@@ -1,111 +1,238 @@
-<style>
-  select {
-    /* irrelevante Eigenschaften gekürzt */
-    height: 50px;
-    border: 1px solid#4485dd;
-    background-color: #fff;
-    color: black;
-    text-align-last: center;
-    text-align: center;
-  }
-</style>
-
 <div ng-if="!$ctrl.mode" class="" style="height: 25px;">
   <div style="float: right; padding: 10px;padding-top: 0px;padding-bottom:0px;">
-    <input style="margin: 0;" type="radio" ng-value="'start-end'" ng-model="$ctrl.currentMode" ng-change="$ctrl.change()">
+    <input
+      style="margin: 0;"
+      type="radio"
+      ng-value="'start-end'"
+      ng-model="$ctrl.currentMode"
+      ng-change="$ctrl.change()"
+    />
     <label style="display:inline" for="sort_type">Absolute Angabe</label>
   </div>
   <div style="float: right; padding: 10px;padding-top: 0px;padding-bottom:0px;">
-    <input style="margin: 0;" type="radio" ng-value="'relative'" ng-model="$ctrl.currentMode" ng-change="$ctrl.change()">
+    <input
+      style="margin: 0;"
+      type="radio"
+      ng-value="'relative'"
+      ng-model="$ctrl.currentMode"
+      ng-change="$ctrl.change()"
+    />
     <label style="display:inline" for="sort_name">Relative Angabe</label>
   </div>
 </div>
 
 <div ng-if="$ctrl.currentMode === 'start-end'">
-
   <div class="od-select-date__selection" style="margin-bottom: 8px;">
-    <div class="od-select-date__selection__item od-select-date__selection__item--2">
-      <label>{{ 'od.select.start' | translate }}</label>
-      <select class="od-select-date__select-day dropdown" ng-model="$ctrl.dayA" ng-change="$ctrl.change()" ng-options="option for option in $ctrl.dayArrayA track by option"
-        style="width:24%;">
+    <div
+      class="od-select-date__selection__item od-select-date__selection__item--2"
+    >
+      <label>{{ "od.select.start" | translate }}</label>
+      <select
+        class="od-select-date__select-day dropdown"
+        ng-model="$ctrl.dayA"
+        ng-change="$ctrl.change()"
+        ng-options="option for option in $ctrl.dayArrayA track by option"
+        style="width:24%;"
+      >
       </select>
       <div style="height:1px;width:2px;float:left;"></div>
-      <select class="od-select-date__select-month" ng-model="$ctrl.monthA" ng-change="$ctrl.change()" ng-options="option for option in $ctrl.monthArrayA track by option"
-        style="width:41%;">
+      <select
+        class="od-select-date__select-month"
+        ng-model="$ctrl.monthA"
+        ng-change="$ctrl.change()"
+        ng-options="option for option in $ctrl.monthArrayA track by option"
+        style="width:41%;"
+      >
       </select>
       <div style="height:1px;width:2px;float:left;"></div>
-      <select class="od-select-date__select-year" ng-model="$ctrl.yearA" ng-change="$ctrl.change()" ng-options="option for option in $ctrl.yearArrayA track by option"
-        style="width:32%;">
+      <select
+        class="od-select-date__select-year"
+        ng-model="$ctrl.yearA"
+        ng-change="$ctrl.change()"
+        ng-options="option for option in $ctrl.yearArrayA track by option"
+        style="width:32%;"
+      >
       </select>
     </div>
 
-    <div class="od-select-date__selection__item od-select-date__selection__item--2">
-      <label>{{ 'od.select.end' | translate }}</label>
-      <select class="od-select-date__select-day" ng-model="$ctrl.dayB" ng-change="$ctrl.change(true)" ng-options="option for option in $ctrl.dayArrayB track by option"
-        style="width:24%;">
+    <div
+      class="od-select-date__selection__item od-select-date__selection__item--2"
+    >
+      <label>{{ "od.select.end" | translate }}</label>
+      <select
+        class="od-select-date__select-day"
+        ng-model="$ctrl.dayB"
+        ng-change="$ctrl.change(true)"
+        ng-options="option for option in $ctrl.dayArrayB track by option"
+        style="width:24%;"
+      >
       </select>
       <div style="height:1px;width:2px;float:left;"></div>
-      <select class="od-select-date__select-month" ng-model="$ctrl.monthB" ng-change="$ctrl.change(true)" ng-options="option for option in $ctrl.monthArrayB track by option"
-        style="width:41%;">
+      <select
+        class="od-select-date__select-month"
+        ng-model="$ctrl.monthB"
+        ng-change="$ctrl.change(true)"
+        ng-options="option for option in $ctrl.monthArrayB track by option"
+        style="width:41%;"
+      >
       </select>
       <div style="height:1px;width:2px;float:left;"></div>
-      <select class="od-select-date__select-year" ng-model="$ctrl.yearB" ng-change="$ctrl.change(true)" ng-options="option for option in $ctrl.yearArrayB track by option"
-        style="width:32%;">
+      <select
+        class="od-select-date__select-year"
+        ng-model="$ctrl.yearB"
+        ng-change="$ctrl.change(true)"
+        ng-options="option for option in $ctrl.yearArrayB track by option"
+        style="width:32%;"
+      >
       </select>
     </div>
   </div>
 
-  <p class="od-select-date__desc">Das entspricht {{ $ctrl.diff($ctrl.dateA,$ctrl.dateB) }} Tagen.</p>
+  <p class="od-select-date__desc">
+    Das entspricht {{ $ctrl.diff($ctrl.dateA, $ctrl.dateB) }} Tagen.
+  </p>
 </div>
-
 
 <div ng-if="$ctrl.currentMode === 'since'">
   <div class="od-select-date__selection" style="margin-bottom: 8px;">
     <div class="od-select-date__selection__item">
-      <label>{{ 'od.select.since' | translate }}</label>
+      <label>{{ "od.select.since" | translate }}</label>
       <div>
-        <select class="od-select-date__select-day" ng-model="$ctrl.dayA" ng-change="$ctrl.change()" ng-options="option for option in $ctrl.dayArrayA track by option">
+        <select
+          class="od-select-date__select-day"
+          ng-model="$ctrl.dayA"
+          ng-change="$ctrl.change()"
+          ng-options="option for option in $ctrl.dayArrayA track by option"
+        >
         </select>
-        <select class="od-select-date__select-month" ng-model="$ctrl.monthA" ng-change="$ctrl.change()" ng-options="option for option in $ctrl.monthArrayA track by option">
+        <select
+          class="od-select-date__select-month"
+          ng-model="$ctrl.monthA"
+          ng-change="$ctrl.change()"
+          ng-options="option for option in $ctrl.monthArrayA track by option"
+        >
         </select>
-        <select class="od-select-date__select-year" ng-model="$ctrl.yearA" ng-change="$ctrl.change()" ng-options="option for option in $ctrl.yearArrayA track by option">
+        <select
+          class="od-select-date__select-year"
+          ng-model="$ctrl.yearA"
+          ng-change="$ctrl.change()"
+          ng-options="option for option in $ctrl.yearArrayA track by option"
+        >
         </select>
       </div>
     </div>
   </div>
 
-  <p class="od-select-date__desc">Das entspricht {{ $ctrl.diff($ctrl.dateA,$ctrl.now) }} Tagen.</p>
+  <p class="od-select-date__desc">
+    Das entspricht {{ $ctrl.diff($ctrl.dateA, $ctrl.now) }} Tagen.
+  </p>
 </div>
 
 <div ng-if="$ctrl.currentMode === 'relative'">
   <div class="od-select-date__selection od-select-date--clear">
-    <div class="od-select-date__selection__item od-select-date__selection__item--4" ng-click="$ctrl.unit = 'days'" ng-class="{'od-select-date--active': $ctrl._unit === 'days'}">
+    <div
+      class="od-select-date__selection__item od-select-date__selection__item--4"
+      ng-click="$ctrl.unit = 'days'"
+      ng-class="{'od-select-date--active': $ctrl._unit === 'days'}"
+    >
       <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Tage
     </div>
-    <div class="od-select-date__selection__item od-select-date__selection__item--4" ng-click="$ctrl.unit = 'weeks'" ng-class="{'od-select-date--active': $ctrl._unit === 'weeks'}">
+    <div
+      class="od-select-date__selection__item od-select-date__selection__item--4"
+      ng-click="$ctrl.unit = 'weeks'"
+      ng-class="{'od-select-date--active': $ctrl._unit === 'weeks'}"
+    >
       <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Wochen
     </div>
-    <div class="od-select-date__selection__item od-select-date__selection__item--4" ng-click="$ctrl.unit = 'months'" ng-class="{'od-select-date--active': $ctrl._unit === 'months'}">
+    <div
+      class="od-select-date__selection__item od-select-date__selection__item--4"
+      ng-click="$ctrl.unit = 'months'"
+      ng-class="{'od-select-date--active': $ctrl._unit === 'months'}"
+    >
       <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Monate
     </div>
-    <div class="od-select-date__selection__item od-select-date__selection__item--4" ng-click="$ctrl.unit = 'years'" ng-class="{'od-select-date--active': $ctrl._unit === 'years'}">
+    <div
+      class="od-select-date__selection__item od-select-date__selection__item--4"
+      ng-click="$ctrl.unit = 'years'"
+      ng-class="{'od-select-date--active': $ctrl._unit === 'years'}"
+    >
       <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Jahre
     </div>
   </div>
-  <div class="od-select-date__selection od-select-date--clear" style="margin-bottom: 8px; border-top-width: 0px;">
+  <div
+    class="od-select-date__selection od-select-date--clear"
+    style="margin-bottom: 8px; border-top-width: 0px;"
+  >
     <div class="od-select-date__number-selection">
-      <button class="od-select-date__number-selection__minus" ng-click="$ctrl.value = $ctrl.value - 1">-</button>
-      <button class="od-select-date__number-selection__plus" ng-click="$ctrl.value = $ctrl.value + 1">+</button>
-      <input type="number" min="1" max="30" class="od-select-date__number-selection__number" ng-model="$ctrl.value" style="text-align: center;">
+      <button
+        class="od-select-date__number-selection__minus"
+        ng-click="$ctrl.value = $ctrl.value - 1"
+      >
+        -
+      </button>
+      <button
+        class="od-select-date__number-selection__plus"
+        ng-click="$ctrl.value = $ctrl.value + 1"
+      >
+        +
+      </button>
+      <input
+        type="number"
+        min="1"
+        max="30"
+        class="od-select-date__number-selection__number"
+        ng-model="$ctrl.value"
+        style="text-align: center;"
+      />
     </div>
   </div>
 
-  <p class="od-select-date__desc" ng-show="$ctrl.unit === 'days' && $ctrl.value === 1">Es werden die Daten des letzten Tages angezeigt.</p>
-  <p class="od-select-date__desc" ng-show="$ctrl.unit === 'days' && $ctrl.value > 1">Es werden die Daten der letzten {{ $ctrl.value }} Tage angezeigt.</p>
-  <p class="od-select-date__desc" ng-show="$ctrl.unit === 'weeks' && $ctrl.value === 1">Es werden die Daten der letzten Woche angezeigt.</p>
-  <p class="od-select-date__desc" ng-show="$ctrl.unit === 'weeks' && $ctrl.value > 1">Es werden die Daten der letzten {{ $ctrl.value }} Wochen angezeigt.</p>
-  <p class="od-select-date__desc" ng-show="$ctrl.unit === 'months' && $ctrl.value === 1">Es werden die Daten des letzten Monats</p>
-  <p class="od-select-date__desc" ng-show="$ctrl.unit === 'months' && $ctrl.value > 1">Es werden die Daten der letzten {{ $ctrl.value }} Monaten angezeigt.</p>
-  <p class="od-select-date__desc" ng-show="$ctrl.unit === 'years' && $ctrl.value === 1">Es werden die Daten des letzten Jahres</p>
-  <p class="od-select-date__desc" ng-show="$ctrl.unit === 'years' && $ctrl.value > 1">Es werden die Daten der letzten {{ $ctrl.value }} Jahren angezeigt.</p>
+  <p
+    class="od-select-date__desc"
+    ng-show="$ctrl.unit === 'days' && $ctrl.value === 1"
+  >
+    Es werden die Daten des letzten Tages angezeigt.
+  </p>
+  <p
+    class="od-select-date__desc"
+    ng-show="$ctrl.unit === 'days' && $ctrl.value > 1"
+  >
+    Es werden die Daten der letzten {{ $ctrl.value }} Tage angezeigt.
+  </p>
+  <p
+    class="od-select-date__desc"
+    ng-show="$ctrl.unit === 'weeks' && $ctrl.value === 1"
+  >
+    Es werden die Daten der letzten Woche angezeigt.
+  </p>
+  <p
+    class="od-select-date__desc"
+    ng-show="$ctrl.unit === 'weeks' && $ctrl.value > 1"
+  >
+    Es werden die Daten der letzten {{ $ctrl.value }} Wochen angezeigt.
+  </p>
+  <p
+    class="od-select-date__desc"
+    ng-show="$ctrl.unit === 'months' && $ctrl.value === 1"
+  >
+    Es werden die Daten des letzten Monats
+  </p>
+  <p
+    class="od-select-date__desc"
+    ng-show="$ctrl.unit === 'months' && $ctrl.value > 1"
+  >
+    Es werden die Daten der letzten {{ $ctrl.value }} Monaten angezeigt.
+  </p>
+  <p
+    class="od-select-date__desc"
+    ng-show="$ctrl.unit === 'years' && $ctrl.value === 1"
+  >
+    Es werden die Daten des letzten Jahres
+  </p>
+  <p
+    class="od-select-date__desc"
+    ng-show="$ctrl.unit === 'years' && $ctrl.value > 1"
+  >
+    Es werden die Daten der letzten {{ $ctrl.value }} Jahren angezeigt.
+  </p>
 </div>

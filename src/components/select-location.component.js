@@ -115,9 +115,15 @@ class controller {
 
     if (this.config.filter) {
       try {
+        this.filterIsUsed = false;
+        let length = items.length;
         items = items.filter(i => {
           return this.config.filter(i);
         });
+
+        if (items.length !== length) {
+          this.filterIsUsed = true;
+        }
       } catch (error) {
         logger.error("filter function error:", error);
       }
@@ -129,6 +135,10 @@ class controller {
   set items(values) {}
 
   showLocation({ id }) {
+    if (this.searchText || this.filterIsUsed) {
+      return true;
+    }
+
     return !$location.isChild(id);
   }
 

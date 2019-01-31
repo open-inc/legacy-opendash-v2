@@ -1,7 +1,10 @@
 const template =
-  `<div>{{ $ctrl.message | translate }}</div>` +
+  `<div ng-if="$ctrl.message">{{ $ctrl.message | translate }}</div>` +
   `<div ng-if="$ctrl.prompt">` +
   `<input type="text" ng-model="$ctrl.output">` +
+  `</div>` +
+  `<div ng-if="$ctrl.form">` +
+  `<od-form ng-if="$ctrl.form" data="$ctrl.formData" form="$ctrl.form"></od-form>` +
   `</div>`;
 
 class controller {
@@ -13,9 +16,16 @@ class controller {
 
   $onInit() {
     try {
+      this.modal.title = this.modal.data.title;
+    } catch (error) {
+      // that's ok...
+    }
+
+    try {
       this.message = this.modal.data.message;
     } catch (error) {
-      this.message = "Empty message.";
+      // that's ok...
+      // this.message = "Empty message.";
     }
 
     try {
@@ -28,6 +38,13 @@ class controller {
 
     try {
       this.prompt = this.modal.data.prompt;
+    } catch (error) {
+      this.prompt = false;
+    }
+
+    try {
+      this.form = this.modal.data.form;
+      this.formData = this.modal.data.formData;
     } catch (error) {
       this.prompt = false;
     }
@@ -54,7 +71,15 @@ class controller {
         isVisible: () => true,
         isDisabled: () => this.prompt && !this.output,
         action: ({ close }) => {
-          close(this.prompt ? this.output : true);
+          if (this.prompt) {
+            return close(this.output);
+          }
+
+          if (this.form) {
+            return close(this.formData);
+          }
+
+          return close(true);
         }
       });
     } catch (error) {

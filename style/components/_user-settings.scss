@@ -1,0 +1,49 @@
+.od_user_settings {
+  &__data {
+    &__table {
+      background: $white;
+      padding: $gutter/2;
+
+      @include raised();
+
+      &__row {
+        &:first-child {
+          font-weight: bold;
+          border-bottom: 2px solid $light - #111;
+          margin-bottom: $gutter/2;
+        }
+
+        &:nth-child(2n) {
+          background: rgba(0, 0, 0, 0.03);
+        }
+        padding: 5px;
+        display: flex;
+        flex-direction: row;
+
+        input {
+          margin-bottom: 0;
+          border-bottom: 0;
+          padding: 0;
+          line-height: 40px;
+
+          &::placeholder {
+            color: rgba(0, 0, 0, 0.3);
+            font-style: italic;
+          }
+
+          &:focus {
+            background: white;
+            line-height: 40px;
+            border: 1px solid grey;
+            padding: 0 10px;
+          }
+        }
+      }
+      &__col {
+        width: 50%;
+        line-height: 40px;
+        overflow: hidden;
+      }
+    }
+  }
+}

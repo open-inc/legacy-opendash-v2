@@ -38,6 +38,19 @@ export default [
           profile_alt: "Nutzer Profilbild"
         }
       },
+      user: {
+        settings: {
+          data: {
+            header: "Benutzerdefinierte Namen für Sensoren",
+            action: "Sensoren anpassen",
+            col_default: "Standart Name",
+            col_custom: "Benutzerdefinierter Name",
+            click_to_edit: "Anklicken zum Editieren",
+            success: "Namen wurden gespeichert.",
+            error: "Namen konnten nicht gespeichert werden."
+          }
+        }
+      },
       dashboard: {
         empty: {
           message: "Keine Widgets gefunden :(",
@@ -52,7 +65,8 @@ export default [
         widgets: {
           add: "Widget aus Vorlage hinzufügen",
           rename: "Geben Sie dem Widget einen neuen Namen:",
-          remove: "Wollen Sie das Widget wirklich löschen?",
+          remove:
+            "Wollen Sie das Widget wirklich aus Ihrem Dashboard entfernen?",
           configurate: "Konfigurieren",
           noconfig: "Dieses Widget muss konfiguriert werden.",
           nodata: "Es stehen keine Daten zur Verfügung.",
@@ -92,6 +106,7 @@ export default [
       },
       ui: {
         ok: "OK",
+        save: "Speichern",
         cancel: "Abbrechen",
         prev: "Zurück",
         next: "Weiter",

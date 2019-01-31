@@ -1,4 +1,5 @@
 import opendashComponent from "./components/opendash.component";
+import userSettingsDataComponent from "./components/user-settings-data.component";
 import routerComponent from "./components/router.component";
 import odAuthComponent from "./components/auth.component";
 import notificationComponent from "./components/notification.component";
@@ -15,6 +16,7 @@ import selectStepComponent from "./components/select-step.component";
 import selectDateComponent from "./components/select-date.component";
 import colorPickerComponent from "./components/color-picker.component";
 import fitTextComponent from "./components/fit-text.component";
+import timeRelativeComponent from "./components/time-relative.component";
 import odPresetsComponent from "./components/presets.component";
 import defaultModalComponent from "./components/default-modal.component";
 
@@ -35,6 +37,8 @@ export default [
   ["od-widget", odWidgetComponent],
   ["od-presets", odPresetsComponent],
 
+  ["od-user-settings-data", userSettingsDataComponent],
+
   // Adapter
   ["highchart", highchartComponent],
 
@@ -49,6 +53,7 @@ export default [
   ["od-default-modal", defaultModalComponent],
 
   ["fitText", fitTextComponent],
+  ["od-time-relative", timeRelativeComponent],
 
   // Core
   ["od-widget-holder", odWidgetHolderDirective, true],
