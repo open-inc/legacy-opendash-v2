@@ -9,7 +9,7 @@
       &__row {
         &:first-child {
           font-weight: bold;
-          border-bottom: 2px solid $light - #111;
+          border-bottom: 2px solid darken($light, 5%);
           margin-bottom: $gutter/2;
         }
 

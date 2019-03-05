@@ -14,7 +14,7 @@ od-select-step {
   $eud-nav-grey: #d6d6d6;
   $eud-nav-active: $active-color;
   $eud-nav-done: $primary;
-  $eud-nav-after: $eud-nav-grey - #444;
+  $eud-nav-after: darken($eud-nav-grey, 20%);
   $eud-footer-height: 60px;
 
   .od__select-steps {

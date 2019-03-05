@@ -28,7 +28,7 @@ $font-family: "Roboto", sans-serif !default;
 
 $primary: #7d8dc9 !default;
 $primary-font: #ffffff !default;
-$primary-hover: $primary - #111 !default;
+$primary-hover: darken($primary, 5%) !default;
 $primary-hover-font: #ffffff !default;
 $primary-link: #000 !default;
 $primary-link-hover: #000 !default;
@@ -48,7 +48,7 @@ $colors: (
     "font": #3c763d,
     "font-hover": #3c763d,
     "link": #2b542c,
-    "link-hover": #2b542c - #111
+    "link-hover": darken(#2b542c, 5%)
   ),
   "info": (
     "background": #d9edf7,
@@ -56,7 +56,7 @@ $colors: (
     "font": #31708f,
     "font-hover": #31708f,
     "link": #245269,
-    "link-hover": #245269 - #111
+    "link-hover": darken(#245269, 5%)
   ),
   "warning": (
     "background": #fcf8e3,
@@ -64,7 +64,7 @@ $colors: (
     "font": #8a6d3b,
     "font-hover": #8a6d3b,
     "link": #66512c,
-    "link-hover": #66512c - #111
+    "link-hover": darken(#66512c, 5%)
   ),
   "danger": (
     "background": #f2dede,
@@ -72,7 +72,7 @@ $colors: (
     "font": #a94442,
     "font-hover": #a94442,
     "link": #843534,
-    "link-hover": #843534 - #111
+    "link-hover": darken(#843534, 5%)
   )
 );
 
