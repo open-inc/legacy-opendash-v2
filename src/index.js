@@ -356,5 +356,3 @@ class openDASH {
 const instance = new openDASH();
 
 export default instance;
-
-export { name, angular, _, moment };
