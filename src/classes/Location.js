@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import Logger from "../helper/logger";
 
 const logger = Logger("opendash/classes/Location");
