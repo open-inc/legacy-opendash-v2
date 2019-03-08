@@ -110,7 +110,7 @@ export default class Modal {
     let controller = [
       "$scope",
       "close",
-      ($scope, close) => {
+      function($scope, close) {
         $scope.modalSettings = new ModalInstance({
           close,
           data
