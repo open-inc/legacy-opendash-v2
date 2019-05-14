@@ -113,7 +113,7 @@ od-eud-editor {
             color: $eud-nav-after;
           }
         }
-        &:first-child() {
+        &:first-child {
           margin-left: 0;
           &:before {
             display: none;
