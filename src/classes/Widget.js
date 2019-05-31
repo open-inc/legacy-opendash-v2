@@ -24,6 +24,8 @@ export default class OpenDashWidget {
     }
 
     this.name = widget.name;
+    this.customName = widget.customName;
+    this.dynamicName = widget.dynamicName;
     this.type = widget.type;
     this.grid = widget.grid;
 
@@ -33,6 +35,10 @@ export default class OpenDashWidget {
     this.operations = new OpenDashWidgetOperations(this);
 
     this.config = widget.config;
+  }
+
+  displayName() {
+    return this.customName || this.dynamicName || this.name;
   }
 
   hasRequestListener(name) {
@@ -52,6 +58,7 @@ export default class OpenDashWidget {
   toJSON() {
     return {
       name: this.name,
+      customName: this.customName,
       type: this.type,
       grid: this.grid,
       config: this.config

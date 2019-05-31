@@ -4,7 +4,7 @@ export default class OpenDashWidgetOperations {
   }
 
   rename(name) {
-    this.widget.name = name;
+    this.widget.dynamicName = name;
   }
 
   onRequest(name, callback) {
