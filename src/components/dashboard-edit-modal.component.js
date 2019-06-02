@@ -60,7 +60,7 @@ class controller {
         }
       };
 
-      $q.resolve();
+      await $q.resolve();
     } catch (error) {
       console.error(error);
     }
