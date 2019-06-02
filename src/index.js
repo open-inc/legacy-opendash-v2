@@ -22,6 +22,8 @@ import Logger from "./helper/logger";
 import envService from "./services/env.service";
 import routerService from "./services/router.service";
 
+import * as ngHelper from "./services/nghelper.service";
+
 const logger = Logger("opendash/core");
 
 let language = "en";
@@ -342,6 +344,15 @@ class openDASH {
         $translateProvider.useSanitizeValueStrategy("escape");
 
         // logger.log(`i18n: ${language} => ${JSON.stringify($translateProvider.translations(), null, 2)}`);
+      }
+    ]);
+
+    this.module.run([
+      "$q",
+      q => {
+        ngHelper.init(async () => {
+          await q.resolve();
+        });
       }
     ]);
 
