@@ -15,14 +15,21 @@ class controller {
 
   login() {
     this.$user.login(this.form).then(null, error => {
-      this.$notification.danger(
-        "Combination of Login and Password is incorrect."
-      );
+      this.$notification.danger("od.auth.login_fail");
     });
   }
 
   register() {
-    this.$notification.danger("Signup failed.");
+    this.$user
+      .register({ email: this.form.email, password: this.form.password })
+      .then(
+        success => {
+          this.$notification.success("od.auth.signup_success");
+        },
+        error => {
+          this.$notification.danger("od.auth.signup_fail");
+        }
+      );
   }
 }
 

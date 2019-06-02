@@ -5,6 +5,7 @@ import odAuthComponent from "./components/auth.component";
 import notificationComponent from "./components/notification.component";
 import odLoadingComponent from "./components/loading.component";
 import dashboardComponent from "./components/dashboard.component";
+import dashboardEditModalComponent from "./components/dashboard-edit-modal.component";
 import headerComponent from "./components/header.component";
 import odWidgetComponent from "./components/widget.component";
 import highchartComponent from "./components/highchart.component";
@@ -31,6 +32,7 @@ export default [
   ["od-router", routerComponent],
   ["od-auth", odAuthComponent],
   ["od-dashboard", dashboardComponent],
+  ["od-dashboard-edit-modal", dashboardEditModalComponent],
   ["od-notification", notificationComponent],
   ["od-loading", odLoadingComponent],
   ["od-header", headerComponent],

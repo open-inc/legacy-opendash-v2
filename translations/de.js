@@ -8,7 +8,15 @@ export default [
         signup: "Account erstellen",
         logout: "Logout",
         noaccount: "Noch keinen Account? Hier klicken.",
+        hasaccount: "Sie haben bereits einen Account? Hier klicken.",
         resetpassword: "Passwort vergessen? Hier klicken.",
+        input: {
+          email: "Email",
+          password: "Passwort",
+          password_repeat: "Passwort wiederholen",
+          password_missmatch:
+            "Die angegebenen Passwörter stimmen nicht überein."
+        },
         button: {
           login: "Einloggen",
           signup: "Erstellen"
@@ -26,7 +34,8 @@ export default [
           delete_prompt:
             "Sind Sie sicher, dass das aktuelle Dashboard gelöscht werden soll?",
           active: "aktiv",
-          shared: "geteilt"
+          shared: "geteilt",
+          edit: "Aktuelles Dashboard freigeben"
         },
         widgets: {
           header: "Widgets",
@@ -57,6 +66,12 @@ export default [
           action: "Widget aus Vorlage hinzufügen"
         },
         shared: {
+          invite: "Einen Nutzer zum Dashboard einladen",
+          invite_success: "Der Nutzer wurde für das Dashboard freigegeben",
+          invite_error:
+            "Der Nutzer konnte nicht für das Dashboard freigegeben werden",
+          invite_info:
+            "Das Dashboard wird für den Nutzer freigegeben, dieser kann das Dashboard sehen und bearbeiten.",
           message:
             "Du bearbeitest ein geteiltes Dashboard. Du kannst eine private Kopie anlegen.",
           action: "Private Kopie anlegen",

@@ -96,6 +96,10 @@ class controller {
     });
   }
 
+  editDashboard() {
+    this.$dashboard.editCurrentDashboard();
+  }
+
   toggleSidebar() {
     this.overlay.toggle();
   }

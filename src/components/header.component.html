@@ -162,6 +162,9 @@
       <a ng-click="$ctrl.deleteDashboard()">{{
         "od.header.dashboards.delete" | translate
       }}</a>
+      <a ng-click="$ctrl.editDashboard()">{{
+        "od.header.dashboards.edit" | translate
+      }}</a>
     </section>
     <section ng-repeat="(header, links) in $ctrl.$header.sidebar">
       <header>{{ header | translate }}</header>
