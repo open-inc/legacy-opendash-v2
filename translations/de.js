@@ -122,6 +122,7 @@ export default [
       ui: {
         ok: "OK",
         save: "Speichern",
+        delete: "Löschen",
         cancel: "Abbrechen",
         prev: "Zurück",
         next: "Weiter",
