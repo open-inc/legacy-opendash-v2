@@ -5,6 +5,7 @@ export default [
       core: {},
       auth: {
         login: "Login",
+        login_fail: "Nutzername oder Passwort falsch",
         signup: "Account erstellen",
         logout: "Logout",
         noaccount: "Noch keinen Account? Hier klicken.",
@@ -54,7 +55,7 @@ export default [
             action: "Account Einstellungen",
             password: {
               header: "Passwort ändern",
-              password: "Passwort",
+              password: "Neues Passwort",
               password_repeat: "Passwort wiederholen",
               password_missmatch:
                 "Die angegebenen Passwörter stimmen nicht überein.",
