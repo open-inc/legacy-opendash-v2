@@ -49,6 +49,19 @@ export default [
       },
       user: {
         settings: {
+          account: {
+            header: "Account Einstellungen",
+            action: "Account Einstellungen",
+            password: {
+              header: "Passwort ändern",
+              password: "Passwort",
+              password_repeat: "Passwort wiederholen",
+              password_missmatch:
+                "Die angegebenen Passwörter stimmen nicht überein.",
+              success: "Passwort wurde überschrieben",
+              error: "Passwort konnte nicht übernommen werden"
+            }
+          },
           data: {
             header: "Benutzerdefinierte Namen für Sensoren",
             action: "Sensoren anpassen",

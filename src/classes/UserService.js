@@ -159,6 +159,14 @@ export default class UserService {
       });
   }
 
+  async setPassword(password) {
+    await this.wait(true);
+
+    logger.log("Method Call: setPassword()");
+
+    return await adapter.setPassword(password);
+  }
+
   async getData(key) {
     await this.wait();
 

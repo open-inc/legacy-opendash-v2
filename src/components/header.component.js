@@ -38,6 +38,13 @@ class controller {
             }
           },
           {
+            label: "od.user.settings.account.action",
+            icon: "fa fa-user",
+            onClick: () => {
+              this.$router.go("/user/settings/account");
+            }
+          },
+          {
             label: "od.auth.logout",
             icon: "fa fa-sign-out",
             onClick: () => {

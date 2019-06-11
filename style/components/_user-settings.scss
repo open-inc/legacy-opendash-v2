@@ -1,4 +1,13 @@
 .od_user_settings {
+  &__account {
+    &__area {
+      background: $white;
+      padding: $gutter/2;
+
+      @include raised();
+    }
+  }
+
   &__data {
     &__table {
       background: $white;
