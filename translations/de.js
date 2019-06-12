@@ -127,10 +127,10 @@ export default [
           placeholder: "Es wurde noch kein Icon gewählt."
         },
         location: {
-          label: "Standort auswählen",
-          empty: "Keine Standorte gefunden.",
-          search: "Nach Standorten suchen...",
-          min: "Es muss mindestens ein Standort ausgewählt werden."
+          label: "Anlage auswählen",
+          empty: "Keine Anlage gefunden.",
+          search: "Nach Anlagen suchen...",
+          min: "Es muss mindestens eine Anlage ausgewählt werden."
         }
       },
       ui: {
