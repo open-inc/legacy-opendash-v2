@@ -1,6 +1,11 @@
 export default [
   "de",
   {
+    ow: {
+      reporting: {
+        createScheduled: "Neuen regelmäßigen Bericht erstellen"
+      }
+    },
     od: {
       core: {},
       auth: {
