@@ -22,6 +22,8 @@ import Logger from "./helper/logger";
 import envService from "./services/env.service";
 import routerService from "./services/router.service";
 
+import * as ngHelper from "./services/nghelper.service";
+
 const logger = Logger("opendash/core");
 
 let language = "en";
@@ -345,6 +347,15 @@ class openDASH {
       }
     ]);
 
+    this.module.run([
+      "$q",
+      q => {
+        ngHelper.init(async () => {
+          await q.resolve();
+        });
+      }
+    ]);
+
     this.router.calcCurrent();
 
     logger.log("Instance started.");
@@ -356,5 +367,3 @@ class openDASH {
 const instance = new openDASH();
 
 export default instance;
-
-export { name, angular, _, moment };

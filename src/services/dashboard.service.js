@@ -276,6 +276,17 @@ export default class Dashboard {
     }
   }
 
+  async editCurrentDashboard() {
+    try {
+      await $modal.open({
+        component: "od-dashboard-edit-modal"
+      });
+    } catch (error) {
+      logger.error(error);
+      $notification.danger("od.dashboard.errors.save");
+    }
+  }
+
   async createDashboardFromConfig(config) {
     try {
       let id = null;

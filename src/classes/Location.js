@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import Logger from "../helper/logger";
 
 const logger = Logger("opendash/classes/Location");
@@ -21,15 +23,21 @@ export default class OpenDashLocation {
   }
 
   get children() {
+    if (!ChildrenStore.has(this)) {
+      return [];
+    }
+
     return ChildrenStore.get(this).map(id => LocationStore.get(id));
   }
 
   set children(children) {
-    logger.assert(
-      Array.isArray(children),
-      "If a location has a children attribute, it must be an Array of Location ids."
-    );
+    if (children) {
+      logger.assert(
+        Array.isArray(children),
+        "If a location has a children attribute, it must be an Array of Location ids."
+      );
 
-    ChildrenStore.set(this, children);
+      ChildrenStore.set(this, children);
+    }
   }
 }

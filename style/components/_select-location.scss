@@ -15,6 +15,13 @@ od-select-location {
       }
     }
 
+    &__empty {
+      color: #444444 !important;
+      background: #fff !important;
+      height: 40px !important;
+      padding: 10px;
+    }
+
     &__item {
       // height: $item-height;
       line-height: $item-height; // margin-bottom: $gutter/2;

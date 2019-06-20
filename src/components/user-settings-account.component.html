@@ -1,0 +1,41 @@
+<div class="container">
+  <h1>{{ "od.user.settings.account.header" | translate }}</h1>
+
+  <div class="od_user_settings__account__area">
+    <h3>
+      {{ "od.user.settings.account.password.header" | translate }}
+    </h3>
+
+    <label>
+      {{ "od.user.settings.account.password.password" | translate }}
+      <input
+        type="password"
+        placeholder="{{
+          'od.user.settings.account.password.password' | translate
+        }}"
+        ng-model="$ctrl.password"
+        ng-change="$ctrl.passwordChange()"
+      />
+    </label>
+
+    <label>
+      {{ "od.user.settings.account.password.password_repeat" | translate }}
+      <input
+        type="password"
+        placeholder="{{
+          'od.user.settings.account.password.password_repeat' | translate
+        }}"
+        ng-model="$ctrl.password_repeat"
+        ng-change="$ctrl.passwordChange()"
+      />
+    </label>
+
+    <p ng-show="$ctrl.password_changed && !$ctrl.password_valid">
+      {{ "od.user.settings.account.password.password_missmatch" | translate }}
+    </p>
+
+    <button ng-click="$ctrl.passwordSave()" ng-disabled="!$ctrl.password_valid">
+      {{ "od.ui.save" | translate }}
+    </button>
+  </div>
+</div>

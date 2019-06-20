@@ -84,7 +84,7 @@ class controller {
       .prompt("od.dashboard.widgets.rename", this.widget.name)
       .then(response => {
         if (response) {
-          this.widget.name = response;
+          this.widget.customName = response;
         }
       });
   }

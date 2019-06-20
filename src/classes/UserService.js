@@ -2,6 +2,8 @@ import _ from "lodash";
 
 import Logger from "../helper/logger";
 
+import { triggerDigestCycle } from "../services/nghelper.service";
+
 const logger = Logger("opendash/services/user");
 
 let adapter;
@@ -62,12 +64,17 @@ export default class UserService {
         waitingForAuth.forEach(resolve => resolve());
         waitingForAuth.length = 0;
 
+        triggerDigestCycle();
+
         return this.auth;
       })
       .catch(error => {
         this.auth = false;
         this.loading = false;
         logger.error("checkAuth() failed.");
+
+        triggerDigestCycle();
+
         return Promise.reject(
           error || new Error("[opendash/services/user] checkAuth() failed.")
         );
@@ -150,6 +157,14 @@ export default class UserService {
           error || new Error("[opendash/services/user] register() failed.")
         );
       });
+  }
+
+  async setPassword(password) {
+    await this.wait(true);
+
+    logger.log("Method Call: setPassword()");
+
+    return await adapter.setPassword(password);
   }
 
   async getData(key) {
@@ -337,6 +352,28 @@ export default class UserService {
       return await adapter.listLocations(...args);
     } catch (error) {
       logger.assert(false, "Error on method call: listLocations(): \n" + error);
+    }
+  }
+
+  async listRoles(...args) {
+    await this.wait();
+
+    logger.log("Method Call: listRoles()");
+    try {
+      return await adapter.listRoles(...args);
+    } catch (error) {
+      logger.assert(false, "Error on method call: listRoles(): \n" + error);
+    }
+  }
+
+  async listUserRoles(...args) {
+    await this.wait();
+
+    logger.log("Method Call: listUserRoles()");
+    try {
+      return await adapter.listUserRoles(...args);
+    } catch (error) {
+      logger.assert(false, "Error on method call: listUserRoles(): \n" + error);
     }
   }
 

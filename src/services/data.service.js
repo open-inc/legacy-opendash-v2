@@ -1,16 +1,15 @@
 import _ from "lodash";
 import moment from "moment";
-// import Map from "collections/map";
 
 import Logger from "../helper/logger";
 
 const logger = Logger("opendash/services/data");
 
-import defaultIcon from "file-loader!../assets/default-item.svg";
-
 import $user from "../services/user.service";
 import $location from "../services/location.service";
 import $env from "../services/env.service";
+
+const defaultIcon = null;
 
 const $store = new Map();
 const $watcherStore = new Map();

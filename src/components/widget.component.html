@@ -1,44 +1,81 @@
 <od-widget-header>
-    <od-widget-header-action ng-if="!$ctrl.menu" ng-click="$ctrl.menu = true" class="fa fa-ellipsis-v" aria-hidden="true"></od-widget-header-action>
-    <od-widget-header-action ng-if="$ctrl.menu" ng-click="$ctrl.menu = false" class="fa fa-times" aria-hidden="true"></od-widget-header-action>
-    <od-widget-header-action ng-repeat="action in $ctrl.$dashboard.widgetActions track by $index" ng-if="$ctrl.menu" ng-click="$ctrl.actionClick(action)"
-        ng-class="action.icon" class="fa" aria-hidden="true"></od-widget-header-action>
-    <od-widget-header-action ng-if="$ctrl.menu" ng-click="$ctrl.remove()" class="fa fa-trash" aria-hidden="true"></od-widget-header-action>
-    <od-widget-header-action ng-if="$ctrl.menu" ng-click="$ctrl.settings()" class="fa fa-cog" aria-hidden="true"></od-widget-header-action>
-    <od-widget-header-action ng-if="$ctrl.menu" ng-click="$ctrl.rename()" class="fa fa-font" aria-hidden="true"></od-widget-header-action>
-    <od-widget-header-name ng-bind="$ctrl.widget.name"></od-widget-header-name>
+  <od-widget-header-action
+    ng-if="!$ctrl.menu"
+    ng-click="$ctrl.menu = true"
+    class="fa fa-ellipsis-v"
+    aria-hidden="true"
+  ></od-widget-header-action>
+  <od-widget-header-action
+    ng-if="$ctrl.menu"
+    ng-click="$ctrl.menu = false"
+    class="fa fa-times"
+    aria-hidden="true"
+  ></od-widget-header-action>
+  <od-widget-header-action
+    ng-repeat="action in $ctrl.$dashboard.widgetActions track by $index"
+    ng-if="$ctrl.menu"
+    ng-click="$ctrl.actionClick(action)"
+    ng-class="action.icon"
+    class="fa"
+    aria-hidden="true"
+  ></od-widget-header-action>
+  <od-widget-header-action
+    ng-if="$ctrl.menu"
+    ng-click="$ctrl.remove()"
+    class="fa fa-trash"
+    aria-hidden="true"
+  ></od-widget-header-action>
+  <od-widget-header-action
+    ng-if="$ctrl.menu"
+    ng-click="$ctrl.settings()"
+    class="fa fa-cog"
+    aria-hidden="true"
+  ></od-widget-header-action>
+  <od-widget-header-action
+    ng-if="$ctrl.menu"
+    ng-click="$ctrl.rename()"
+    class="fa fa-font"
+    aria-hidden="true"
+  ></od-widget-header-action>
+  <od-widget-header-name
+    ng-bind="$ctrl.widget.displayName()"
+  ></od-widget-header-name>
 </od-widget-header>
 <od-widget-holder ng-if="$ctrl.widget.state.enabled"></od-widget-holder>
 <od-widget-noconfig ng-if="!$ctrl.widget.state.config">
-
-
-
-    <div class="noconfigcontainer" ng-show="$ctrl.widget.state.data">
-        <div class="middler">
-            <div class="noconfigitem" style="padding-bottom: 12px;">
-                <i class="fa fa-2x fa-cogs" style="font-size: 42px; position: relative;top:5px;" aria-hidden="true"></i>
-            </div>
-            <div class="noconfigitem" style="padding-bottom: 8px;">
-                {{ 'od.dashboard.widgets.noconfig' | translate }}
-            </div>
-            <button class="noconfigitem" ng-click="$ctrl.settings()">
-                {{ 'od.dashboard.widgets.configurate' | translate }}
-            </button>
-        </div>
+  <div class="noconfigcontainer" ng-show="$ctrl.widget.state.data">
+    <div class="middler">
+      <div class="noconfigitem" style="padding-bottom: 12px;">
+        <i
+          class="fa fa-2x fa-cogs"
+          style="font-size: 42px; position: relative;top:5px;"
+          aria-hidden="true"
+        ></i>
+      </div>
+      <div class="noconfigitem" style="padding-bottom: 8px;">
+        {{ "od.dashboard.widgets.noconfig" | translate }}
+      </div>
+      <button class="noconfigitem" ng-click="$ctrl.settings()">
+        {{ "od.dashboard.widgets.configurate" | translate }}
+      </button>
     </div>
+  </div>
 
-    <div class="noconfigcontainer" ng-show="!$ctrl.widget.state.data">
-        <div class="middler">
-            <div class="noconfigitem" style="padding-bottom: 12px;">
-                <i class="fa fa-2x fa-database" style="font-size: 42px; position: relative;top:5px;" aria-hidden="true"></i>
-            </div>
-            <div class="noconfigitem" style="padding-bottom: 8px;">
-                {{ 'od.dashboard.widgets.nodata' | translate }}
-            </div>
-            <button class="noconfigitem" ng-click="$ctrl.settings()">
-                {{ 'od.dashboard.widgets.configurate' | translate }}
-            </button>
-        </div>
+  <div class="noconfigcontainer" ng-show="!$ctrl.widget.state.data">
+    <div class="middler">
+      <div class="noconfigitem" style="padding-bottom: 12px;">
+        <i
+          class="fa fa-2x fa-database"
+          style="font-size: 42px; position: relative;top:5px;"
+          aria-hidden="true"
+        ></i>
+      </div>
+      <div class="noconfigitem" style="padding-bottom: 8px;">
+        {{ "od.dashboard.widgets.nodata" | translate }}
+      </div>
+      <button class="noconfigitem" ng-click="$ctrl.settings()">
+        {{ "od.dashboard.widgets.configurate" | translate }}
+      </button>
     </div>
-
+  </div>
 </od-widget-noconfig>

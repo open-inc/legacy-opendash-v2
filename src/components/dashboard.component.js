@@ -29,6 +29,10 @@ class controller {
 
   isShared() {
     try {
+      if (this.shared) {
+        return true;
+      }
+
       if (!this.$dashboard.current.shared) {
         return false;
       }

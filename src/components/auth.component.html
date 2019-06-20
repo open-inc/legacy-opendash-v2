@@ -1,38 +1,64 @@
 <div class="od-auth" ng-if="!$ctrl.$user.loading" ng-show="!$ctrl.$user.auth">
   <div class="container container--auth">
-    <h1 ng-show="$ctrl.state === 'login'">{{ 'od.auth.login' | translate }}</h1>
-    <h1 ng-show="$ctrl.state === 'register'">{{ 'od.auth.signup' | translate }}</h1>
+    <h1 ng-show="$ctrl.state === 'login'">{{ "od.auth.login" | translate }}</h1>
+    <h1 ng-show="$ctrl.state === 'register'">
+      {{ "od.auth.signup" | translate }}
+    </h1>
     <form>
       <fieldset>
         <fieldset>
           <input
             type="text"
-            placeholder="Email"
-            ng-model="$ctrl.form.email" />
+            placeholder="{{ 'od.auth.input.email' | translate }}"
+            ng-model="$ctrl.form.email"
+          />
         </fieldset>
         <fieldset>
           <input
             type="password"
-            placeholder="Passwort"
-            ng-model="$ctrl.form.password" />
+            placeholder="{{ 'od.auth.input.password' | translate }}"
+            ng-model="$ctrl.form.password"
+          />
         </fieldset>
-        <button type="submit"
+        <fieldset>
+          <input
+            type="password"
+            ng-show="$ctrl.state === 'register'"
+            placeholder="{{ 'od.auth.input.password_repeat' | translate }}"
+            ng-model="$ctrl.form.password_repeat"
+          />
+        </fieldset>
+        <p
+          ng-if="$ctrl.state === 'register'"
+          ng-show="$ctrl.form.password !== $ctrl.form.password_repeat"
+        >
+          {{ "od.auth.input.password_missmatch" | translate }}
+        </p>
+        <button
+          type="submit"
           ng-click="$ctrl.login()"
-          ng-show="$ctrl.state === 'login'">
-          {{ 'od.auth.button.login' | translate }}
+          ng-if="$ctrl.state === 'login'"
+        >
+          {{ "od.auth.button.login" | translate }}
         </button>
-        <button type="submit"
+        <button
+          type="submit"
           ng-click="$ctrl.register()"
-          ng-show="$ctrl.state === 'register'">
-          {{ 'od.auth.button.signup' | translate }}
+          ng-if="$ctrl.state === 'register'"
+          ng-disabled="!$ctrl.form.email || !$ctrl.form.password || $ctrl.form.password !== $ctrl.form.password_repeat"
+        >
+          {{ "od.auth.button.signup" | translate }}
         </button>
       </fieldset>
     </form>
-    <a ng-click="$ctrl.state = 'login'" ng-show="$ctrl.state !== 'login'">
-      {{ 'od.auth.resetpassword' | translate }}
+    <!-- <a ng-click="$ctrl.state = 'login'" ng-show="$ctrl.state !== 'login'">
+      {{ "od.auth.resetpassword" | translate }}
+    </a> -->
+    <a ng-click="$ctrl.state = 'register'" ng-show="$ctrl.state !== 'register'">
+      {{ "od.auth.noaccount" | translate }}
     </a>
-    <a ng-click="$ctrl.state = 'register'" ng-show="false">
-      {{ 'od.auth.noaccount' | translate }}
+    <a ng-click="$ctrl.state = 'login'" ng-show="$ctrl.state !== 'login'">
+      {{ "od.auth.hasaccount" | translate }}
     </a>
   </div>
 </div>

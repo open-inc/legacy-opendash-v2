@@ -1,4 +1,13 @@
 .od_user_settings {
+  &__account {
+    &__area {
+      background: $white;
+      padding: $gutter/2;
+
+      @include raised();
+    }
+  }
+
   &__data {
     &__table {
       background: $white;
@@ -9,7 +18,7 @@
       &__row {
         &:first-child {
           font-weight: bold;
-          border-bottom: 2px solid $light - #111;
+          border-bottom: 2px solid darken($light, 5%);
           margin-bottom: $gutter/2;
         }
 

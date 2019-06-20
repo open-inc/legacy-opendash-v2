@@ -43,7 +43,7 @@ class controller {
         scope.helper[element.key] = {};
 
         scope.isVisible[element.key] = function() {
-          if (!_.isFunction(element.isVisible)) {
+          if (!lodash.isFunction(element.isVisible)) {
             return true;
           }
 

@@ -1,10 +1,12 @@
 import opendashComponent from "./components/opendash.component";
 import userSettingsDataComponent from "./components/user-settings-data.component";
+import userSettingsAccountComponent from "./components/user-settings-account.component";
 import routerComponent from "./components/router.component";
 import odAuthComponent from "./components/auth.component";
 import notificationComponent from "./components/notification.component";
 import odLoadingComponent from "./components/loading.component";
 import dashboardComponent from "./components/dashboard.component";
+import dashboardEditModalComponent from "./components/dashboard-edit-modal.component";
 import headerComponent from "./components/header.component";
 import odWidgetComponent from "./components/widget.component";
 import highchartComponent from "./components/highchart.component";
@@ -31,6 +33,7 @@ export default [
   ["od-router", routerComponent],
   ["od-auth", odAuthComponent],
   ["od-dashboard", dashboardComponent],
+  ["od-dashboard-edit-modal", dashboardEditModalComponent],
   ["od-notification", notificationComponent],
   ["od-loading", odLoadingComponent],
   ["od-header", headerComponent],
@@ -38,6 +41,7 @@ export default [
   ["od-presets", odPresetsComponent],
 
   ["od-user-settings-data", userSettingsDataComponent],
+  ["od-user-settings-account", userSettingsAccountComponent],
 
   // Adapter
   ["highchart", highchartComponent],

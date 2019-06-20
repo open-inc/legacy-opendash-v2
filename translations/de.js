@@ -1,14 +1,28 @@
 export default [
   "de",
   {
+    ow: {
+      reporting: {
+        createScheduled: "Neuen regelmäßigen Bericht erstellen"
+      }
+    },
     od: {
       core: {},
       auth: {
         login: "Login",
+        login_fail: "Nutzername oder Passwort falsch",
         signup: "Account erstellen",
         logout: "Logout",
         noaccount: "Noch keinen Account? Hier klicken.",
+        hasaccount: "Sie haben bereits einen Account? Hier klicken.",
         resetpassword: "Passwort vergessen? Hier klicken.",
+        input: {
+          email: "Email",
+          password: "Passwort",
+          password_repeat: "Passwort wiederholen",
+          password_missmatch:
+            "Die angegebenen Passwörter stimmen nicht überein."
+        },
         button: {
           login: "Einloggen",
           signup: "Erstellen"
@@ -26,7 +40,8 @@ export default [
           delete_prompt:
             "Sind Sie sicher, dass das aktuelle Dashboard gelöscht werden soll?",
           active: "aktiv",
-          shared: "geteilt"
+          shared: "geteilt",
+          edit: "Aktuelles Dashboard freigeben"
         },
         widgets: {
           header: "Widgets",
@@ -40,6 +55,19 @@ export default [
       },
       user: {
         settings: {
+          account: {
+            header: "Account Einstellungen",
+            action: "Account Einstellungen",
+            password: {
+              header: "Passwort ändern",
+              password: "Neues Passwort",
+              password_repeat: "Passwort wiederholen",
+              password_missmatch:
+                "Die angegebenen Passwörter stimmen nicht überein.",
+              success: "Passwort wurde überschrieben",
+              error: "Passwort konnte nicht übernommen werden"
+            }
+          },
           data: {
             header: "Benutzerdefinierte Namen für Sensoren",
             action: "Sensoren anpassen",
@@ -57,6 +85,12 @@ export default [
           action: "Widget aus Vorlage hinzufügen"
         },
         shared: {
+          invite: "Einen Nutzer zum Dashboard einladen",
+          invite_success: "Der Nutzer wurde für das Dashboard freigegeben",
+          invite_error:
+            "Der Nutzer konnte nicht für das Dashboard freigegeben werden",
+          invite_info:
+            "Das Dashboard wird für den Nutzer freigegeben, dieser kann das Dashboard sehen und bearbeiten.",
           message:
             "Du bearbeitest ein geteiltes Dashboard. Du kannst eine private Kopie anlegen.",
           action: "Private Kopie anlegen",
@@ -98,15 +132,16 @@ export default [
           placeholder: "Es wurde noch kein Icon gewählt."
         },
         location: {
-          label: "Standort auswählen",
-          empty: "Keine Standorte gefunden.",
-          search: "Nach Standorten suchen...",
-          min: "Es muss mindestens ein Standort ausgewählt werden."
+          label: "Anlage auswählen",
+          empty: "Keine Anlage gefunden.",
+          search: "Nach Anlagen suchen...",
+          min: "Es muss mindestens eine Anlage ausgewählt werden."
         }
       },
       ui: {
         ok: "OK",
         save: "Speichern",
+        delete: "Löschen",
         cancel: "Abbrechen",
         prev: "Zurück",
         next: "Weiter",

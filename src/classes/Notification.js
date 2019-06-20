@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import { triggerDigestCycle } from "../services/nghelper.service";
 
 export default class Notification {
