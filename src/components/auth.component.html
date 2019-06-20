@@ -1,11 +1,10 @@
 <div class="od-auth" ng-if="!$ctrl.$user.loading" ng-show="!$ctrl.$user.auth">
   <div class="container container--auth">
     <h1 ng-show="$ctrl.state === 'login'">{{ "od.auth.login" | translate }}</h1>
-    <h1 ng-show="$ctrl.state === 'register' || $ctrl.state === 'registerFull'">{{ "od.auth.signup" | translate }}</h1>
-    <h1 ng-show="$ctrl.state === 'pw'">{{ "od.auth.pw" | translate }}</h1>
+    <h1 ng-show="$ctrl.state === 'register'">
+      {{ "od.auth.signup" | translate }}
+    </h1>
     <form>
-     
-     
       <fieldset>
         <fieldset>
           <input
@@ -17,7 +16,6 @@
         <fieldset>
           <input
             type="password"
-            ng-hide="$ctrl.state === 'pw'"
             placeholder="{{ 'od.auth.input.password' | translate }}"
             ng-model="$ctrl.form.password"
           />
@@ -25,49 +23,13 @@
         <fieldset>
           <input
             type="password"
-            ng-show="$ctrl.state === 'register' || $ctrl.state === 'registerFull'"
+            ng-show="$ctrl.state === 'register'"
             placeholder="{{ 'od.auth.input.password_repeat' | translate }}"
             ng-model="$ctrl.form.password_repeat"
           />
         </fieldset>
-
-        <p ng-show="$ctrl.state === 'registerFull'" style="background-color: black;width: 100%;height: 1px;"></p>
-        <p ng-show="$ctrl.state === 'registerFull'">Zusatzinformationen</p>
-        <fieldset>
-          <input
-            type="text"
-            ng-show="$ctrl.state === 'registerFull'"
-            placeholder="{{ 'od.auth.input.location_city' | translate }}"
-            ng-model="$ctrl.form.location_city"
-          />
-        </fieldset>
-        <fieldset>
-          <input
-            type="number"
-            ng-show="$ctrl.state === 'registerFull'"
-            placeholder="{{ 'od.auth.input.location_long' | translate }}"
-            ng-model="$ctrl.form.location_long"
-          />
-        </fieldset>
-        <fieldset>
-          <input
-            type="number"
-            ng-show="$ctrl.state === 'registerFull'"
-            placeholder="{{ 'od.auth.input.location_lat' | translate }}"
-            ng-model="$ctrl.form.location_lat"
-          />
-        </fieldset>
-        
-
-
-
-
-
-
-
-
         <p
-          ng-if="$ctrl.state === 'register' || $ctrl.state === 'registerFull'"
+          ng-if="$ctrl.state === 'register'"
           ng-show="$ctrl.form.password !== $ctrl.form.password_repeat"
         >
           {{ "od.auth.input.password_missmatch" | translate }}
@@ -87,40 +49,16 @@
         >
           {{ "od.auth.button.signup" | translate }}
         </button>
-
-        <button
-        type="submit"
-        ng-click="$ctrl.registerFull()"
-        ng-if="$ctrl.state === 'registerFull'"
-        ng-disabled="!$ctrl.form.email || !$ctrl.form.password || !$ctrl.form.location_city || $ctrl.form.password !== $ctrl.form.password_repeat"
-      >
-        {{ "od.auth.button.signup" | translate }}
-      </button>
-
-        <button
-          type="submit"
-          ng-click="$ctrl.resetpw()"
-          ng-if="$ctrl.state === 'pw'"
-          ng-disabled="!$ctrl.form.email"
-        >
-          {{ "od.auth.button.resetpw" | translate }}
-        </button>
       </fieldset>
-
-
-
-
-
     </form>
-    
-    <a ng-click="$ctrl.state = 'registerFull'" ng-show="$ctrl.state !== 'register' && $ctrl.state !== 'registerFull'" ng-hide="$ctrl.state === 'pw'">
+    <!-- <a ng-click="$ctrl.state = 'login'" ng-show="$ctrl.state !== 'login'">
+      {{ "od.auth.resetpassword" | translate }}
+    </a> -->
+    <a ng-click="$ctrl.state = 'register'" ng-show="$ctrl.state !== 'register'">
       {{ "od.auth.noaccount" | translate }}
     </a>
-    <a ng-click="$ctrl.state = 'login'" ng-show="$ctrl.state !== 'login'" >
+    <a ng-click="$ctrl.state = 'login'" ng-show="$ctrl.state !== 'login'">
       {{ "od.auth.hasaccount" | translate }}
-    </a></br>
-    <a ng-click="$ctrl.state = 'pw'" ng-show="$ctrl.state !== 'register' && $ctrl.state !== 'registerFull'" ng-hide="$ctrl.state === 'pw'">
-      {{ "od.auth.resetpassword" | translate }}
     </a>
   </div>
 </div>
