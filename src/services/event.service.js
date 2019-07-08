@@ -28,9 +28,9 @@ export default class EventService {
     }
 
     if (_.isString(event)) {
-      let cancelEvent = $rootScope.$on(event, () => {
-        this.log("Listen", event);
-        callback();
+      let cancelEvent = $rootScope.$on(event, data => {
+        this.log("Listen", event, data);
+        callback(data);
       });
 
       return () => {
@@ -53,14 +53,14 @@ export default class EventService {
     }
   }
 
-  emit(event) {
+  emit(event, data) {
     if (_.isArray(event)) {
-      return event.forEach(e => this.emit(e));
+      return event.forEach(e => this.emit(e, data));
     }
 
     if (_.isString(event)) {
       this.log("Emit", event);
-      $rootScope.$broadcast(event);
+      $rootScope.$broadcast(event, data);
     }
   }
 
