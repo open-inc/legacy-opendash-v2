@@ -28,7 +28,7 @@ export default class EventService {
     }
 
     if (_.isString(event)) {
-      let cancelEvent = $rootScope.$on(event, data => {
+      let cancelEvent = $rootScope.$on(event, (ngEvent, data) => {
         this.log("Listen", event, data);
         callback(data);
       });
