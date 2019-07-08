@@ -459,13 +459,13 @@ export default class Dashboard {
 
   addWidget(widget) {
     this.current.addWidget(widget);
-    $event.emit("od-widgets-created");
+    $event.emit("od-widgets-created", widget);
     return true;
   }
 
   removeWidget(widget) {
     this.current.removeWidget(widget);
-    $event.emit("od-widgets-removed");
+    $event.emit("od-widgets-removed", widget);
     return true;
   }
 
