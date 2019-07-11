@@ -1,5 +1,6 @@
 import opendashComponent from "./components/opendash.component";
 import userSettingsDataComponent from "./components/user-settings-data.component";
+import userSettingsLangComponent from "./components/user-settings-lang.component";
 import userSettingsAccountComponent from "./components/user-settings-account.component";
 import routerComponent from "./components/router.component";
 import odAuthComponent from "./components/auth.component";
@@ -41,6 +42,7 @@ export default [
   ["od-presets", odPresetsComponent],
 
   ["od-user-settings-data", userSettingsDataComponent],
+  ["od-user-settings-lang", userSettingsLangComponent],
   ["od-user-settings-account", userSettingsAccountComponent],
 
   // Adapter

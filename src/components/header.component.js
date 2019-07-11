@@ -45,6 +45,15 @@ class controller {
             }
           },
           {
+            label: "od.user.settings.language.action",
+            icon: "fa fa-globe",
+            onClick: () => {
+              this.$modal.open({
+                component: "od-user-settings-lang"
+              });
+            }
+          },
+          {
             label: "od.auth.logout",
             icon: "fa fa-sign-out",
             onClick: () => {

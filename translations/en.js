@@ -36,6 +36,15 @@ export default [
           profile_alt: "Nutzer Profilbild"
         }
       },
+      user: {
+        settings: {
+          language: {
+            action: "Change language",
+            info:
+              "Please select your prefered language. Your choice will be saved on the device and respected in subsequent visits."
+          }
+        }
+      },
       dashboard: {
         empty: {
           message: "No Widgets found :(",
@@ -92,6 +101,10 @@ export default [
         prev: "Back",
         next: "Next"
       }
+    },
+    languages: {
+      "en.label": "English",
+      "de.label": "German"
     }
   }
 ];

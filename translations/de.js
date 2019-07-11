@@ -76,6 +76,11 @@ export default [
             click_to_edit: "Anklicken zum Editieren",
             success: "Namen wurden gespeichert.",
             error: "Namen konnten nicht gespeichert werden."
+          },
+          languages: {
+            action: "Sprache ändern",
+            info:
+              "Bitte wählen Sie Ihre bevorzugte Sprache aus. Die Auswahl wird auf dem Gerät gespeichert und bei nachfolgenden Sitzungen bevorzugt."
           }
         }
       },
@@ -147,6 +152,10 @@ export default [
         next: "Weiter",
         notimplemented: "Diese Operation wird nicht unterstützt."
       }
+    },
+    languages: {
+      "en.label": "Englisch",
+      "de.label": "Deutsch"
     }
   }
 ];

@@ -26,24 +26,6 @@ import * as ngHelper from "./services/nghelper.service";
 
 const logger = Logger("opendash/core");
 
-let language = "en";
-
-// Try getting browser default language
-try {
-  if (
-    navigator.languages &&
-    _.isArray(navigator.languages) &&
-    _.isString(navigator.languages[0])
-  ) {
-    language = navigator.languages[0].split("-")[0];
-  } else {
-    language = navigator.language.split("-")[0];
-  }
-} catch (error) {
-  logger.error("Error while trying to detect the language:", error);
-  logger.error("Fallback language is:", language);
-}
-
 const docs = "http://docs.opendash.de";
 
 let instanceStarted = false;
@@ -285,10 +267,6 @@ class openDASH {
   }
 
   i18n(settings) {
-    if (settings.language && _.isString(settings.language)) {
-      language = settings.language;
-    }
-
     if (settings.translations && _.isObject(settings.translations)) {
       _.each(settings.translations, (value, key) => {
         this.translations.push([key, value]);
@@ -336,11 +314,27 @@ class openDASH {
     this.module.config([
       "$translateProvider",
       $translateProvider => {
-        this.translations.forEach(translation => {
-          $translateProvider.translations(translation[0], translation[1]);
+        this.translations.forEach(([key, translation]) => {
+          $translateProvider.translations(key, translation);
         });
 
-        $translateProvider.preferredLanguage(language);
+        const keys = this.translations
+          .map(([key, translation]) => key)
+          .filter((v, i, a) => a.indexOf(v) === i);
+
+        const overwriteLanguage = window.localStorage.getItem(
+          "opendash/language"
+        );
+
+        $translateProvider.fallbackLanguage("en");
+        $translateProvider.registerAvailableLanguageKeys(keys);
+
+        if (keys.includes(overwriteLanguage)) {
+          $translateProvider.preferredLanguage(overwriteLanguage);
+        } else {
+          $translateProvider.determinePreferredLanguage();
+        }
+
         $translateProvider.useSanitizeValueStrategy("escape");
 
         // logger.log(`i18n: ${language} => ${JSON.stringify($translateProvider.translations(), null, 2)}`);
