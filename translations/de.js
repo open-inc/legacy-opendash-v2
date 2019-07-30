@@ -85,7 +85,7 @@ export default [
             success: "Namen wurden gespeichert.",
             error: "Namen konnten nicht gespeichert werden."
           },
-          languages: {
+          language: {
             action: "Sprache ändern",
             info:
               "Bitte wählen Sie Ihre bevorzugte Sprache aus. Die Auswahl wird auf dem Gerät gespeichert und bei nachfolgenden Sitzungen bevorzugt."
