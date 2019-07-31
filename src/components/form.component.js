@@ -30,6 +30,11 @@ class controller {
       scope.isVisible = {};
 
       function onChange(key, value) {
+        try {
+          this.onChange(key, value);
+        } catch (error) {
+          // that's ok...
+        }
         // console.log(key);
       }
 
@@ -189,6 +194,7 @@ let component = {
   bindings: {
     form: "<",
     data: "<",
+    onChange: "&",
     valid: "="
   }
 };
