@@ -1,12 +1,14 @@
 import _ from "lodash";
 
 import Logger from "../helper/logger";
+import axios from "axios";
 
 import { triggerDigestCycle } from "../services/nghelper.service";
 
 const logger = Logger("opendash/services/user");
 
 let adapter;
+let $http;
 
 const waitingForAdapter = [];
 const waitingForAuth = [];
@@ -21,6 +23,7 @@ export default class UserService {
   get adapter() {
     return adapter ? true : false;
   }
+
 
   init(_adapter) {
     adapter = _adapter;
@@ -157,6 +160,99 @@ export default class UserService {
           error || new Error("[opendash/services/user] register() failed.")
         );
       });
+  }
+
+  async registerFull(credentials, city, lat, long) {
+    await this.wait(true);
+
+    logger.log("Method Call: registerFull()");
+
+    return adapter
+      .register(credentials)
+      .then(user => {
+        this.user = user;
+
+
+
+        
+        try {
+          console.log("Creating Location");
+          $http = axios.create({
+            headers: {
+              "X-Parse-Application-Id": Parse.applicationId,
+              "X-Parse-Session-Token": this.user.session
+            }
+          });
+          $http.post(Parse.serverURL+"/classes/Locations", {
+            ACL: {
+              [this.user.id]: {
+                read: true,
+                write: true
+              },
+              "role:Admin": {
+                read: true,
+                write: true
+              }
+            },
+            name: city,
+            city: city,
+            address: "",
+            postCode: 0,
+            province: "",
+            location: {
+              __type: "GeoPoint",
+              latitude: parseFloat((typeof lat === 'undefined') ? 0 : lat),
+              longitude: parseFloat((typeof long === 'undefined') ? 0 : long)
+            },
+            spsid: this.user.email,
+            ticketID: "-"
+          }).then(e => {
+            console.log("Creating Permissions");
+
+            $http.post(Parse.serverURL+"/classes/AccessPermissions", {
+              ACL: {
+                [this.user.id]: {
+                  read: true,
+                  write: true
+                }
+              },
+              owner: this.user.email,
+              read: ".*",
+              write:".*",
+              delete:".*"
+            }).then(f => {
+            return true;
+          });
+        });
+    
+        } catch (error) {
+          console.error(error);
+        }
+
+
+
+
+
+        
+      })
+      .catch(error => {
+        logger.error("register() failed.");
+        return Promise.reject(
+          error || new Error("[opendash/services/user] register() failed.")
+        );
+      });
+  }
+
+  async resetPassword(mail) {
+    await this.wait(true);
+    logger.log("Method Call: resetPasswort()");
+    Parse.User.requestPasswordReset(mail)
+.then(() => {
+  // Password reset request was sent successfully
+}).catch((error) => {
+  // Show the error message somewhere
+  alert("Error: " + error.code + " " + error.message);
+});
   }
 
   async setPassword(password) {

@@ -31,6 +31,28 @@ class controller {
         }
       );
   }
+
+  registerFull() {
+    this.$user
+      .registerFull({ email: this.form.email, password: this.form.password}, this.form.location_city, this.form.location_long, this.form.location_lat)
+      .then(
+        success => {
+          this.$notification.success("od.auth.signup_success");
+          setTimeout(() => {
+            location.reload();
+          }, 5000);
+        },
+        error => {
+          this.$notification.danger("od.auth.signup_fail");
+        }
+      );
+  }
+
+  resetpw() {
+    this.$user.resetPassword(this.form.email);
+    this.$notification.success("od.auth.reset_pw");
+    this.state = "login";
+  }
 }
 
 let component = {

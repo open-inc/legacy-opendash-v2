@@ -13,22 +13,20 @@ export default [
         login_fail: "Nutzername oder Passwort falsch",
         signup: "Account erstellen",
         logout: "Logout",
-        pw: "Passwort zurücksetzen",
+        pw:"Passwort zurücksetzen",
         noaccount: "Noch keinen Account? Hier klicken.",
         hasaccount: "Sie haben bereits einen Account? Hier klicken.",
         resetpassword: "Passwort vergessen? Hier klicken.",
-        signup_success:
-          "Account erfolgreich erstellt. Sie werden in 5 Sekunden weitergeleitet.",
+        signup_success: "Account erfolgreich erstellt. Sie werden in 5 Sekunden weitergeleitet.",
         signup_fail: "Account konnte nicht angelegt werden.",
-        reset_pw:
-          "Sie erhalten in Kürze eine E-Mail mit weiteren Instruktionen.",
+        reset_pw: "Sie erhalten in Kürze eine E-Mail mit weiteren Instruktionen.",
         input: {
           email: "Email",
           password: "Passwort",
           password_repeat: "Passwort wiederholen",
           password_missmatch:
             "Die angegebenen Passwörter stimmen nicht überein.",
-          location_city: "Stadtname",
+          location_city:"Stadtname",
           location_lat: "GPS Latitude",
           location_long: "GPS Longitude"
         },
