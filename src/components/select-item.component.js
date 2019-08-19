@@ -79,7 +79,7 @@ class controller {
       }
 
       if (this.config.initialSelection) {
-        if (!_.isArray(this.config.initialSelection)) {
+        if (this.config.type && !_.isArray(this.config.initialSelection)) {
           throw new Error(
             "Bad usage of od-select-item config.initialSelection attribute. Must be an Array."
           );
@@ -158,6 +158,13 @@ class controller {
       default:
         return "fa-question-circle-o";
     }
+  }
+
+  getName(item) {
+    return `${item.name} - ${item.valueTypes
+      .map(vt => vt.name)
+      .filter(v => v)
+      .join(", ")}`;
   }
 
   searchOnChange() {
