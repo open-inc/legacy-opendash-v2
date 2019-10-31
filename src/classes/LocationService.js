@@ -167,7 +167,6 @@ export default class LocationService {
   async onChange(observer) {
     if (_.isFunction(observer)) {
       this.observer.push(observer);
-
       if (this.current) {
         await observer(this.current);
       }

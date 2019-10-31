@@ -227,11 +227,21 @@ export default class Dashboard {
         `Dashboard selected: ${this.current.name} (${this.current.id})`
       );
 
-      this.ready = true;
+      //this.ready = true;
 
-      $event.emit("od-dashboard-ready");
+      //$event.emit("od-dashboard-ready");
 
-      await $q.resolve();
+      //await $q.resolve();
+
+      await $q.resolve().then(e => {
+        this.ready = true;
+        $event.emit("od-dashboard-ready");
+        //NEU NEU NEU
+        setTimeout(() => {
+          console.log("READY");
+          $scope.$digest();
+        }, 1000);
+      });
     } catch (error) {
       logger.error(error);
       $notification.danger("od.dashboard.errors.init");
