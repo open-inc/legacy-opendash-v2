@@ -32,7 +32,9 @@ class controller {
   }
 
   get output() {
+
     if (this.lsm) {
+      
       return $location.current.map(loc => loc.id);
     } else {
       return this._output;
@@ -47,7 +49,11 @@ class controller {
       );
     }
 
-    this.available = $location.locations;
+    this.available = _.orderBy($location.locations,['name'],['asc']);
+    
+    
+    
+    
 
     if (this.config.locationServiceMode || this.config.lsm) {
       this.lsm = true;
@@ -99,15 +105,30 @@ class controller {
   searchOnChange() {}
 
   get items() {
-    let items = this.available;
-
+    let items = _.orderBy(this.available,['name'],['asc']);
     if (this.searchText) {
       items = items.filter(i => {
         let item = this.vo ? i[0] : i;
 
+        console.log(this.vo);
+
         let nameMatch = item.name
           .toLowerCase()
           .includes(this.searchText.toLowerCase());
+
+        if(!nameMatch) {
+          if(item.city) {
+          nameMatch = item.city
+          .toLowerCase()
+          .includes(this.searchText.toLowerCase())
+        }
+        }
+
+        if(!nameMatch) {
+          if(item.address) {
+          nameMatch = item.address.toLowerCase().includes(this.searchText.toLowerCase());
+        }
+        }
 
         return nameMatch;
       });
@@ -146,6 +167,9 @@ class controller {
     if (!children || children.length === 0) {
       return this.output.indexOf(id) >= 0;
     }
+
+
+    
 
     return children
       .map(child => child.id)
