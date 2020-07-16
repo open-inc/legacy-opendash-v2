@@ -16,7 +16,7 @@
     "collections": "^5.1.2",
     "javascript-detect-element-resize": "~0.5.3",
     "jquery": "^1.0.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.19",
     "moment": "^2.21.0",
     "path-to-regexp": "^2.2.1"
   },
