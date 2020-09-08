@@ -26,7 +26,7 @@
     >
       <div class="od-topbar__user__icon">
         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-        <!-- <img ng-src="{{ $ctrl.user.profile }}"> -->
+        <img ng-src="{{ $ctrl.user.profile }}">
       </div>
       <div class="od-topbar__user__actions" ng-show="$ctrl.userActionsActive">
         <div class="od-topbar__user__wellcome">
@@ -154,7 +154,7 @@
         }}</span>
       </a>
     </section>
-    <section>
+    <!--<section>
       <header>{{ "od.header.dashboards.manage" | translate }}</header>
       <a ng-click="$ctrl.createDashboard()">{{
         "od.header.dashboards.create" | translate
@@ -162,10 +162,7 @@
       <a ng-click="$ctrl.deleteDashboard()">{{
         "od.header.dashboards.delete" | translate
       }}</a>
-      <!--<a ng-click="$ctrl.editDashboard()">{{
-        "od.header.dashboards.edit" | translate
-      }}</a>-->
-    </section>
+    </section>-->
     <section ng-repeat="(header, links) in $ctrl.$header.sidebar">
       <header>{{ header | translate }}</header>
       <a ng-click="link.action()" ng-repeat="link in links">{{
