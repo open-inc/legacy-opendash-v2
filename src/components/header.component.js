@@ -30,7 +30,7 @@ class controller {
         this.user = this.$user.user;
 
         this.userActions = [
-          /*{
+          {
             label: "od.user.settings.data.action",
             icon: "fa fa-cogs",
             onClick: () => {
@@ -43,7 +43,7 @@ class controller {
             onClick: () => {
               this.$router.go("/user/settings/account");
             }
-          },*/
+          },
           {
             label: "od.user.settings.language.action",
             icon: "fa fa-globe",
