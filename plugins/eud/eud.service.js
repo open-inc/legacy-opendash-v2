@@ -15,7 +15,7 @@ export default class EUDService {
       "$q",
       "opendash/services/env",
       "opendash/services/header",
-      "moment"
+      "moment",
     ];
   }
 
@@ -35,7 +35,7 @@ export default class EUDService {
         text: "od.header.widgets.eud",
         action: () => {
           this.newWidget();
-        }
+        },
       });
     }
   }
@@ -45,12 +45,12 @@ export default class EUDService {
       controller: [
         "$scope",
         "close",
-        function($scope, close) {
+        function ($scope, close) {
           let DEFAULT_SETTINGS = {
             history: {
               aggregation: 1,
               unit: "weeks", // days, weeks, months, years
-              value: 10
+              value: 10,
             },
             chart: {
               type: "time", // time, pie, heatmap
@@ -66,41 +66,41 @@ export default class EUDService {
               legend: true,
               animation: false,
               yAxisTitleA: ["", "", "", ""],
-              plotLines: []
-            }
+              plotLines: [],
+            },
           };
           $scope.fixed = {};
           $scope.selected = {};
           $scope.settings = DEFAULT_SETTINGS;
-          $scope.save = function(selected, settings) {
+          $scope.save = function (selected, settings) {
             $dashboard.addWidget({
               name: "Analyse Widget",
               type: "eud-widget",
               grid: [6, 4],
               config: {
                 selected,
-                settings
-              }
+                settings,
+              },
             });
             $scope.settings = {};
             $scope.selected = {};
             close();
           };
           $scope.loaded = true;
-        }
+        },
       ],
       template:
-        '<od-eud-editor ng-if="loaded" selected="selected" settings="settings" save="save" ></od-eud-editor>'
+        '<od-eud-editor ng-if="loaded" selected="selected" settings="settings" save="save" ></od-eud-editor>',
     };
-    $modal.showModal(options).then(modal => {
-      modal.close.then(result => {});
+    $modal.showModal(options).then((modal) => {
+      modal.close.then((result) => {});
     });
   }
   getItems() {
     return $data.wait().then(() => {
       let items = $data.listByType("Number");
       return _.chain(items)
-        .map(item => {
+        .map((item) => {
           let i = item[0];
           return {
             id: i.id,
@@ -109,16 +109,16 @@ export default class EUDService {
             value: item[1],
             unit: i.valueTypes[item[1]].unit,
             valueName: i.valueTypes[item[1]].name,
-            selected: false
+            selected: false,
           };
         })
-        .filter(item => !(item === null))
+        .filter((item) => !(item === null))
         .value();
     });
   }
 
   isSelectedItem(selected, item) {
-    const result = selected.filter(e => {
+    const result = selected.filter((e) => {
       const [id, valueId] = e;
 
       return item.id === id && item.value === valueId;
@@ -128,7 +128,7 @@ export default class EUDService {
   }
 
   filterSelectedItems(selected, items) {
-    return _.filter(items, item => this.isSelectedItem(selected, item));
+    return _.filter(items, (item) => this.isSelectedItem(selected, item));
   }
 
   fixSelected(selected) {
@@ -153,7 +153,7 @@ export default class EUDService {
 
     return $q
       .all(
-        _.map(items, item => {
+        _.map(items, (item) => {
           //Bug Fix
           if (history.unit != "days") {
             if (history.unit == "weeks") {
@@ -169,26 +169,26 @@ export default class EUDService {
           return $data
             .get(item.id)
             .history(history)
-            .then(data => {
+            .then((data) => {
               let itemSettings = this.isSelectedItem(selected, item)[2];
               itemSettings.name = `${item.name} (${item.valueName})`;
               // itemSettings.color = null;
               return {
                 item: item,
-                history: data.map(x => ({
+                history: data.map((x) => ({
                   date: x.date,
-                  value: x.value[item.value]
+                  value: x.value[item.value],
                 })),
-                settings: itemSettings
+                settings: itemSettings,
               };
             });
         })
       )
-      .then(data => {
+      .then((data) => {
         for (let i = 0; i < data.length; i++) {
           data[i].history = _.sortBy(data[i].history, "date");
         }
-        return _.filter(data, d => d.history.length > 0);
+        return _.filter(data, (d) => d.history.length > 0);
       });
   }
 
@@ -227,11 +227,45 @@ export default class EUDService {
           "tooltip.pointFormat",
           "{series.name}: {point.y:.2f}"
         );
+        let formatter = function (opts) {
+          console.log(opts);
+          var s =
+            "<b>" +
+            Highcharts.dateFormat("%e.%m.%Y - %H:%M:%S", new Date(this.x)) +
+            "</b>";
+
+          let series = opts.chart.options.series;
+          series.forEach((serie) => {
+            let i2Use = findLastIndex(
+              serie.data,
+              0,
+              serie.data.length - 1,
+              this.x
+            );
+            if (i2Use !== -1) {
+              s +=
+                '<br/><span style="color:' +
+                this.color +
+                '">\u25CF</span>: ' +
+                serie.name +
+                ": " +
+                serie.data[i2Use][1] +
+                " " +
+                (unitArray[this.series.index]
+                  ? unitArray[this.series.index]
+                  : "");
+            }
+          });
+          return s;
+        };
         _.set(highchartConfig, "tooltip.xDateFormat", "%Y-%m-%d %H:%M");
+        _.set(highchartConfig, "tooltip.crosshairs", true);
+        _.set(highchartConfig, "tooltip.formatter", formatter);
+
         _.set(highchartConfig, "global.useUTC", false);
         _.set(highchartConfig, "useHighStocks", true);
         _.set(highchartConfig, "boost", {
-          useGPUTranslations: true
+          useGPUTranslations: true,
         });
         _.set(highchartConfig, "chart.reflow", false);
         _.set(
@@ -559,7 +593,7 @@ function getChartSeries(items, settings) {
   switch (settings.chart.type) {
     case "time":
       let series = [];
-      _.each(items, item => {
+      _.each(items, (item) => {
         let serie = {};
         (serie.name = item.settings.name),
           (serie.color = item.settings.color),
@@ -575,11 +609,11 @@ function getChartSeries(items, settings) {
               ["day", [1]],
               ["week", [1]],
               ["month", [1, 6]],
-              ["year", null]
-            ]
+              ["year", null],
+            ],
           }),
           (serie.data = []);
-        _.each(item.history, z => {
+        _.each(item.history, (z) => {
           serie.data.push([z.date.valueOf(), z.value]);
         });
         series.push(serie);
@@ -590,11 +624,11 @@ function getChartSeries(items, settings) {
         {
           name: "Pie Chart",
           innerSize: settings.chart.pie_style === "donut" ? "60%" : "0%",
-          data: _.map(items, item => ({
+          data: _.map(items, (item) => ({
             name: `${item.item.name} (${item.item.valueName})`,
-            y: getPieChartAggregation(item.history, settings)
-          }))
-        }
+            y: getPieChartAggregation(item.history, settings),
+          })),
+        },
       ];
     default:
       return [];
@@ -603,7 +637,7 @@ function getChartSeries(items, settings) {
 
 function getPieChartAggregation(history, settings) {
   let result = 0;
-  const values = _.map(history, h => h.value);
+  const values = _.map(history, (h) => h.value);
   switch (settings.chart.pie_aggregation) {
     case "SUM":
       result = _.sum(values);
