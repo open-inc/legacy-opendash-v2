@@ -114,7 +114,7 @@ class controller {
               {},
               element.settings,
               {
-                initialSelection: scope.output[element.key]
+                initialSelection: scope.output[element.key],
               }
             );
 
@@ -171,7 +171,9 @@ class controller {
       // create new element and use it as form html
       let element = $compile(template)(scope);
       $element.html(element);
-      $q.resolve();
+      setTimeout(() => {
+        scope.$digest();
+      }, 100);
     };
   }
 
@@ -195,8 +197,8 @@ let component = {
     form: "<",
     data: "<",
     onChange: "&",
-    valid: "="
-  }
+    valid: "=",
+  },
 };
 
 export default component;
