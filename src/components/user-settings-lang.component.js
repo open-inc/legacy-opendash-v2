@@ -1,3 +1,6 @@
+import * as Highcharts from "highcharts/highstock";
+import moment from "moment";
+
 const template = `
 <p>
   {{ 'od.user.settings.language.info' | translate }}
@@ -50,11 +53,109 @@ class controller {
         $translate.use(this.lang);
 
         window.localStorage.setItem("opendash/language", this.lang);
+        
+        this.setHighchartsLang();
+
       };
 
       await $q.resolve();
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  setHighchartsLang() {
+    console.log("Set Language: " +this.lang);
+    if(this.lang == "de") {
+      moment.locale("de");
+      Highcharts.setOptions({lang: {
+        thousandsSep: ".",
+        decimalPoint: ",",
+        months: [
+          "Januar",
+          "Februar",
+          "März",
+          "April",
+          "Mai",
+          "Juni",
+          "Juli",
+          "August",
+          "September",
+          "Oktober",
+          "November",
+          "Dezember",
+        ],
+        weekdays: [
+          "Sonntag",
+          "Montag",
+          "Dienstag",
+          "Mittwoch",
+          "Donnerstag",
+          "Freitag",
+          "Samstag",
+        ],
+        shortMonths: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Mai",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Dez",
+        ],
+        notData: "Keine Daten verfügbar",
+        resetZoom: "Zoom zurücksetzen",
+      }});
+    } else {
+      moment.locale("en-gb");
+      Highcharts.setOptions({lang: {
+        thousandsSep: ".",
+        decimalPoint: ",",
+        months: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ],
+        weekdays: [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Satarday",
+        ],
+        shortMonths: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+        notData: "No Data available",
+        resetZoom: "Reset Zoom",
+      }});
     }
   }
 

@@ -52,6 +52,7 @@ od-select-date {
     &__selection {
       @extend .clearfix;
       text-align: center;
+      color:#ddd;
       background: $od-color-background-light;
       border: 1px solid $od-color-border;
       &__item {

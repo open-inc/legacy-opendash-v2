@@ -43,7 +43,7 @@ export default class Presets {
           $scope.loaded = true;
         }
       ],
-      template: '<od-presets add="add"></od-presets>'
+      template: '<div class="eud__header__center noselect"> <h3>{{ "od.presets.title" | translate }}<//h3> </div> <od-presets add="add"></od-presets>'
     };
 
     $modal.showModal(options).then(modal => {

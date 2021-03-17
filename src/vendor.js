@@ -5,5 +5,6 @@ window.jQuery = jquery;
 window.$ = jquery;
 
 import moment from "moment";
+//import "moment/locale/en-gb";
 import "moment/locale/de";
 moment.locale("de");

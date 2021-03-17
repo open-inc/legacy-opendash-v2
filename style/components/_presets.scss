@@ -2,6 +2,14 @@
   margin-top: $gutter; // padding: $gutter/2;
   // border-bottom: 1px solid rgba(0,0,0,.2);
   @extend .clearfix;
+
+  img {
+    float: left;
+    width:  99%;
+    height: 127px;
+    object-fit: scale-down;
+}
+
   &__group_1,
   &__group_2 {
     padding: $gutter/2;
@@ -28,12 +36,12 @@
   }
   @include media(">550px") {
     &__group_1 {
-      width: 30%;
+      width: 45%;
       margin: 0;
     }
     &__group_2 {
       display: block;
-      width: 70%;
+      width: 55%;
     }
     &__group_1,
     &__group_2 {

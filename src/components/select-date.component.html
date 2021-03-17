@@ -7,7 +7,7 @@
       ng-model="$ctrl.currentMode"
       ng-change="$ctrl.change()"
     />
-    <label style="display:inline" for="sort_type">Absolute Angabe</label>
+    <label style="display:inline" for="sort_type">{{ "od.eud.step2_absolute" | translate }}</label>
   </div>
   <div style="float: right; padding: 10px;padding-top: 0px;padding-bottom:0px;">
     <input
@@ -17,7 +17,7 @@
       ng-model="$ctrl.currentMode"
       ng-change="$ctrl.change()"
     />
-    <label style="display:inline" for="sort_name">Relative Angabe</label>
+    <label style="display:inline" for="sort_name">{{ "od.eud.step2_relative" | translate }}</label>
   </div>
 </div>
 
@@ -89,7 +89,7 @@
   </div>
 
   <p class="od-select-date__desc">
-    Das entspricht {{ $ctrl.diff($ctrl.dateA, $ctrl.dateB) }} Tagen.
+    {{ "od.eud.step2_info1a" | translate }} {{ $ctrl.diff($ctrl.dateA, $ctrl.dateB) }} {{ "od.eud.step2_info2a" | translate }}.
   </p>
 </div>
 
@@ -124,7 +124,7 @@
   </div>
 
   <p class="od-select-date__desc">
-    Das entspricht {{ $ctrl.diff($ctrl.dateA, $ctrl.now) }} Tagen.
+    {{ "od.eud.step2_info1a" | translate }} {{ $ctrl.diff($ctrl.dateA, $ctrl.now) }} {{ "od.eud.step2_info2a" | translate }}.
   </p>
 </div>
 
@@ -135,28 +135,28 @@
       ng-click="$ctrl.unit = 'days'"
       ng-class="{'od-select-date--active': $ctrl._unit === 'days'}"
     >
-      <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Tage
+      <i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ "od.eud.step2_days" | translate }}
     </div>
     <div
       class="od-select-date__selection__item od-select-date__selection__item--4"
       ng-click="$ctrl.unit = 'weeks'"
       ng-class="{'od-select-date--active': $ctrl._unit === 'weeks'}"
     >
-      <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Wochen
+      <i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ "od.eud.step2_weeks" | translate }}
     </div>
     <div
       class="od-select-date__selection__item od-select-date__selection__item--4"
       ng-click="$ctrl.unit = 'months'"
       ng-class="{'od-select-date--active': $ctrl._unit === 'months'}"
     >
-      <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Monate
+      <i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ "od.eud.step2_months" | translate }}
     </div>
     <div
       class="od-select-date__selection__item od-select-date__selection__item--4"
       ng-click="$ctrl.unit = 'years'"
       ng-class="{'od-select-date--active': $ctrl._unit === 'years'}"
     >
-      <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Jahre
+      <i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ "od.eud.step2_years" | translate }}
     </div>
   </div>
   <div
@@ -191,48 +191,48 @@
     class="od-select-date__desc"
     ng-show="$ctrl.unit === 'days' && $ctrl.value === 1"
   >
-    Es werden die Daten des letzten Tages angezeigt.
+  {{ "od.eud.step2_info_day" | translate }}
   </p>
   <p
     class="od-select-date__desc"
     ng-show="$ctrl.unit === 'days' && $ctrl.value > 1"
   >
-    Es werden die Daten der letzten {{ $ctrl.value }} Tage angezeigt.
+  {{ "od.eud.step2_info1" | translate }} {{ $ctrl.value }} {{ "od.eud.step2_days" | translate }} {{ "od.eud.step2_info2" | translate }}
   </p>
   <p
     class="od-select-date__desc"
     ng-show="$ctrl.unit === 'weeks' && $ctrl.value === 1"
   >
-    Es werden die Daten der letzten Woche angezeigt.
+  {{ "od.eud.step2_info_week" | translate }}
   </p>
   <p
     class="od-select-date__desc"
     ng-show="$ctrl.unit === 'weeks' && $ctrl.value > 1"
   >
-    Es werden die Daten der letzten {{ $ctrl.value }} Wochen angezeigt.
+  {{ "od.eud.step2_info1" | translate }} {{ $ctrl.value }} {{ "od.eud.step2_weeks" | translate }} {{ "od.eud.step2_info2" | translate }}
   </p>
   <p
     class="od-select-date__desc"
     ng-show="$ctrl.unit === 'months' && $ctrl.value === 1"
   >
-    Es werden die Daten des letzten Monats
+  {{ "od.eud.step2_info_month" | translate }}
   </p>
   <p
     class="od-select-date__desc"
     ng-show="$ctrl.unit === 'months' && $ctrl.value > 1"
   >
-    Es werden die Daten der letzten {{ $ctrl.value }} Monaten angezeigt.
+  {{ "od.eud.step2_info1" | translate }} {{ $ctrl.value }} {{ "od.eud.step2_months" | translate }} {{ "od.eud.step2_info2" | translate }}
   </p>
   <p
     class="od-select-date__desc"
     ng-show="$ctrl.unit === 'years' && $ctrl.value === 1"
   >
-    Es werden die Daten des letzten Jahres
+  {{ "od.eud.step2_info_year" | translate }}
   </p>
   <p
     class="od-select-date__desc"
     ng-show="$ctrl.unit === 'years' && $ctrl.value > 1"
   >
-    Es werden die Daten der letzten {{ $ctrl.value }} Jahren angezeigt.
+  {{ "od.eud.step2_info1" | translate }} {{ $ctrl.value }} {{ "od.eud.step2_years" | translate }} {{ "od.eud.step2_info2" | translate }}
   </p>
 </div>

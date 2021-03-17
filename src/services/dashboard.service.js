@@ -238,7 +238,6 @@ export default class Dashboard {
         $event.emit("od-dashboard-ready");
         //NEU NEU NEU
         setTimeout(() => {
-          console.log("READY");
           $scope.$digest();
         }, 1000);
       });
@@ -304,7 +303,6 @@ export default class Dashboard {
 
       config = Object.assign({}, config, { id, location });
 
-      console.log();
 
       let dashboard = new OpenDashDashboard(config);
 
@@ -334,7 +332,6 @@ export default class Dashboard {
         name
       });
 
-      console.log(dashboard);
 
       this.createDashboardFromConfig(dashboard);
     } catch (error) {
@@ -357,7 +354,6 @@ export default class Dashboard {
 
       let dashboard = Object.assign({}, this.current.toJSON(), { id, name });
 
-      console.log(dashboard);
 
       this.createDashboardFromConfig(dashboard);
     } catch (error) {

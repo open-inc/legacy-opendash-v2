@@ -110,7 +110,6 @@ class controller {
       items = items.filter(i => {
         let item = this.vo ? i[0] : i;
 
-        console.log(this.vo);
 
         let nameMatch = item.name
           .toLowerCase()
@@ -184,7 +183,6 @@ class controller {
   toggleSelected({ id, children }) {
     let isSelected = this.isSelected({ id, children });
 
-    console.log("select", isSelected, id, children);
 
     if (children && children.length > 0) {
       if (isSelected) {

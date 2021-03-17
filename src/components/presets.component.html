@@ -1,14 +1,43 @@
 <div class="od-preset" ng-repeat="preset in $ctrl.presets">
-  <div class="od-preset__group_1">
+  
+  
+  
+  
+  <div class="od-preset__group_1" style="height: 190px;">
+    
     <img class="od-preset__image" ng-src="{{ preset.image }}">
     <button class="od-preset__button" ng-click="$ctrl.add(preset.config)">{{ 'od.presets.add' | translate }}</button>
+  
   </div>
-  <div class="od-preset__group_2">
-    <div class="od-preset__name">
+  
+  
+  
+  <div class="od-preset__group_2" style="height:190px;position: relative;">
+    <div style="margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);">
+    
+    <div ng-if="!$ctrl.getLanguage()" class="od-preset__name">
       {{ preset.name }}
     </div>
-    <div class="od-preset__description">
+    <div ng-if="$ctrl.getLanguage()" class="od-preset__name">
+      {{ preset.nameEN }}
+    </div>
+
+    <div ng-if="!$ctrl.getLanguage()" class="od-preset__description">
       {{ preset.description }}
+    </div>
+    <div ng-if="$ctrl.getLanguage()" class="od-preset__description">
+      {{ preset.descriptionEN }}
+    </div>
+
+    <div style="background-color: darkgray;height:1px;width: 100%;"></div>
+
+    <p ng-if="!$ctrl.getLanguage()" style="font-style: italic;font-size:0.9em">{{ preset.settings }}</p>
+    <p ng-if="$ctrl.getLanguage()" style="font-style: italic;font-size:0.9em">{{ preset.settingsEN }}</p>
+
     </div>
   </div>
 </div>

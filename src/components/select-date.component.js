@@ -3,11 +3,14 @@ import moment from "moment";
 
 import template from "./select-date.component.html";
 
+
 import Logger from "../helper/logger";
+
+let $translate;
 
 const logger = Logger("od.ui.select-date");
 
-const NumberToMonth = {
+let NumberToMonth = {
   0: "Januar",
   1: "Februar",
   2: "März",
@@ -22,12 +25,35 @@ const NumberToMonth = {
   11: "Dezember"
 };
 
+let NumberToMonthEN = {
+  0: "January",
+  1: "February",
+  2: "March",
+  3: "April",
+  4: "May",
+  5: "June",
+  6: "July",
+  7: "August",
+  8: "September",
+  9: "October",
+  10: "November",
+  11: "December"
+};
+
 const MonthToNumber = lodash.invert(NumberToMonth);
+const MonthToNumberEN = lodash.invert(NumberToMonthEN);
 
 const ALLOWED_MODES = ["relative", "start-end", "since"];
 
 class controller {
-  constructor() {
+
+  static get $inject() {
+    return ["$injector"];
+  }
+ 
+
+  constructor($injector) {
+    $translate = $injector.get("$translate");
     this.dateA = moment()
       .date(1)
       .startOf("day");
@@ -37,6 +63,46 @@ class controller {
     this._value = 1;
     this._unit = "days";
     this.currentMode = ALLOWED_MODES[0];
+
+    $translate("od.js.month1").then(translate => {
+      NumberToMonth[0] = translate;
+    });
+    $translate("od.js.month2").then(translate => {
+      NumberToMonth[1] = translate;
+    });
+    $translate("od.js.month3").then(translate => {
+      NumberToMonth[2] = translate;
+    });
+    $translate("od.js.month4").then(translate => {
+      NumberToMonth[3] = translate;
+    });
+    $translate("od.js.month5").then(translate => {
+      NumberToMonth[4] = translate;
+    });
+    $translate("od.js.month6").then(translate => {
+      NumberToMonth[5] = translate;
+    });
+    $translate("od.js.month7").then(translate => {
+      NumberToMonth[6] = translate;
+    });
+    $translate("od.js.month8").then(translate => {
+      NumberToMonth[7] = translate;
+    });
+    $translate("od.js.month9").then(translate => {
+      NumberToMonth[8] = translate;
+    });
+    $translate("od.js.month10").then(translate => {
+      NumberToMonth[9] = translate;
+    });
+    $translate("od.js.month11").then(translate => {
+      NumberToMonth[10] = translate;
+    });
+    $translate("od.js.month12").then(translate => {
+      NumberToMonth[11] = translate;
+    });
+
+    
+
   }
 
   $onInit() {
@@ -119,7 +185,11 @@ class controller {
   }
 
   set monthA(value) {
-    this.dateA.month(MonthToNumber[value]);
+    if($translate.use() === "de") {
+      this.dateA.month(MonthToNumber[value]);
+    } else {
+      this.dateA.month(MonthToNumberEN[value]);
+    }
   }
 
   get yearA() {
@@ -143,7 +213,11 @@ class controller {
   }
 
   set monthB(value) {
-    this.dateB.month(MonthToNumber[value]);
+    if($translate.use() === "de") {
+      this.dateB.month(MonthToNumber[value]);
+    } else {
+      this.dateB.month(MonthToNumberEN[value]);
+    }
   }
 
   get yearB() {

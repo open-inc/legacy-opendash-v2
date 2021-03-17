@@ -19,6 +19,8 @@ import config from "./config";
 
 import Logger from "./helper/logger";
 
+import * as Highcharts from "highcharts/highstock";
+
 import envService from "./services/env.service";
 import routerService from "./services/router.service";
 
@@ -325,18 +327,26 @@ class openDASH {
         const overwriteLanguage = window.localStorage.getItem(
           "opendash/language"
         );
+        
+
 
         $translateProvider.fallbackLanguage("en");
         $translateProvider.registerAvailableLanguageKeys(keys);
 
         if (keys.includes(overwriteLanguage)) {
           $translateProvider.preferredLanguage(overwriteLanguage);
+          this.setHighchartsLang(overwriteLanguage);
         } else {
           $translateProvider.determinePreferredLanguage();
+          this.setHighchartsLang("en");
         }
 
-        $translateProvider.useSanitizeValueStrategy("escape");
+        
+        
 
+
+
+        $translateProvider.useSanitizeValueStrategy("escape");
         // logger.log(`i18n: ${language} => ${JSON.stringify($translateProvider.translations(), null, 2)}`);
       }
     ]);
@@ -356,6 +366,102 @@ class openDASH {
 
     return this.module.name;
   }
+
+  setHighchartsLang(lang) {
+    console.log("Set Language: " +this.lang);
+    if(lang == "de") {
+      moment.locale("de");
+      Highcharts.setOptions({lang: {
+        thousandsSep: ".",
+        decimalPoint: ",",
+        months: [
+          "Januar",
+          "Februar",
+          "März",
+          "April",
+          "Mai",
+          "Juni",
+          "Juli",
+          "August",
+          "September",
+          "Oktober",
+          "November",
+          "Dezember",
+        ],
+        weekdays: [
+          "Sonntag",
+          "Montag",
+          "Dienstag",
+          "Mittwoch",
+          "Donnerstag",
+          "Freitag",
+          "Samstag",
+        ],
+        shortMonths: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Mai",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Dez",
+        ],
+        notData: "Keine Daten verfügbar",
+        resetZoom: "Zoom zurücksetzen",
+      }});
+    } else {
+      moment.locale("en-gb");
+      Highcharts.setOptions({lang: {
+        thousandsSep: ".",
+        decimalPoint: ",",
+        months: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ],
+        weekdays: [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Satarday",
+        ],
+        shortMonths: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+        notData: "No Data available",
+        resetZoom: "Reset Zoom",
+      }});
+    }
+  }
+
 }
 
 const instance = new openDASH();

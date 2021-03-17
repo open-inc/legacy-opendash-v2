@@ -35,7 +35,6 @@ export default class UserService {
   }
 
   async wait(skipAuth = false) {
-    logger.log("Method Call: wait()");
 
     return new Promise((resolve, reject) => {
       if (skipAuth && adapter) {
@@ -104,7 +103,6 @@ export default class UserService {
       .login(credentials.email, credentials.password)
 
       .then(user => {
-        console.log(user);
         this.user = user;
         return this.checkAuth();
       })
@@ -176,7 +174,6 @@ export default class UserService {
 
         
         try {
-          console.log("Creating Location");
           $http = axios.create({
             headers: {
               "X-Parse-Application-Id": Parse.applicationId,
@@ -207,7 +204,6 @@ export default class UserService {
             spsid: this.user.email,
             ticketID: "-"
           }).then(e => {
-            console.log("Creating Permissions");
 
             $http.post(Parse.serverURL+"/classes/AccessPermissions", {
               ACL: {
@@ -319,7 +315,8 @@ export default class UserService {
   async getDashboard(id) {
     await this.wait();
 
-    logger.log("Method Call: getDashboard()");
+
+
 
     try {
       if (adapter.getDashboard) {
@@ -335,6 +332,7 @@ export default class UserService {
 
   async setDashboard(dashboard) {
     await this.wait();
+
 
     logger.log("Method Call: setDashboard()");
 
@@ -353,7 +351,6 @@ export default class UserService {
   async deleteDashboard(id) {
     await this.wait();
 
-    logger.log("Method Call: getDashboard()");
 
     try {
       if (adapter.deleteDashboard) {
@@ -378,6 +375,8 @@ export default class UserService {
     await this.wait();
 
     logger.log("Method Call: createDashboard()");
+
+
 
     try {
       if (adapter.createDashboard) {
