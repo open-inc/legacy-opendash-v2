@@ -9,6 +9,7 @@ import notificationService from "./services/notification.service";
 import presetsService from "./services/presets.service";
 import headerService from "./services/header.service";
 import routerService from "./services/router.service";
+import { isDateUnit } from "./components/data.display.datetime"
 
 export default [
   ["user", userService, true],
@@ -21,5 +22,6 @@ export default [
   ["dashboard", dashboardService],
   ["header", headerService],
   ["env", envService, true],
-  ["router", routerService, true]
+  ["router", routerService, true],
+  ["date", isDateUnit, true]
 ];

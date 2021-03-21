@@ -26,7 +26,7 @@ import defaultModalComponent from "./components/default-modal.component";
 import odWidgetHolderDirective from "./components/widget-holder.directive";
 import odTabsDirective from "./components/tabs.directive";
 import odTabDirective from "./components/tab.directive";
-
+import odDataDisplayDateTime from "./components/data.display.datetime";
 export default [
   // Core
   ["opendash", opendashComponent],
@@ -66,5 +66,6 @@ export default [
 
   // UI
   ["od-tabs", odTabsDirective, true],
-  ["od-tab", odTabDirective, true]
+  ["od-tab", odTabDirective, true],
+  ["od-data-dt", ["$compile", odDataDisplayDateTime], true],
 ];
