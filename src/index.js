@@ -338,7 +338,7 @@ class openDASH {
           this.setHighchartsLang(overwriteLanguage);
         } else {
           $translateProvider.determinePreferredLanguage();
-          this.setHighchartsLang("en");
+          this.setHighchartsLang("de");
         }
 
         
@@ -368,7 +368,7 @@ class openDASH {
   }
 
   setHighchartsLang(lang) {
-    console.log("Set Language: " +this.lang);
+    console.log("Set Language: " + lang);
     if(lang == "de") {
       moment.locale("de");
       Highcharts.setOptions({lang: {
