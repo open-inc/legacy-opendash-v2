@@ -92,9 +92,9 @@ function OpenDashDataDisplayDateTimeLink(scope, elem, attr) {
         else {
             //["unix", "full", "date", "time", "humanize"];
             if (scope.mode === "unix") return "" + scope.date.valueOf();
-            if (scope.mode === "full") return scope.date.format("DD.MM.YYYY @ hh:mm:ss");
+            if (scope.mode === "full") return scope.date.format("DD.MM.YYYY @ HH:mm:ss");
             if (scope.mode === "date") return scope.date.format("DD.MM.YYYY");
-            if (scope.mode === "time") return scope.date.format("hh:mm:ss");
+            if (scope.mode === "time") return scope.date.format("HH:mm:ss");
             if (scope.mode === "humanize") return scope.date.fromNow();
         }
     }
