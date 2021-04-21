@@ -47,7 +47,7 @@ class controller {
         // add helper object:
         scope.helper[element.key] = {};
 
-        scope.isVisible[element.key] = function() {
+        scope.isVisible[element.key] = function () {
           if (!lodash.isFunction(element.isVisible)) {
             return true;
           }
@@ -63,7 +63,7 @@ class controller {
 
         switch (element.type) {
           case "input":
-            scope.helper[element.key].onChange = function() {
+            scope.helper[element.key].onChange = function () {
               onChange(element.key, null);
             };
 
@@ -76,7 +76,7 @@ class controller {
             break;
 
           case "textarea":
-            scope.helper[element.key].onChange = function() {
+            scope.helper[element.key].onChange = function () {
               onChange(element.key, null);
             };
 
@@ -90,22 +90,21 @@ class controller {
           case "select":
             scope.helper[element.key].options = element.settings.options;
 
-            scope.helper[element.key].onChange = function() {
+            scope.helper[element.key].onChange = function () {
               onChange(element.key, null);
             };
 
             template += `<select
                           ng-model="output['${element.key}']"
-                          ng-options="o.value as o.label for o in helper['${
-                            element.key
-                          }'].options"
+                          ng-options="o.value as o.label for o in helper['${element.key
+              }'].options"
                           ng-change="helper['${element.key}'].onChange()"
                           ></select>`;
 
             break;
 
           case "select-item":
-            scope.helper[element.key].watcher = function(selection) {
+            scope.helper[element.key].watcher = function (selection) {
               scope.output[element.key] = selection;
               onChange(element.key, selection);
             };
@@ -126,7 +125,7 @@ class controller {
             break;
 
           case "select-date":
-            scope.helper[element.key].watcher = function(selection) {
+            scope.helper[element.key].watcher = function (selection) {
               scope.output[element.key] = selection;
               onChange(element.key, selection);
             };
@@ -141,7 +140,7 @@ class controller {
             break;
 
           case "select-icon":
-            scope.helper[element.key].watcher = function(selection) {
+            scope.helper[element.key].watcher = function (selection) {
               scope.output[element.key] = selection;
               onChange(element.key, selection);
             };

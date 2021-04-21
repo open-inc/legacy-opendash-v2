@@ -1,6 +1,6 @@
 import moment from "moment";
 const milliseconds = ["ms", "milliseconds"];
-const seconds = ["sec", "sek", "seconds", "sekunden"];
+const seconds = ["s", "sec", "sek", "seconds", "sekunden"];
 const minutes = ["min", "minutes", "minuten"];
 const hours = ["std", "h", "hr", "hrs", "stunden", "hours"];
 const days = ["days", "tage"];
@@ -20,13 +20,14 @@ export default function OpenDashDataDisplayDateTime(_$compile) {
             value: "=time",
             unit: "@tsunit",
             timeMode: "@",
+            mode: "@"
         },
         link: OpenDashDataDisplayDateTimeLink
     };
 }
 
-function OpenDashDataDisplayDateTimeLink(scope, elem, attr) {
-    scope.mode = "full";
+function render(scope, elem, attr) {
+    if (!scope.mode) scope.mode = "full";
     if (!scope.timeMode) {
         if (seconds.indexOf(scope.unit.toLowerCase() != 1 || milliseconds.indexOf(scope.unit.toLowerCase() != 1))) {
             if (scope.value > (1000 * 3600 * 24 * 365 * 10)) {
@@ -87,7 +88,7 @@ function OpenDashDataDisplayDateTimeLink(scope, elem, attr) {
                 return string;
             }
             if (scope.mode === "humanize") return scope.date.humanize();
-            if (scope.mode === "unix") return scope.date.asMilliseconds();
+            if (scope.mode === "unix") return scope.date.asMilliseconds() + " ms";
         }
         else {
             //["unix", "full", "date", "time", "humanize"];
@@ -108,13 +109,19 @@ function OpenDashDataDisplayDateTimeLink(scope, elem, attr) {
             elem.html($compile('<span ng-click="switchView()">' + scope.getTimeString() + '</span>')(scope));
         }
     }
-
     if (!isDateUnit(scope.unit) || !scope.date.isValid()) {
         elem.html($compile('<span">' + scope.getTimeString() + '</span>')(scope));
     } else {
         elem.html($compile('<span ng-click="switchView()">' + scope.getTimeString() + '</span>')(scope));
     }
 
+
+
+}
+function OpenDashDataDisplayDateTimeLink(scope, elem, attr) {
+    scope.$watch("value", () => {
+        render(scope, elem, attr);
+    });
 
 
 }
@@ -145,6 +152,6 @@ const isDateUnit = (unit) => {
     if (years.indexOf(unit) != -1) {
         return true;
     }
-    console.log("Not a date uint")
+    //console.log("Not a date uint")
 }
 export { OpenDashDataDisplayDateTime, isDateUnit };
