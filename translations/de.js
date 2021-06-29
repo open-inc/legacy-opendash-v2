@@ -331,10 +331,13 @@ export default [
         settings_hashtag: "Raute",
         settings_arrow: "Pfeil",
       },
+      sharedHighlight:"Hebe ausgewählten Bereich in anderen Widgets hervor",
+      sharedHighlight_Yes:"Hervorheben",
+      sharedHighlight_No:"Nicht Hervorheben",
       live: {
-        settings_axis: "Y-Achsen verknüpfen?",
-        settings_yes: "Ja",
-        settings_no: "Nein"
+        settings_axis: "Achsenskalen synchronisieren",
+        settings_yes: "Gleiche Max- und Min-Werte auf den Y-Achsen",
+        settings_no: "Max- und Min-Werte für jede Achse ermitteln"
       },
       table: {
         settings_1day: "1 Tag",

@@ -10,7 +10,7 @@ import presetsService from "./services/presets.service";
 import headerService from "./services/header.service";
 import routerService from "./services/router.service";
 import { isDateUnit } from "./components/data.display.datetime"
-
+import highlightService from "./services/highlight.service";
 export default [
   ["user", userService, true],
   ["location", locationService, true],
@@ -23,5 +23,6 @@ export default [
   ["header", headerService],
   ["env", envService, true],
   ["router", routerService, true],
-  ["date", isDateUnit, true]
+  ["date", isDateUnit, true],
+  ["highlight", highlightService, true]
 ];
