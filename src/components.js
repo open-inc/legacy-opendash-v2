@@ -27,6 +27,7 @@ import odWidgetHolderDirective from "./components/widget-holder.directive";
 import odTabsDirective from "./components/tabs.directive";
 import odTabDirective from "./components/tab.directive";
 import odDataDisplayDateTime from "./components/data.display.datetime";
+import odDataDisplay from "./components/data.display.component";
 export default [
   // Core
   ["opendash", opendashComponent],
@@ -68,4 +69,5 @@ export default [
   ["od-tabs", odTabsDirective, true],
   ["od-tab", odTabDirective, true],
   ["od-data-dt", ["$compile", odDataDisplayDateTime], true],
+  ["od-data-display", ["$compile","opendash/services/stringmap", odDataDisplay], true],
 ];

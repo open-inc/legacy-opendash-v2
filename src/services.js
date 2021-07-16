@@ -11,6 +11,7 @@ import headerService from "./services/header.service";
 import routerService from "./services/router.service";
 import { isDateUnit } from "./components/data.display.datetime"
 import highlightService from "./services/highlight.service";
+import stringmapService from "./services/stringmap.service";
 export default [
   ["user", userService, true],
   ["location", locationService, true],
@@ -24,5 +25,6 @@ export default [
   ["env", envService, true],
   ["router", routerService, true],
   ["date", isDateUnit, true],
-  ["highlight", highlightService, true]
+  ["highlight", highlightService, true],
+  ["stringmap", stringmapService, true]
 ];
