@@ -69,5 +69,5 @@ export default [
   ["od-tabs", odTabsDirective, true],
   ["od-tab", odTabDirective, true],
   ["od-data-dt", ["$compile", odDataDisplayDateTime], true],
-  ["od-data-display", ["$compile","opendash/services/stringmap", odDataDisplay], true],
+  ["od-data-display", ["$compile","opendash/services/stringmap","$injector", odDataDisplay], true],
 ];

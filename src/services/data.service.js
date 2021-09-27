@@ -29,7 +29,7 @@ export default class OpenDashDataService {
     adapters = $injector
       .get("od.adapter.register")
       .map(([AdapterFactory, cfg]) => {
-        return new AdapterFactory(cfg, { $user, $location });
+        return new AdapterFactory(cfg, { $user, $location,$injector });
       });
 
     let LOCK = false;

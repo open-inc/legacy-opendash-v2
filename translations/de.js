@@ -17,7 +17,21 @@ export default [
       }
     },
     od: {
+      datetime:{
+        seconds:"Sekunde(n)",
+        minutes:"Minute(n)",
+        hours:"Stunde(n)",
+        days:"Tag(e)", 
+        weeks:"Woche(n)",
+        months:"Monat(e)",
+        years:"Jahr(e)",
+        timeframe: "Zeitraum"
+
+      },
       core: {},
+      datadisplay:{
+        c2clip : "In die Zwischenablage kopiert! "
+      },
       greis: {
         report_adhoc: "Neuen Bericht anlegen",
         report_modal_topic: "Neuen bericht für",

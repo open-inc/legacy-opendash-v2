@@ -1,27 +1,19 @@
-import moment from "moment";
-const milliseconds = ["ms", "milliseconds"];
-const seconds = ["s", "sec", "sek", "seconds", "sekunden"];
-const minutes = ["min", "minutes", "minuten"];
-const hours = ["std", "h", "hr", "hrs", "stunden", "hours"];
-const days = ["days", "tage"];
-const weeks = ["wochen", "weeks"];
-const month = ["months", "monate"];
-const years = ["jahre", "years"];
-const duration_modes = ["unix", "full", "humanize"];
-const date_modes = ["unix", "full", "date", "time", "humanize"];
-const momentsUnits = ["years", "months", "weeks", "days", "hours", "minutes", "seconds", "milliseconds"];
-const momentsLabels = ["J", "Mon", "Wo", "T", "Std", "Min", "Sek", "Ms"];
-let $compile, stringmap;
-export default function OpenDashDataDisplay(_$compile, _stringmap) {
+import {isDateUnit} from "./data.display.datetime";
+let $compile, stringmap,$injector,$notification;
+
+export default function OpenDashDataDisplay(_$compile, _stringmap,_$injector) {
     $compile = _$compile;
     stringmap =_stringmap;
+    $injector = _$injector;
+    $notification = $injector.get("opendash/services/notification");
     return {
         restrict: "E",
         scope: {
             type: "=",
             value: "=",
             unit: "=",
-            showUnit:"="
+            showUnit:"=",
+            
         },
         link: OpenDashDataDisplayLink
     };
@@ -39,30 +31,53 @@ function isBase64Image(text){
 function render(scope, elem, attr) {
     
     let unit = scope.unit;
+    if(!scope.type || scope.type===""){
+        scope.type ="string"
+    }
     let type = scope.type.toLowerCase();
     let value = scope.value;
-    let toShow = value;
+    let toShow = ""+value;
+    
     if(scope.showUnit) {
         toShow += (" "+unit);
     }
+    //console.log("DataDisplay", unit, type, value, toShow)
     if(type==="number"){
+        
+        if(isDateUnit(unit)){
+            
+            elem.html($compile('<od-data-dt tsunit="'+unit+'" time='+parseInt(scope.value)+' />')(scope));    
+            return;
+        };
+        
         elem.html($compile('<span>' + toShow + '</span>')(scope));
         return;
     }
     if(type==="string"){
         if(isBase64Image(""+value)){
-            elem.html($compile('<span  >  <img src="'+value+'" />  </span>')(scope));
+            elem.html($compile('<a href="#" ng-click="openNewTab()"  >  <img src="'+value+'" />  </a>')(scope));
             return;    
         }
         if(isLink(""+value)){
             elem.html($compile('<span title='+value+'>  <a target="_blank" href="'+value+'" >Link</a></span>')(scope));
             return;    
         }
-        elem.html($compile('<span>' + stringmap.get(toShow.trim()) + '</span>')(scope));
+        
+        if(toShow.trim() ===""){
+            toShow ="--"
+        }
+        elem.html($compile('<span ng-click="copytoclip()"title="'+toShow+'">' + stringmap.get(toShow.trim()) + '</span>')(scope));
         return;
     }
     if(type==="boolean"){
-        let string = '<span title='+value+' class="ow-sidebar-data__boolean '+ (value?'ow-sidebar-data__boolean__active':'')+'" />';
+        
+        
+        let string ="";
+        if(value){
+            string+= '<i class="fa fa-circle ng-scope" style="height: 50%; color: rgb(0, 99, 172);" aria-hidden="true"></i>'
+        }else{
+            string+= '<i class="fa fa-circle-o ng-scope" style="height:50%;" aria-hidden="true"></i>'
+        }
         elem.html($compile(string)(scope))
         return;
     }
@@ -78,6 +93,7 @@ function render(scope, elem, attr) {
     }
     
 }
+
 function OpenDashDataDisplayLink(scope, elem, attr) {
     scope.$watch("value", () => {
         render(scope, elem, attr);
@@ -85,7 +101,19 @@ function OpenDashDataDisplayLink(scope, elem, attr) {
     scope.$watch("type", () => {
         render(scope, elem, attr);
     });
-
+    scope.openNewTab =()=>{
+        var win = window.open();
+        win.document.write('<iframe src="' + scope.value  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+    }
+    scope.copytoclip =()=>{
+        let data = [new ClipboardItem({ "text/plain": new Blob([""+scope.value], { type: "text/plain" }) })];
+        navigator.clipboard.write(data).then(function() {
+           $notification.success("od.datadisplay.c2clip");
+            
+        }, function() {
+        console.error("Unable to write to clipboard. :-(");
+        });
+    }
 
 }
 

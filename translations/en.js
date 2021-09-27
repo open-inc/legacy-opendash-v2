@@ -18,6 +18,20 @@ export default [
     },
     od: {
       core: {},
+      datetime:{
+        seconds:"Second(s)",
+        minutes:"Minute(s)",
+        hours:"Hour(s)",
+        days:"Day(s)", 
+        weeks:"Week(s)",
+        months:"Month(s)",
+        years:"Year(s)",
+        timeframe: "Timespan"
+
+      },
+      datadisplay:{
+        c2clip : "Copied to clipboard "
+      },
       greis: {
         report_adhoc: "New Report",
         report_modal_topic: "Creating Report for",
@@ -293,6 +307,9 @@ export default [
       }
     },
     widgets: {
+      sharedHighlight:"Highlight selection from other widgets",
+      sharedHighlight_Yes:"Higlight",
+      sharedHighlight_No:"Do not highlight",
       general: {
         no_settings: "This Widget has no Settings.",
       },

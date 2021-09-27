@@ -13,6 +13,7 @@ const momentsUnits = ["years", "months", "weeks", "days", "hours", "minutes", "s
 const momentsLabels = ["J", "Mon", "Wo", "T", "Std", "Min", "Sek", "Ms"];
 let $compile;
 export default function OpenDashDataDisplayDateTime(_$compile) {
+    
     $compile = _$compile;
     return {
         restrict: "E",
@@ -112,6 +113,7 @@ function render(scope, elem, attr) {
     if (!isDateUnit(scope.unit) || !scope.date.isValid()) {
         elem.html($compile('<span">' + scope.getTimeString() + '</span>')(scope));
     } else {
+        
         elem.html($compile('<span ng-click="switchView()">' + scope.getTimeString() + '</span>')(scope));
     }
 
@@ -119,8 +121,10 @@ function render(scope, elem, attr) {
 
 }
 function OpenDashDataDisplayDateTimeLink(scope, elem, attr) {
+    
     scope.$watch("value", () => {
         render(scope, elem, attr);
+        
     });
 
 
@@ -152,6 +156,7 @@ const isDateUnit = (unit) => {
     if (years.indexOf(unit) != -1) {
         return true;
     }
+    return false;
     //console.log("Not a date uint")
 }
 export { OpenDashDataDisplayDateTime, isDateUnit };

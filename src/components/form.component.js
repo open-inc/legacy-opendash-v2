@@ -10,7 +10,8 @@ class controller {
   }
 
   constructor($element, $compile, $rootScope, $q) {
-    this.$onInit = () => {
+   
+    this.init = ()=>{
       logger.assert(
         lodash.isArray(this.form),
         "Databinding 'form' must be an Array"
@@ -29,11 +30,13 @@ class controller {
       scope.error = {};
       scope.isVisible = {};
 
-      function onChange(key, value) {
+      let onChange=(key, value) =>{
         try {
+          //this.test(key,value);
           this.onChange(key, value);
+          this.init(template, scope);
         } catch (error) {
-          // that's ok...
+         //Ok! on Change does not exist so rerendering is not necessary  
         }
         // console.log(key);
       }
@@ -105,8 +108,9 @@ class controller {
 
           case "select-item":
             scope.helper[element.key].watcher = function (selection) {
+              let old = scope.output[element.key];
               scope.output[element.key] = selection;
-              onChange(element.key, selection);
+              if(old!==selection)onChange(element.key, selection);
             };
 
             scope.helper[element.key].settings = Object.assign(
@@ -168,12 +172,18 @@ class controller {
       template += "</div>";
 
       // create new element and use it as form html
+      this.renderForm(template,scope);
+    }
+    this.$onInit = () => {
+     this.init();
+    };
+    this.renderForm= (template,scope)=>{
       let element = $compile(template)(scope);
       $element.html(element);
       setTimeout(() => {
         scope.$digest();
       }, 100);
-    };
+    }
   }
 
   validateFormElement(element) {
@@ -195,7 +205,7 @@ let component = {
   bindings: {
     form: "<",
     data: "<",
-    onChange: "&",
+    onChange: "<",
     valid: "=",
   },
 };
