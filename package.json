@@ -17,7 +17,7 @@
     "javascript-detect-element-resize": "~0.5.3",
     "jquery": "^1.0.0",
     "lodash": "^4.17.5",
-    "moment": "^2.21.0",
+    "moment": "^2.29.4",
     "path-to-regexp": "^2.2.1"
   },
   "devDependencies": {
